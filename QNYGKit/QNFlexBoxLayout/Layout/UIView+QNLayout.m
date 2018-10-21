@@ -118,7 +118,11 @@ extern void YGSetMesure(QNLayout *layout);
 }
 
 - (void)qn_layoutWithFixedSize {
-    [self qn_layouWithSize:self.frame.size];
+    if (CGRectIsEmpty(self.frame)) {
+        [self qn_layoutWithWrapContent];
+    } else {
+        [self qn_layouWithSize:self.frame.size];
+    }
 }
 
 - (void)qn_setFlexDirection:(QNFlexDirection)direction
