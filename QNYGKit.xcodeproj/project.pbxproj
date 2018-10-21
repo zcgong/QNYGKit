@@ -162,6 +162,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		3C32B1B2217C9B4A00DF30FB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3C32B1A9217C4E8200DF30FB /* UIView+ZJ.h */,
+				3C32B1A8217C4E8200DF30FB /* UIView+ZJ.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		61062F59215B579200C279D9 /* QNLayoutBase */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,8 +234,6 @@
 		61062F78215B60C500C279D9 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				3C32B1A9217C4E8200DF30FB /* UIView+ZJ.h */,
-				3C32B1A8217C4E8200DF30FB /* UIView+ZJ.m */,
 				61062F56215B514200C279D9 /* QNLayoutDiv.h */,
 				61062F57215B514200C279D9 /* QNLayoutDiv.m */,
 				3C2FEC70217B63890046ED62 /* QNLayoutStrDiv.h */,
@@ -269,10 +276,11 @@
 		617974CB21549FDE00142DD9 /* QNYGKit */ = {
 			isa = PBXGroup;
 			children = (
-				3C32B1AB217C58AB00DF30FB /* Images */,
 				61062F76215B607800C279D9 /* QNFlexBoxLayout */,
 				61062F59215B579200C279D9 /* QNLayoutBase */,
 				61062F67215B590100C279D9 /* QNFeed */,
+				3C32B1AB217C58AB00DF30FB /* Images */,
+				3C32B1B2217C9B4A00DF30FB /* Utils */,
 				617974CC21549FDE00142DD9 /* AppDelegate.h */,
 				617974CD21549FDE00142DD9 /* AppDelegate.m */,
 				617974CF21549FDE00142DD9 /* ViewController.h */,

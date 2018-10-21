@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "QNFeedView.h"
 #import "QNFlexBoxLayout.h"
+#import "UIView+ZJ.h"
 
 @interface ViewController ()
 @property(nonatomic, strong) UILabel *testlabel;
@@ -63,37 +64,35 @@
     labelTitle.text = @"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。";
     labelTitle.backgroundColor = [UIColor orangeColor];
     [labelTitle qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapContent();
+        layout.wrapContent();   // 自适应大小
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 0, 10, 0));
     }];
     
-    QNLayoutDiv *imageDiv = [QNLayoutDiv  linerLayoutDiv];
+    QNLayoutDiv *imageDiv = [QNLayoutDiv linerLayoutDiv];
     UIImageView *imageViewA = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 124, 78)];
-    imageViewA.backgroundColor = [UIColor blueColor];
     imageViewA.image = [UIImage imageNamed:@"moment_picA"];
     [imageViewA qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapSize(); // 效果同下面imageViewB
+        layout.wrapSize(); // 固定大小，效果同下面imageViewB
     }];
     UIImageView *imageViewB = [[UIImageView alloc] initWithFrame:CGRectZero];
-    imageViewB.backgroundColor = [UIColor greenColor];
     imageViewB.image = [UIImage imageNamed:@"moment_picB"];
     [imageViewB qn_makeLayout:^(QNLayout *layout) {
         layout.size.equalToSize(CGSizeMake(124, 78));
     }];
     
     UIImageView *imageViewC = [[UIImageView alloc] initWithFrame:CGRectZero];
-    imageViewC.backgroundColor = [UIColor greenColor];
     imageViewC.image = [UIImage imageNamed:@"moment_picC"];
     [imageViewC qn_makeLayout:^(QNLayout *layout) {
         layout.size.equalToSize(CGSizeMake(124, 78));
     }];
     [imageDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionRow)); layout.justifyContent.equalTo(@(QNJustifySpaceBetween));
-        layout.children(@[imageViewA, imageViewB, imageViewC]);
+        layout.flexDirection.equalTo(@(QNFlexDirectionRow));    // 水平布局
+        layout.justifyContent.equalTo(@(QNJustifySpaceBetween));    // 分散排列，平分间距
+        layout.children(@[imageViewA, imageViewB, imageViewC]); // 设置子view
     }];
     
     [mView qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionColumn));
+        layout.flexDirection.equalTo(@(QNFlexDirectionColumn)); // 垂直布局
         layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 15, 10, 15));
         layout.children(@[labelTitle, imageDiv]);
     }];
@@ -105,117 +104,6 @@
     [bgView addSubview:mView];
     [mView qn_layoutWithFixedWidth];
     mView.top = labelD.bottom + 20;
-    
-    // Do any additional setup after loading the view, typically from a nib.
-    /*
-    NSString *dataFilePath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
-    NSDictionary *rootDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    NSArray *feedDicts = rootDict[@"feed"];
-    
-    NSMutableArray *feeds = @[].mutableCopy;
-    
-    [feedDicts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [feeds addObject:[[QNFeedModel alloc] initWithDictionary:obj]];
-    }];
-    
-    QNFeedModel *feedModel = [feeds objectAtIndex:0];
-    QNFeedView *feedView = [QNFeedView defaultFeedView];
-//    [feedView applyModel:feedModel];
-    QNViewModelItem *viewModelItem = [QNFeedViewModel getViewModelItemWithModel:feedModel];
-    [feedView applyViewModelItem:viewModelItem];
-    feedView.frame = CGRectMake(0, 64, feedView.frame.size.width, feedView.frame.size.height);
-    feedView.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:feedView];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        QNFeedModel *feedModel = [feeds objectAtIndex:1];
-        QNViewModelItem *viewModelItem = [QNFeedViewModel getViewModelItemWithModel:feedModel];
-        [feedView applyViewModelItem:viewModelItem];
-        feedView.frame = CGRectMake(0, 64, feedView.frame.size.width, feedView.frame.size.height);
-        feedView.backgroundColor = [UIColor orangeColor];
-        [self.view addSubview:feedView];
-    });
-    */
-    
-    /*
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    [label qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapContent();
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 0, 0, 10));
-    }];
-    label.text = @"hello world";
-    label.backgroundColor = [UIColor grayColor];
-    label.textColor = [UIColor orangeColor];
-//    [label qn_applyLayoutWithFixedWidth];
-//    label.frame = CGRectMake(10, 164, label.frame.size.width, label.frame.size.height);
-//    [self.view addSubview:label];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-    imageView.backgroundColor = [UIColor greenColor];
-//    [imageView qn_markAllowLayout];
-//    [imageView qn_makeLayout:^(QNLayout *layout) {
-//        layout.width.height.equalTo(@(100));
-//    }];
-    
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 414, 0)];
-    [view qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionColumn));
-        layout.children(@[label, imageView]);
-    }];
-    [view addSubview:imageView];
-    [view addSubview:label];
-    view.backgroundColor = [UIColor purpleColor];
-    [view qn_applyLayoutWithFixedWidth];
-    QNLayoutCache *cache = [view.qn_layout layoutCache];
-    view.frame = CGRectMake(0, 164, view.frame.size.width, view.frame.size.height);
-    [self.view addSubview:view];
-     */
-    
-    /*
-    self.testlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 414,100)];
-    self.testlabel.backgroundColor = [UIColor orangeColor];
-    self.testlabel.text = @"Hello world, hello world, hello world,Hello world, hello world, hello world,Hello world, hello world, hello world";
-    self.testlabel.font = [UIFont fontWithName: @"Zapfino" size: 15];
-//    [self.testlabel sizeToFit];
-//    [self.testlabel qn_markAllowLayout];
-    [self.testlabel qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapContent();
-//        layout.width.equalTo(@(120));
-    }];
-//    [self.testlabel qn_applyLayouWithSize:CGSizeMake(300, 100)];
-    self.testlabel.numberOfLines = 0;
-    [self.testlabel qn_layoutWithFixedWidth];
-    [self.view addSubview:self.testlabel];
-    self.testlabel.frame = CGRectMake(0, 120, self.testlabel.frame.size.width, self.testlabel.frame.size.height);
-    
-    QNLayoutFixedSizeDiv *fixDiv = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(100, 100)];
-//    [fixDiv qn_applyLayouWithSize:qn_undefinedSize];
-    NSLog(@"");
-    
-    NSMutableParagraphStyle *parag = [[NSMutableParagraphStyle alloc] init];
-    
-    NSDictionary *attrDict = @{NSFontAttributeName:[UIFont fontWithName: @"Zapfino" size: 15],
-                               NSForegroundColorAttributeName:[UIColor blueColor]};
-    NSMutableAttributedString *mAttributedString = [[NSMutableAttributedString alloc] initWithString:@"Hello world, hello world, hello world,Hello world, hello world, hello world,Hello world, hello world, hello world" attributes:attrDict];
-    
-    QNLayoutStrDiv *strDiv = [QNLayoutStrDiv layoutStrDivWithCalAttributedStr:[mAttributedString copy]];
-    [strDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(10, 0, 10, 0));
-    }];
-//    [strDiv qn_applyLayouWithSize:CGSizeMake(220, qn_undefined)];
-    NSLog(@"");
-//    self.testlabel.attributedText = [mAttributedString copy];
-    
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayoutDiv];
-    
-    [mainDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapContent();
-        layout.children(@[strDiv, fixDiv]);
-    }];
-    [mainDiv qn_layouWithSize:CGSizeMake(414, 100)];
-    NSLog(@"");
-     */
 }
 
 
