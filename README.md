@@ -21,7 +21,8 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ***
 
 ### 使用举例
-```
+![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnygkit.png)
+```objective-c
 UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 80, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 100)];
     [self.view addSubview:bgView];
     // 1、自适应，长度和高度都不限制，类似sizeToFit。
@@ -110,4 +111,3 @@ UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 80, [UIScreen mainS
     [mView qn_layoutWithFixedWidth];
     mView.top = labelD.bottom + 20;
 ```
-![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnygkit.png)
