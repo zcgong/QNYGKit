@@ -51,7 +51,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     labelA.top = 75;
     
     // 2、自适应，长度固定，高度不限制。
-    UILabel *labelB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0)];
+    UILabel *labelB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
     labelB.numberOfLines = 0;
     labelB.text = @"2、自适应，长度固定，高度不限制。（我是补充文字，我是补充文字，我是补充文字。）";
     labelB.backgroundColor = [UIColor orangeColor];
