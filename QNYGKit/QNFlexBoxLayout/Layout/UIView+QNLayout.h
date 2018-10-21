@@ -21,12 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIView (QNLayout)<QNLayoutProtocol, QNLayoutCalProtocol>
 - (void)qn_layoutWithLayoutType:(QNYGViewLayoutType)layoutType;
-//- (void)qn_layoutWithWrapContent;
 - (void)qn_layoutWithFixedWidth;
 - (void)qn_layoutWithFixedHeight;
 - (void)qn_layoutWithFixedSize;
-
-//- (void)qn_markAllowLayout;
 
 - (void)qn_setFlexDirection:(QNFlexDirection)direction
              justifyContent:(QNJustify)justifyContent

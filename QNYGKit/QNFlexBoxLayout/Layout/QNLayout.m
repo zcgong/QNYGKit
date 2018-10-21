@@ -61,20 +61,12 @@ static YGSize YGMeasureView(
     id<QNLayoutCalProtocol> calLayout = (__bridge id<QNLayoutCalProtocol>) YGNodeGetContext(node);
     __block CGSize sizeThatFits;
     if ([[NSThread currentThread] isMainThread]) {
-//        sizeThatFits = [view sizeThatFits:(CGSize) {
-//            .width = constrainedWidth,
-//            .height = constrainedHeight,
-//        }];
         sizeThatFits = [calLayout calculateSizeWithSize:(CGSize) {
             .width = constrainedWidth,
             .height = constrainedHeight,
         }];
     } else {
         dispatch_sync(dispatch_get_main_queue(), ^{
-//            sizeThatFits = [view sizeThatFits:(CGSize) {
-//                .width = constrainedWidth,
-//                .height = constrainedHeight,
-//            }];
             sizeThatFits = [calLayout calculateSizeWithSize:(CGSize) {
                 .width = constrainedWidth,
                 .height = constrainedHeight,

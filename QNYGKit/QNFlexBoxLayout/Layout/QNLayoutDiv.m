@@ -39,12 +39,6 @@
     self.mChildren = [children copy];
     [self.qn_layout removeAllChildren];
     
-//    for (id<QNLayoutProtocol> child in children) {
-//        if ([child isKindOfClass:[UIView class]]) {
-//            [(UIView *)child qn_markAllowLayout];
-//        }
-//    }
-    
     for (id<QNLayoutProtocol> layoutElement in children) {
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
         [self.qn_layout addChild:layoutElement.qn_layout];

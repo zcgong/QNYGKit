@@ -17,8 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSDictionary *qnStyles;
 @property(nonatomic, copy) NSArray<id<QNLayoutProtocol>> *qnchildren;
 
-//+ (instancetype)defaultLayoutDiv;
-
 + (instancetype)linerLayoutDiv;
 
 + (instancetype)verticalLayoutDiv;

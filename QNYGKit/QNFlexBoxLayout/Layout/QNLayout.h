@@ -148,6 +148,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (QNLayout * (^)(UIEdgeInsets attr))equalToEdgeInsets;
 
+/**
+ 必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效
+ */
 - (QNLayout * (^)(void))wrapContent;
 
 - (QNLayout * (^)(void))wrapSize;
