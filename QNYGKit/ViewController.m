@@ -7,34 +7,30 @@
 //
 
 #import "ViewController.h"
-#import "QNFeedView.h"
 #import "QNFlexBoxLayout.h"
 #import "UIView+ZJ.h"
 
-@interface ViewController ()
-@property(nonatomic, strong) UILabel *testlabel;
-@end
+#define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 80, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 100)];
-    [self.view addSubview:bgView];
     // 1、自适应，长度和高度都不限制，类似sizeToFit。
     UILabel *labelA = [[UILabel alloc] initWithFrame:CGRectZero];
     labelA.numberOfLines = 0;
     labelA.text = @"1、自适应，长度和高度都不限制。（我是补充文字，我是补充文字，我是补充文字。）";
     labelA.backgroundColor = [UIColor orangeColor];
-    [bgView addSubview:labelA];
+    [self.view addSubview:labelA];
     [labelA qn_layoutWithWrapContent];
+    labelA.top = 75;
     
     // 2、自适应，长度固定，高度不限制。
-    UILabel *labelB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0)];
+    UILabel *labelB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
     labelB.numberOfLines = 0;
     labelB.text = @"2、自适应，长度固定，高度不限制。（我是补充文字，我是补充文字，我是补充文字。）";
     labelB.backgroundColor = [UIColor orangeColor];
-    [bgView addSubview:labelB];
+    [self.view addSubview:labelB];
     [labelB qn_layoutWithFixedWidth];
     labelB.top = labelA.bottom + 10;
     
@@ -43,7 +39,7 @@
     labelC.numberOfLines = 0;
     labelC.text = @"3、自适应，高度固定，长度不限制。（我是补充文字，我是补充文字，我是补充文字。）";
     labelC.backgroundColor = [UIColor orangeColor];
-    [bgView addSubview:labelC];
+    [self.view addSubview:labelC];
     [labelC qn_layoutWithFixedHeight];
     labelC.top = labelB.bottom + 10;
     
@@ -52,12 +48,12 @@
     labelD.numberOfLines = 0;
     labelD.text = @"4、直接固定size。（我是补充文字，我是补充文字，我是补充文字。）";
     labelD.backgroundColor = [UIColor orangeColor];
-    [bgView addSubview:labelD];
+    [self.view addSubview:labelD];
     [labelD qn_layoutWithFixedSize];
     labelD.top = labelC.bottom + 10;
     
     // 5、组合view，水平、垂直布局等
-    UIView *mView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0)];
+    UIView *mView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
     mView.backgroundColor = [UIColor yellowColor];
     UILabel *labelTitle = [[UILabel alloc] initWithFrame:CGRectZero];
     labelTitle.numberOfLines = 0;
@@ -101,16 +97,9 @@
     [mView addSubview:imageViewA];
     [mView addSubview:imageViewB];
     [mView addSubview:imageViewC];
-    [bgView addSubview:mView];
+    [self.view addSubview:mView];
     [mView qn_layoutWithFixedWidth];
     mView.top = labelD.bottom + 20;
 }
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 @end
