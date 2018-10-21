@@ -11,13 +11,14 @@
 #import "QNLayout+Private.h"
 #import "Yoga.h"
 #import "QNLayoutCache.h"
+#import "QNLayoutCalProtocol.h"
 
-const CGSize qn_undefinedSize = {
+const CGSize QNUndefinedSize = {
     .width = YGUndefined,
     .height = YGUndefined,
 };
 
-const CGFloat qn_undefined = YGUndefined;
+const CGFloat QNUndefinedValue = YGUndefined;
 
 static CGFloat QNRoundPixelValue(CGFloat value)
 {
@@ -57,16 +58,24 @@ static YGSize YGMeasureView(
     const CGFloat constrainedWidth = (widthMode == YGMeasureModeUndefined) ? CGFLOAT_MAX : width;
     const CGFloat constrainedHeight = (heightMode == YGMeasureModeUndefined) ? CGFLOAT_MAX: height;
     
-    UIView *view = (__bridge UIView*) YGNodeGetContext(node);
+    id<QNLayoutCalProtocol> calLayout = (__bridge id<QNLayoutCalProtocol>) YGNodeGetContext(node);
     __block CGSize sizeThatFits;
     if ([[NSThread currentThread] isMainThread]) {
-        sizeThatFits = [view sizeThatFits:(CGSize) {
+//        sizeThatFits = [view sizeThatFits:(CGSize) {
+//            .width = constrainedWidth,
+//            .height = constrainedHeight,
+//        }];
+        sizeThatFits = [calLayout calculateSizeWithSize:(CGSize) {
             .width = constrainedWidth,
             .height = constrainedHeight,
         }];
     } else {
         dispatch_sync(dispatch_get_main_queue(), ^{
-            sizeThatFits = [view sizeThatFits:(CGSize) {
+//            sizeThatFits = [view sizeThatFits:(CGSize) {
+//                .width = constrainedWidth,
+//                .height = constrainedHeight,
+//            }];
+            sizeThatFits = [calLayout calculateSizeWithSize:(CGSize) {
                 .width = constrainedWidth,
                 .height = constrainedHeight,
             }];
@@ -79,7 +88,7 @@ static YGSize YGMeasureView(
 }
 
 void YGSetMesure(QNLayout *layout) {
-    if ([layout.context isKindOfClass:[UIView class]] && layout.allChildren.count == 0) {
+    if ([layout.context conformsToProtocol:@protocol(QNLayoutCalProtocol)] && layout.allChildren.count == 0) {
         YGNodeSetMeasureFunc(layout.qnNode, YGMeasureView);
     } else {
         YGNodeSetMeasureFunc(layout.qnNode, NULL);
@@ -96,7 +105,7 @@ void YGSetMesure(QNLayout *layout) {
 
 @property(nonatomic, weak) QNLayout *parent;
 
-@property(nonatomic, copy)NSDictionary *QNStyles;
+@property(nonatomic, copy) NSDictionary *QNStyles;
 
 @property(nonatomic, assign) YGNodeRef qnNode;
 
@@ -572,14 +581,11 @@ if ([self.styleNames containsObject:@""#key]) {\
 - (QNLayout * (^)(void))wrapSize {
     return ^QNLayout* () {
         if ([self.context isKindOfClass:[UIView class]]) {
-            [self.styleNames addObject:@"Size"];
-            QN_STYLE_ALL_SIZE(Size,((UIView *)(self.context)).frame.size)
-            [self.styleNames removeAllObjects];
+            [self setSize:((UIView *)(self.context)).frame.size];
         }
         return self;
     };
 }
-
 
 - (QNLayout * (^)(NSArray* children))children {
     return ^QNLayout* (NSArray* children) {

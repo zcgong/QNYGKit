@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "QNLayoutProtocol.h"
+#import "QNLayoutCalProtocol.h"
 
 typedef NS_ENUM(NSInteger, QNYGViewLayoutType) {
     kQNYGViewLayoutTypeWrap,
@@ -18,14 +19,14 @@ typedef NS_ENUM(NSInteger, QNYGViewLayoutType) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIView (QNLayout)<QNLayoutProtocol>
-- (void)qn_applyLayoutWithLayoutType:(QNYGViewLayoutType)layoutType;
-- (void)qn_wrapContent;
-- (void)qn_applyLayoutWithFixedWidth;
-- (void)qn_applyLayoutWithFixedHeight;
-- (void)qn_applyLayoutWithFixedSize;
+@interface UIView (QNLayout)<QNLayoutProtocol, QNLayoutCalProtocol>
+- (void)qn_layoutWithLayoutType:(QNYGViewLayoutType)layoutType;
+//- (void)qn_layoutWithWrapContent;
+- (void)qn_layoutWithFixedWidth;
+- (void)qn_layoutWithFixedHeight;
+- (void)qn_layoutWithFixedSize;
 
-- (void)qn_markAllowLayout;
+//- (void)qn_markAllowLayout;
 
 - (void)qn_setFlexDirection:(QNFlexDirection)direction
              justifyContent:(QNJustify)justifyContent

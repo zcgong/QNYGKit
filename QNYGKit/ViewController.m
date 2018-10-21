@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "QNFeedView.h"
+#import "QNLayoutFixedSizeDiv.h"
+#import "QNLayoutStrDiv.h"
 
 @interface ViewController ()
 @property(nonatomic, strong) UILabel *testlabel;
@@ -83,17 +85,48 @@
     [self.view addSubview:view];
      */
     
-    self.testlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0,0)];
+    self.testlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 414,100)];
     self.testlabel.backgroundColor = [UIColor orangeColor];
-    self.testlabel.text = @"Hello world, hello world, hello world";
+    self.testlabel.text = @"Hello world, hello world, hello world,Hello world, hello world, hello world,Hello world, hello world, hello world";
+    self.testlabel.font = [UIFont fontWithName: @"Zapfino" size: 15];
 //    [self.testlabel sizeToFit];
 //    [self.testlabel qn_markAllowLayout];
-//    [self.testlabel qn_makeLayout:^(QNLayout *layout) {
-//        layout.wrapContent();
-//    }];
-    [self.testlabel qn_applyLayouWithSize:CGSizeMake(300, 100)];
+    [self.testlabel qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapContent();
+//        layout.width.equalTo(@(120));
+    }];
+//    [self.testlabel qn_applyLayouWithSize:CGSizeMake(300, 100)];
+    self.testlabel.numberOfLines = 0;
+    [self.testlabel qn_layoutWithFixedWidth];
     [self.view addSubview:self.testlabel];
     self.testlabel.frame = CGRectMake(0, 120, self.testlabel.frame.size.width, self.testlabel.frame.size.height);
+    
+    QNLayoutFixedSizeDiv *fixDiv = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(100, 100)];
+//    [fixDiv qn_applyLayouWithSize:qn_undefinedSize];
+    NSLog(@"");
+    
+    NSMutableParagraphStyle *parag = [[NSMutableParagraphStyle alloc] init];
+    
+    NSDictionary *attrDict = @{NSFontAttributeName:[UIFont fontWithName: @"Zapfino" size: 15],
+                               NSForegroundColorAttributeName:[UIColor blueColor]};
+    NSMutableAttributedString *mAttributedString = [[NSMutableAttributedString alloc] initWithString:@"Hello world, hello world, hello world,Hello world, hello world, hello world,Hello world, hello world, hello world" attributes:attrDict];
+    
+    QNLayoutStrDiv *strDiv = [QNLayoutStrDiv layoutStrDivWithCalAttributedStr:[mAttributedString copy]];
+    [strDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(10, 0, 10, 0));
+    }];
+//    [strDiv qn_applyLayouWithSize:CGSizeMake(220, qn_undefined)];
+    NSLog(@"");
+//    self.testlabel.attributedText = [mAttributedString copy];
+    
+    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayoutDiv];
+    
+    [mainDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapContent();
+        layout.children(@[strDiv, fixDiv]);
+    }];
+    [mainDiv qn_layouWithSize:CGSizeMake(414, 100)];
+    NSLog(@"");
 }
 
 

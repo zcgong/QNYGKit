@@ -51,7 +51,7 @@
     UIView<QNViewProtocol> *cView = [[self do_viewClass] defaultView];
     [cView applyDataModel:dataModel];
     
-    [cView qn_applyLayoutWithLayoutType:[self do_viewLayoutType]];
+    [cView qn_layoutWithLayoutType:[self do_viewLayoutType]];
     QNLayoutCache *cache = [cView.qn_layout layoutCache];
     return cache;
 }

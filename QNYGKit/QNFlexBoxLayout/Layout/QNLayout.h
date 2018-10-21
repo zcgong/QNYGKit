@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-extern const CGSize qn_undefinedSize;
+extern const CGSize QNUndefinedSize;
 
-extern const CGFloat qn_undefined;
+extern const CGFloat QNUndefinedValue;
 
 typedef enum QNFlexDirection {
     QNFlexDirectionColumn,

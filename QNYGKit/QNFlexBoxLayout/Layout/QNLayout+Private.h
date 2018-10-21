@@ -24,8 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, assign) CGRect frame;
 
-//@property(nonatomic, assign) CGSize mesureSize;
-
 - (NSArray *)allChildren;
 
 - (void)addChild:(QNLayout *)layout;

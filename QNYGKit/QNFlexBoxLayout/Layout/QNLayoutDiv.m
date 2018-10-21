@@ -39,11 +39,11 @@
     self.mChildren = [children copy];
     [self.qn_layout removeAllChildren];
     
-    for (id<QNLayoutProtocol> child in children) {
-        if ([child isKindOfClass:[UIView class]]) {
-            [(UIView *)child qn_markAllowLayout];
-        }
-    }
+//    for (id<QNLayoutProtocol> child in children) {
+//        if ([child isKindOfClass:[UIView class]]) {
+//            [(UIView *)child qn_markAllowLayout];
+//        }
+//    }
     
     for (id<QNLayoutProtocol> layoutElement in children) {
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
@@ -64,7 +64,7 @@
     self.qn_children = newChildren;
 }
 
-- (void)qn_applyLayouWithSize:(CGSize)size {
+- (void)qn_layouWithSize:(CGSize)size {
     [self.qn_layout calculateLayoutWithSize:size];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
@@ -90,7 +90,7 @@
 }
 
 
-- (void)qn_asycApplyLayoutWithSize:(CGSize)size {
+- (void)qn_asycLayoutWithSize:(CGSize)size {
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.qn_layout calculateLayoutWithSize:size];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -137,6 +137,18 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
     [self.mChildren removeObject:layout];
     self.qn_children = [self.mChildren copy];
+}
+
++ (instancetype)defaultLayoutDiv {
+    return [self layoutDivWithFlexDirection:QNFlexDirectionRow];
+}
+
++ (instancetype)linerLayoutDiv {
+    return [self layoutDivWithFlexDirection:QNFlexDirectionRow];
+}
+
++ (instancetype)verticalLayoutDiv {
+    return [self layoutDivWithFlexDirection:QNFlexDirectionColumn];
 }
 
 + (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction {

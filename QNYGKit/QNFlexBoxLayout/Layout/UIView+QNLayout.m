@@ -29,11 +29,11 @@ extern void YGSetMesure(QNLayout *layout);
     objc_setAssociatedObject(self, @selector(qn_children), children, OBJC_ASSOCIATION_COPY_NONATOMIC);
     [[self qn_layout] removeAllChildren];
     
-    for (id<QNLayoutProtocol> child in children) {
-        if ([child isKindOfClass:[UIView class]]) {
-            [(UIView *)child qn_markAllowLayout];
-        }
-    }
+//    for (id<QNLayoutProtocol> child in children) {
+//        if ([child isKindOfClass:[UIView class]]) {
+//            [(UIView *)child qn_markAllowLayout];
+//        }
+//    }
     
     for (id<QNLayoutProtocol> layoutElement in children) {
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
@@ -83,50 +83,48 @@ extern void YGSetMesure(QNLayout *layout);
     objc_setAssociatedObject(self, @selector(qn_layout), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)qn_applyLayoutWithLayoutType:(QNYGViewLayoutType)layoutType {
+- (void)qn_layoutWithLayoutType:(QNYGViewLayoutType)layoutType {
     switch (layoutType) {
         case kQNYGViewLayoutTypeWrap:
-            [self qn_wrapContent];
+            [self qn_layoutWithWrapContent];
             break;
         case kQNYGViewLayoutTypeWidth:
-            [self qn_applyLayoutWithFixedWidth];
+            [self qn_layoutWithFixedWidth];
             break;
         case kQNYGViewLayoutTypeHeight:
-            [self qn_applyLayoutWithFixedHeight];
+            [self qn_layoutWithFixedHeight];
             break;
         case kQNYGViewLayoutTypeSize:
-            [self qn_applyLayoutWithFixedSize];
+            [self qn_layoutWithFixedSize];
             break;
         default:
             break;
     }
 }
 
-- (void)qn_wrapContent {
+- (void)qn_layoutWithWrapContent {
     [self qn_layout].wrapContent();
-    [[self qn_layout] calculateLayoutWithSize:qn_undefinedSize];
+    [[self qn_layout] calculateLayoutWithSize:QNUndefinedSize];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
 }
 
-- (void)qn_applyLayoutWithFixedWidth {
-    [self qn_layout].width.equalTo(@(self.frame.size.width));
+- (void)qn_layoutWithFixedWidth {
     [self qn_layout].wrapContent();
-    [[self qn_layout] calculateLayoutWithSize:CGSizeMake(self.frame.size.width, qn_undefined)];
+    [[self qn_layout] calculateLayoutWithSize:CGSizeMake(self.frame.size.width, QNUndefinedValue)];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
 }
 
-- (void)qn_applyLayoutWithFixedHeight {
-    [self qn_layout].height.equalTo(@(self.frame.size.height));
+- (void)qn_layoutWithFixedHeight {
     [self qn_layout].wrapContent();
-    [[self qn_layout] calculateLayoutWithSize:CGSizeMake(qn_undefined, self.frame.size.height)];
+    [[self qn_layout] calculateLayoutWithSize:CGSizeMake(QNUndefinedValue, self.frame.size.height)];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
 }
 
-- (void)qn_applyLayoutWithFixedSize {
-    [self qn_applyLayouWithSize:self.frame.size];
+- (void)qn_layoutWithFixedSize {
+    [self qn_layouWithSize:self.frame.size];
 }
 
 - (void)qn_setFlexDirection:(QNFlexDirection)direction
@@ -154,14 +152,14 @@ extern void YGSetMesure(QNLayout *layout);
 
 #pragma mark - layout
 
-- (void)qn_applyLayouWithSize:(CGSize)size {
+- (void)qn_layouWithSize:(CGSize)size {
     [[self qn_layout] calculateLayoutWithSize:size];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
 }
 
 
-- (void)qn_asycApplyLayoutWithSize:(CGSize)size {
+- (void)qn_asycLayoutWithSize:(CGSize)size {
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [[self qn_layout] calculateLayoutWithSize:size];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -179,9 +177,9 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
     }
 }
 
-- (void)qn_markAllowLayout {
-    [self qn_layout];
-}
+//- (void)qn_markAllowLayout {
+//    [self qn_layout];
+//}
 
 - (QNLayout *)qn_makeLayout:(void(^)(QNLayout *layout))layout {
     if (layout) {
@@ -196,5 +194,9 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
     self.qn_children = newChildren;
 }
 
+- (CGSize)calculateSizeWithSize:(CGSize)size {
+    CGSize calSize = [self sizeThatFits:size];
+    return CGSizeMake(ceil(calSize.width), ceil(calSize.height));
+}
 
 @end

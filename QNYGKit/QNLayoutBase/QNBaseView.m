@@ -14,6 +14,10 @@
     return [[self alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0)];
 }
 
+- (void)applyModel:(id<QNModelProtocol>)model {
+    
+}
+
 - (void)applyDataModel:(id<QNDataModelProtocol>)dataModel {
     
 }

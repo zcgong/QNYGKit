@@ -34,9 +34,9 @@
 
 - (void)qn_applyLayoutToViewHierachy;
 
-- (void)qn_applyLayouWithSize:(CGSize)size;
+- (void)qn_layouWithSize:(CGSize)size;
 
-- (void)qn_asycApplyLayoutWithSize:(CGSize)size;
+- (void)qn_asycLayoutWithSize:(CGSize)size;
 
 - (QNLayout *)qn_makeLayout:(void(^)(QNLayout *layout))layout;
 

@@ -74,7 +74,7 @@
     _timeLabel.attributedText = dataModel.timeAttr;
     [self qn_markDirty];
     [self p_layoutViews];
-    [self qn_applyLayoutWithFixedWidth];
+    [self qn_layoutWithFixedWidth];
 }
 
 - (void)p_layoutViews {
