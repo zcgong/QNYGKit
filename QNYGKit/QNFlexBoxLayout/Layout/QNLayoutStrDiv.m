@@ -14,12 +14,12 @@
 
 @implementation QNLayoutStrDiv
 
-+ (instancetype)layoutStrDivWithCalAttributedStr:(NSAttributedString *)calAttributedStr {
++ (instancetype)layoutStrDivWithCalAttrStr:(NSAttributedString *)calAttrStr {
     QNLayoutStrDiv *div = [self linerLayoutDiv];
     [div qn_makeLayout:^(QNLayout *layout) {
         layout.wrapContent();
     }];
-    div.calAttributedStr = calAttributedStr;
+    div.calAttributedStr = calAttrStr;
     return div;
 }
 

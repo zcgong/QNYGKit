@@ -53,10 +53,11 @@
     labelD.top = labelC.bottom + 10;
     
     // 5、组合view，水平、垂直布局等
-    UIView *mView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
-    mView.backgroundColor = [UIColor yellowColor];
+    UIView *mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
+    mainView.backgroundColor = [UIColor yellowColor];
     UILabel *labelTitle = [[UILabel alloc] initWithFrame:CGRectZero];
     labelTitle.numberOfLines = 0;
+    labelTitle.font = [UIFont systemFontOfSize:15];
     labelTitle.text = @"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。";
     labelTitle.backgroundColor = [UIColor orangeColor];
     [labelTitle qn_makeLayout:^(QNLayout *layout) {
@@ -87,19 +88,47 @@
         layout.children(@[imageViewA, imageViewB, imageViewC]); // 设置子view
     }];
     
-    [mView qn_makeLayout:^(QNLayout *layout) {
+    [mainView qn_makeLayout:^(QNLayout *layout) {
         layout.flexDirection.equalTo(@(QNFlexDirectionColumn)); // 垂直布局
         layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 15, 10, 15));
         layout.children(@[labelTitle, imageDiv]);
     }];
     
-    [mView addSubview:labelTitle];
-    [mView addSubview:imageViewA];
-    [mView addSubview:imageViewB];
-    [mView addSubview:imageViewC];
-    [self.view addSubview:mView];
-    [mView qn_layoutWithFixedWidth];
-    mView.top = labelD.bottom + 20;
+    [mainView addSubview:labelTitle];
+    [mainView addSubview:imageViewA];
+    [mainView addSubview:imageViewB];
+    [mainView addSubview:imageViewC];
+    [self.view addSubview:mainView];
+    [mainView qn_layoutWithFixedWidth];
+    mainView.top = labelD.bottom + 20;
+    
+    // 6、完全使用Div计算view的frame
+    NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
+    NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。" attributes:attrDict];
+    QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv layoutStrDivWithCalAttrStr:[mAttrString copy]];
+    [titleDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 0, 10, 0));
+    }];
+    QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(124, 78)];
+    QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(124, 78)];
+    QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(124, 78)];
+    QNLayoutDiv *linearDiv = [QNLayoutDiv linerLayoutDiv];
+    [linearDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.justifyContent.equalTo(@(QNJustifySpaceBetween));    // 分散排列，平分间距
+        layout.children(@[divA, divB, divC]); // 设置子view
+    }];
+    
+    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayoutDiv];
+    [mainDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 15, 10, 15));
+        layout.children(@[titleDiv, linearDiv]);
+    }];
+    [mainDiv qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
+    NSAssert(CGSizeEqualToSize(mainDiv.frame.size, mainView.frame.size), @"main frame not equal");
+    NSAssert(CGRectEqualToRect(labelTitle.frame, titleDiv.frame), @"title frame not equal");
+    NSAssert(CGRectEqualToRect(divA.frame, imageViewA.frame), @"A frame not equal");
+    NSAssert(CGRectEqualToRect(divB.frame, imageViewB.frame), @"B frame not equal");
+    NSAssert(CGRectEqualToRect(divC.frame, imageViewC.frame), @"C frame not equal");
 }
 
 @end

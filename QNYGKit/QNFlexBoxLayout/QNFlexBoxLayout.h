@@ -11,6 +11,8 @@
 
 #import "QNLayout.h"
 #import "QNLayoutDiv.h"
+#import "QNLayoutStrDiv.h"
+#import "QNLayoutFixedSizeDiv.h"
 #import "QNLayoutProtocol.h"
 #import "UIView+QNLayout.h"
 

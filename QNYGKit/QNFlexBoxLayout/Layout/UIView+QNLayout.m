@@ -10,7 +10,6 @@
 #import <objc/runtime.h>
 #import "QNLayout+Private.h"
 #import "QNAsyncLayoutTransaction.h"
-#import "UIView+ZJ.h"
 
 extern void YGSetMesure(QNLayout *layout);
 
@@ -108,7 +107,7 @@ extern void YGSetMesure(QNLayout *layout);
 - (void)qn_layoutOriginWithWrapContent {
     [self qn_layout].wrapContent();
     [[self qn_layout] calculateLayoutWithSize:QNUndefinedSize];
-    self.size = [self qn_layout].frame.size;
+    [self qn_size:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
 }
 
@@ -152,14 +151,14 @@ extern void YGSetMesure(QNLayout *layout);
 - (void)qn_layoutOriginWithFixedWidth {
     [self qn_layout].wrapContent();
     [[self qn_layout] calculateLayoutWithSize:CGSizeMake(self.frame.size.width, QNUndefinedValue)];
-    self.size = [self qn_layout].frame.size;
+    [self qn_size:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
 }
 
 - (void)qn_layoutOriginWithFixedHeight {
     [self qn_layout].wrapContent();
     [[self qn_layout] calculateLayoutWithSize:CGSizeMake(QNUndefinedValue, self.frame.size.height)];
-    self.size = [self qn_layout].frame.size;
+    [self qn_size:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
 }
 
@@ -211,7 +210,7 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_layoutOriginWithSize:(CGSize)size {
     [[self qn_layout] calculateLayoutWithSize:size];
-    self.size = [self qn_layout].frame.size;
+    [self qn_size:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
 }
 
@@ -219,7 +218,7 @@ extern void YGSetMesure(QNLayout *layout);
     [QNAsyncLayoutTransaction addCalculateBlock:^{
         [self.qn_layout calculateLayoutWithSize:size];
     } complete:^{
-        self.size = self.qn_layout.frame.size;
+        [self qn_size:[self qn_layout].frame.size];
         [self qn_applyLayoutToViewHierachy];
     }];
 }
@@ -247,6 +246,12 @@ extern void YGSetMesure(QNLayout *layout);
 - (CGSize)calculateSizeWithSize:(CGSize)size {
     CGSize calSize = [self sizeThatFits:size];
     return CGSizeMake(ceil(calSize.width), ceil(calSize.height));
+}
+
+- (void)qn_size:(CGSize)size {
+    CGRect newframe = self.frame;
+    newframe.size = size;
+    self.frame = newframe;
 }
 
 @end
