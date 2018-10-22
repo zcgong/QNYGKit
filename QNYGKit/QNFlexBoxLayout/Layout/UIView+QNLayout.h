@@ -25,6 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)qn_layoutWithFixedHeight;
 - (void)qn_layoutWithFixedSize;
 
+- (void)qn_layoutOriginWithSize:(CGSize)size;
+- (void)qn_asycLayoutOriginWithSize:(CGSize)size;
+
 - (void)qn_setFlexDirection:(QNFlexDirection)direction
              justifyContent:(QNJustify)justifyContent
                  alignItems:(QNAlign)alignItems

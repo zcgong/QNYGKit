@@ -9,6 +9,8 @@
 #import "UIView+QNLayout.h"
 #import <objc/runtime.h>
 #import "QNLayout+Private.h"
+#import "QNAsyncLayoutTransaction.h"
+#import "UIView+ZJ.h"
 
 extern void YGSetMesure(QNLayout *layout);
 
@@ -118,11 +120,7 @@ extern void YGSetMesure(QNLayout *layout);
 }
 
 - (void)qn_layoutWithFixedSize {
-    if (CGRectIsEmpty(self.frame)) {
-        [self qn_layoutWithWrapContent];
-    } else {
-        [self qn_layouWithSize:self.frame.size];
-    }
+    [self qn_layoutWithSize:self.frame.size];
 }
 
 - (void)qn_setFlexDirection:(QNFlexDirection)direction
@@ -150,23 +148,35 @@ extern void YGSetMesure(QNLayout *layout);
 
 #pragma mark - layout
 
-- (void)qn_layouWithSize:(CGSize)size {
+- (void)qn_layoutWithSize:(CGSize)size {
     [[self qn_layout] calculateLayoutWithSize:size];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
 }
 
-
 - (void)qn_asycLayoutWithSize:(CGSize)size {
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [[self qn_layout] calculateLayoutWithSize:size];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.frame = [self qn_layout].frame;
-            [self qn_applyLayoutToViewHierachy];
-        });
-    });
+    [QNAsyncLayoutTransaction addCalculateBlock:^{
+        [self.qn_layout calculateLayoutWithSize:size];
+    } complete:^{
+        self.frame = self.qn_layout.frame;
+        [self qn_applyLayoutToViewHierachy];
+    }];
 }
 
+- (void)qn_layoutOriginWithSize:(CGSize)size {
+    [[self qn_layout] calculateLayoutWithSize:size];
+    self.size = [self qn_layout].frame.size;
+    [self qn_applyLayoutToViewHierachy];
+}
+
+- (void)qn_asycLayoutOriginWithSize:(CGSize)size {
+    [QNAsyncLayoutTransaction addCalculateBlock:^{
+        [self.qn_layout calculateLayoutWithSize:size];
+    } complete:^{
+        self.size = self.qn_layout.frame.size;
+        [self qn_applyLayoutToViewHierachy];
+    }];
+}
 
 - (void)qn_applyLayoutToViewHierachy {
     for (id<QNLayoutProtocol> layoutElement in [self qn_children]) {
@@ -174,10 +184,6 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [layoutElement qn_applyLayoutToViewHierachy];
     }
 }
-
-//- (void)qn_markAllowLayout {
-//    [self qn_layout];
-//}
 
 - (QNLayout *)qn_makeLayout:(void(^)(QNLayout *layout))layout {
     if (layout) {

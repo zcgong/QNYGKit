@@ -9,6 +9,7 @@
 #import "QNLayoutDiv.h"
 #import "QNLayout+Private.h"
 #import "UIView+QNLayout.h"
+#import "QNAsyncLayoutTransaction.h"
 
 @interface QNLayoutDiv()
 @property(nonatomic, strong) NSMutableArray *mChildren;
@@ -58,7 +59,7 @@
     self.qn_children = newChildren;
 }
 
-- (void)qn_layouWithSize:(CGSize)size {
+- (void)qn_layoutWithSize:(CGSize)size {
     [self.qn_layout calculateLayoutWithSize:size];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
@@ -85,13 +86,12 @@
 
 
 - (void)qn_asycLayoutWithSize:(CGSize)size {
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    [QNAsyncLayoutTransaction addCalculateBlock:^{
         [self.qn_layout calculateLayoutWithSize:size];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.frame = self.qn_layout.frame;
-            [self qn_applyLayoutToViewHierachy];
-        });
-    });
+    } complete:^{
+        self.frame = self.qn_layout.frame;
+        [self qn_applyLayoutToViewHierachy];
+    }];
 }
 
 

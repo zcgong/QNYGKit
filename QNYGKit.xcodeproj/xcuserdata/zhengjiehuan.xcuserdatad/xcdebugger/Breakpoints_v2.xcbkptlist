@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QNYGKit/QNFlexBoxLayout/Layout/UIView+QNLayout.m"
-            timestampString = "561798094.5558881"
+            timestampString = "561883836.740991"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "-qn_layoutWithLayoutType:"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QNYGKit/QNFlexBoxLayout/Layout/UIView+QNLayout.m"
-            timestampString = "561798094.55597"
+            timestampString = "561883836.741078"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "-qn_layoutWithFixedHeight"
             landmarkType = "7">
          </BreakpointContent>
@@ -73,29 +73,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QNYGKit/QNFlexBoxLayout/Yoga/Yoga.c"
-            timestampString = "561791861.276763"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1553"
-            endingLineNumber = "1553"
-            landmarkName = "YGNodelayoutImpl"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "QNYGKit/QNFlexBoxLayout/Layout/UIView+QNLayout.m"
-            timestampString = "561798094.5577511"
+            timestampString = "561883836.74117"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "-qn_layoutWithFixedSize"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "-qn_asycLayoutWithSize:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QNYGKit/QNFlexBoxLayout/Layout/UIView+QNLayout.m"
-            timestampString = "561798094.557833"
+            timestampString = "561883836.741236"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "-qn_layoutWithFixedSize"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "-qn_asycLayoutWithSize:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

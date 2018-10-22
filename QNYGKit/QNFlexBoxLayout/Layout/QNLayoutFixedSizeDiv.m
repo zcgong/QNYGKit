@@ -22,8 +22,8 @@
     return div;
 }
 
-- (void)qn_layouWithSize:(CGSize)size {
-    [super qn_layouWithSize:self.fixedSize];
+- (void)qn_layoutWithSize:(CGSize)size {
+    [super qn_layoutWithSize:self.fixedSize];
 }
 
 - (void)qn_asycLayoutWithSize:(CGSize)size {

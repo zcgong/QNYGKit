@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C0AD586217D83510029F680 /* QNAsyncLayoutTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0AD585217D83510029F680 /* QNAsyncLayoutTransaction.m */; };
 		3C2FEC72217B63890046ED62 /* QNLayoutStrDiv.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2FEC71217B63890046ED62 /* QNLayoutStrDiv.m */; };
 		3C2FEC75217B63B90046ED62 /* QNLayoutFixedSizeDiv.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2FEC74217B63B90046ED62 /* QNLayoutFixedSizeDiv.m */; };
 		3C32B1AA217C4E8200DF30FB /* UIView+ZJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C32B1A8217C4E8200DF30FB /* UIView+ZJ.m */; };
@@ -58,6 +59,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C0AD584217D83510029F680 /* QNAsyncLayoutTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNAsyncLayoutTransaction.h; sourceTree = "<group>"; };
+		3C0AD585217D83510029F680 /* QNAsyncLayoutTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNAsyncLayoutTransaction.m; sourceTree = "<group>"; };
 		3C2FEC6F217B625C0046ED62 /* QNLayoutCalProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNLayoutCalProtocol.h; sourceTree = "<group>"; };
 		3C2FEC70217B63890046ED62 /* QNLayoutStrDiv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNLayoutStrDiv.h; sourceTree = "<group>"; };
 		3C2FEC71217B63890046ED62 /* QNLayoutStrDiv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNLayoutStrDiv.m; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 		61062F78215B60C500C279D9 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
+				3C0AD584217D83510029F680 /* QNAsyncLayoutTransaction.h */,
+				3C0AD585217D83510029F680 /* QNAsyncLayoutTransaction.m */,
 				61062F56215B514200C279D9 /* QNLayoutDiv.h */,
 				61062F57215B514200C279D9 /* QNLayoutDiv.m */,
 				3C2FEC70217B63890046ED62 /* QNLayoutStrDiv.h */,
@@ -454,6 +459,7 @@
 				61062F73215B5A3700C279D9 /* QNFeedView.m in Sources */,
 				617974DF21549FE000142DD9 /* main.m in Sources */,
 				61062F58215B514300C279D9 /* QNLayoutDiv.m in Sources */,
+				3C0AD586217D83510029F680 /* QNAsyncLayoutTransaction.m in Sources */,
 				617975102154A45100142DD9 /* QNLayoutCache.m in Sources */,
 				61062F6A215B592E00C279D9 /* QNFeedModel.m in Sources */,
 				617975092154A10E00142DD9 /* Yoga.c in Sources */,

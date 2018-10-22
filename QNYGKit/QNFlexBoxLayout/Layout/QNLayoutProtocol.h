@@ -30,11 +30,11 @@
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout;
 
-- (void)qn_removeAllChildren;
+//- (void)qn_removeAllChildren;
 
 - (void)qn_applyLayoutToViewHierachy;
 
-- (void)qn_layouWithSize:(CGSize)size;
+- (void)qn_layoutWithSize:(CGSize)size;
 
 - (void)qn_asycLayoutWithSize:(CGSize)size;
 

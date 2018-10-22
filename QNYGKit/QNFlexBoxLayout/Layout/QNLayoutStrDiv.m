@@ -24,7 +24,7 @@
 }
 
 - (void)qn_layoutWithWrapContent {
-    [super qn_layouWithSize:QNUndefinedSize];
+    [super qn_layoutWithSize:QNUndefinedSize];
 }
 
 - (CGSize)calculateSizeWithSize:(CGSize)size {
