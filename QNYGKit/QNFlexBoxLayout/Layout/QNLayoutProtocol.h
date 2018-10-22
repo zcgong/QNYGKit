@@ -36,7 +36,7 @@
 
 - (void)qn_layoutWithSize:(CGSize)size;
 
-- (void)qn_asycLayoutWithSize:(CGSize)size;
+- (void)qn_asyncLayoutWithSize:(CGSize)size;
 
 - (QNLayout *)qn_makeLayout:(void(^)(QNLayout *layout))layout;
 

@@ -85,7 +85,7 @@
 }
 
 
-- (void)qn_asycLayoutWithSize:(CGSize)size {
+- (void)qn_asyncLayoutWithSize:(CGSize)size {
     [QNAsyncLayoutTransaction addCalculateBlock:^{
         [self.qn_layout calculateLayoutWithSize:size];
     } complete:^{
@@ -93,7 +93,6 @@
         [self qn_applyLayoutToViewHierachy];
     }];
 }
-
 
 - (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index {
     return [self.qn_children objectAtIndex:index];
@@ -114,7 +113,7 @@
 }
 
 
-- (void)qn_removeAllChildren {
+- (void)p_removeAllChildren {
     self.qn_children = nil;
 }
 
@@ -124,7 +123,7 @@
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
         [layoutElement qn_markDirty];
     }
-    [self qn_removeAllChildren];
+    [self p_removeAllChildren];
     self.qn_layout = nil;
 }
 

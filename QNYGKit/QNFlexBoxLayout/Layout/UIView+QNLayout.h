@@ -25,8 +25,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)qn_layoutWithFixedHeight;
 - (void)qn_layoutWithFixedSize;
 
+//- (void)qn_layoutOriginWithLayoutType:(QNYGViewLayoutType)layoutType;
+//- (void)qn_layoutOriginWithWrapContent;
+//- (void)qn_layoutOriginWithFixedWidth;
+//- (void)qn_layoutOriginWithFixedHeight;
+//- (void)qn_layoutOriginWithFixedSize;
+
 - (void)qn_layoutOriginWithSize:(CGSize)size;
-- (void)qn_asycLayoutOriginWithSize:(CGSize)size;
+- (void)qn_asyncLayoutOriginWithSize:(CGSize)size;
 
 - (void)qn_setFlexDirection:(QNFlexDirection)direction
              justifyContent:(QNJustify)justifyContent

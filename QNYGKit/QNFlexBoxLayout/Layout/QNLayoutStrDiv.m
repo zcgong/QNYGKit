@@ -24,6 +24,7 @@
 }
 
 - (void)qn_layoutWithWrapContent {
+    [self qn_layout].wrapContent();
     [super qn_layoutWithSize:QNUndefinedSize];
 }
 

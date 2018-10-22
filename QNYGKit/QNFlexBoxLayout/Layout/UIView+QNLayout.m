@@ -65,7 +65,7 @@ extern void YGSetMesure(QNLayout *layout);
     self.qn_children = newChildren;
 }
 
-- (void)qn_removeAllChildren {
+- (void)p_removeAllChildren {
     self.qn_children = nil;
 }
 
@@ -75,7 +75,7 @@ extern void YGSetMesure(QNLayout *layout);
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
         [layoutElement qn_markDirty];
     }
-    self.qn_children = nil;
+    [self p_removeAllChildren];
     objc_setAssociatedObject(self, @selector(qn_layout), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
@@ -105,6 +105,13 @@ extern void YGSetMesure(QNLayout *layout);
     [self qn_applyLayoutToViewHierachy];
 }
 
+- (void)qn_layoutOriginWithWrapContent {
+    [self qn_layout].wrapContent();
+    [[self qn_layout] calculateLayoutWithSize:QNUndefinedSize];
+    self.size = [self qn_layout].frame.size;
+    [self qn_applyLayoutToViewHierachy];
+}
+
 - (void)qn_layoutWithFixedWidth {
     [self qn_layout].wrapContent();
     [[self qn_layout] calculateLayoutWithSize:CGSizeMake(self.frame.size.width, QNUndefinedValue)];
@@ -121,6 +128,43 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_layoutWithFixedSize {
     [self qn_layoutWithSize:self.frame.size];
+}
+
+- (void)qn_layoutOriginWithLayoutType:(QNYGViewLayoutType)layoutType {
+    switch (layoutType) {
+        case kQNYGViewLayoutTypeWrap:
+            [self qn_layoutOriginWithWrapContent];
+            break;
+        case kQNYGViewLayoutTypeWidth:
+            [self qn_layoutOriginWithFixedWidth];
+            break;
+        case kQNYGViewLayoutTypeHeight:
+            [self qn_layoutOriginWithFixedHeight];
+            break;
+        case kQNYGViewLayoutTypeSize:
+            [self qn_layoutOriginWithFixedSize];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)qn_layoutOriginWithFixedWidth {
+    [self qn_layout].wrapContent();
+    [[self qn_layout] calculateLayoutWithSize:CGSizeMake(self.frame.size.width, QNUndefinedValue)];
+    self.size = [self qn_layout].frame.size;
+    [self qn_applyLayoutToViewHierachy];
+}
+
+- (void)qn_layoutOriginWithFixedHeight {
+    [self qn_layout].wrapContent();
+    [[self qn_layout] calculateLayoutWithSize:CGSizeMake(QNUndefinedValue, self.frame.size.height)];
+    self.size = [self qn_layout].frame.size;
+    [self qn_applyLayoutToViewHierachy];
+}
+
+- (void)qn_layoutOriginWithFixedSize {
+    [self qn_layoutOriginWithSize:self.frame.size];
 }
 
 - (void)qn_setFlexDirection:(QNFlexDirection)direction
@@ -149,13 +193,15 @@ extern void YGSetMesure(QNLayout *layout);
 #pragma mark - layout
 
 - (void)qn_layoutWithSize:(CGSize)size {
+    [self qn_layout].wrapContent();
     [[self qn_layout] calculateLayoutWithSize:size];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
 }
 
-- (void)qn_asycLayoutWithSize:(CGSize)size {
+- (void)qn_asyncLayoutWithSize:(CGSize)size {
     [QNAsyncLayoutTransaction addCalculateBlock:^{
+        [self qn_layout].wrapContent();
         [self.qn_layout calculateLayoutWithSize:size];
     } complete:^{
         self.frame = self.qn_layout.frame;
@@ -169,7 +215,7 @@ extern void YGSetMesure(QNLayout *layout);
     [self qn_applyLayoutToViewHierachy];
 }
 
-- (void)qn_asycLayoutOriginWithSize:(CGSize)size {
+- (void)qn_asyncLayoutOriginWithSize:(CGSize)size {
     [QNAsyncLayoutTransaction addCalculateBlock:^{
         [self.qn_layout calculateLayoutWithSize:size];
     } complete:^{

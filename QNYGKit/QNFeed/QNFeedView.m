@@ -87,10 +87,8 @@
     }];
     
     [_contentImageView qn_makeLayout:^(QNLayout *layout) {
-//        layout.width.height.equalTo(@(100));
         layout.wrapSize();
     }];
-    
     
     QNLayoutDiv *div = [QNLayoutDiv layoutDivWithFlexDirection:QNFlexDirectionRow];
     
@@ -103,7 +101,6 @@
     }];
     
     [div qn_makeLayout:^(QNLayout *layout) {
-//        layout.flexDirection.equalTo(@(QNFlexDirectionRow));
         layout.justifyContent.equalTo(@(QNJustifySpaceBetween));
         layout.children(@[self.usernameLabel, self.timeLabel]);
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(10, 0, 0, 0));
