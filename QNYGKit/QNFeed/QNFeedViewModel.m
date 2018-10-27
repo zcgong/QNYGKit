@@ -9,6 +9,7 @@
 #import "QNFeedViewModel.h"
 #import "QNFeedView.h"
 #import "QNFeedViewDataModel.h"
+#import "QNFeedViewLayoutModel.h"
 
 @implementation QNFeedViewModel
 
@@ -16,12 +17,8 @@
     return [QNFeedViewDataModel class];
 }
 
-+ (Class)do_viewClass {
-    return [QNFeedView class];
-}
-
-+ (QNYGViewLayoutType)do_viewLayoutType {
-    return kQNYGViewLayoutTypeWidth;
++ (Class)do_layoutModelClass {
+    return [QNFeedViewLayoutModel class];
 }
 
 @end

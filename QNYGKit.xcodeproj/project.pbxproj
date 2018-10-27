@@ -16,6 +16,8 @@
 		3C32B1B1217C59AA00DF30FB /* moment_picA@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C32B1AE217C59AA00DF30FB /* moment_picA@2x.png */; };
 		3C6DE0232165ADFF00BDC6E6 /* QNBaseDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DE0222165ADFF00BDC6E6 /* QNBaseDataModel.m */; };
 		3C6DE0262165AF0700BDC6E6 /* QNBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DE0252165AF0700BDC6E6 /* QNBaseModel.m */; };
+		3CD840832184125C0037E673 /* QNBaseLayoutModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD840822184125C0037E673 /* QNBaseLayoutModel.m */; };
+		3CD84086218414FE0037E673 /* QNFeedViewLayoutModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD84085218414FE0037E673 /* QNFeedViewLayoutModel.m */; };
 		61062F55215B505300C279D9 /* UIView+QNLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F54215B505300C279D9 /* UIView+QNLayout.m */; };
 		61062F58215B514300C279D9 /* QNLayoutDiv.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F57215B514200C279D9 /* QNLayoutDiv.m */; };
 		61062F64215B57B100C279D9 /* QNViewModelItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F5A215B57B100C279D9 /* QNViewModelItem.m */; };
@@ -76,6 +78,11 @@
 		3C6DE0242165AF0700BDC6E6 /* QNBaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNBaseModel.h; sourceTree = "<group>"; };
 		3C6DE0252165AF0700BDC6E6 /* QNBaseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNBaseModel.m; sourceTree = "<group>"; };
 		3C6DE02A2165EEF300BDC6E6 /* QNViewModelProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNViewModelProtocol.h; sourceTree = "<group>"; };
+		3CD84080218412220037E673 /* QNLayoutModelProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNLayoutModelProtocol.h; sourceTree = "<group>"; };
+		3CD840812184125C0037E673 /* QNBaseLayoutModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNBaseLayoutModel.h; sourceTree = "<group>"; };
+		3CD840822184125C0037E673 /* QNBaseLayoutModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNBaseLayoutModel.m; sourceTree = "<group>"; };
+		3CD84084218414FE0037E673 /* QNFeedViewLayoutModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNFeedViewLayoutModel.h; sourceTree = "<group>"; };
+		3CD84085218414FE0037E673 /* QNFeedViewLayoutModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNFeedViewLayoutModel.m; sourceTree = "<group>"; };
 		61062F52215B500D00C279D9 /* QNLayout+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QNLayout+Private.h"; sourceTree = "<group>"; };
 		61062F53215B505300C279D9 /* UIView+QNLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+QNLayout.h"; sourceTree = "<group>"; };
 		61062F54215B505300C279D9 /* UIView+QNLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+QNLayout.m"; sourceTree = "<group>"; };
@@ -191,6 +198,9 @@
 				61062F61215B57B100C279D9 /* QNBaseViewModel.m */,
 				61062F5C215B57B100C279D9 /* QNViewModelItem.h */,
 				61062F5A215B57B100C279D9 /* QNViewModelItem.m */,
+				3CD84080218412220037E673 /* QNLayoutModelProtocol.h */,
+				3CD840812184125C0037E673 /* QNBaseLayoutModel.h */,
+				3CD840822184125C0037E673 /* QNBaseLayoutModel.m */,
 			);
 			path = QNLayoutBase;
 			sourceTree = "<group>";
@@ -203,6 +213,8 @@
 				61062F69215B592E00C279D9 /* QNFeedModel.m */,
 				61062F6B215B599600C279D9 /* QNFeedViewDataModel.h */,
 				61062F6C215B599600C279D9 /* QNFeedViewDataModel.m */,
+				3CD84084218414FE0037E673 /* QNFeedViewLayoutModel.h */,
+				3CD84085218414FE0037E673 /* QNFeedViewLayoutModel.m */,
 				61062F6E215B59F700C279D9 /* QNFeedViewModel.h */,
 				61062F6F215B59F700C279D9 /* QNFeedViewModel.m */,
 				61062F71215B5A3700C279D9 /* QNFeedView.h */,
@@ -461,12 +473,14 @@
 				61062F58215B514300C279D9 /* QNLayoutDiv.m in Sources */,
 				3C0AD586217D83510029F680 /* QNAsyncLayoutTransaction.m in Sources */,
 				617975102154A45100142DD9 /* QNLayoutCache.m in Sources */,
+				3CD84086218414FE0037E673 /* QNFeedViewLayoutModel.m in Sources */,
 				61062F6A215B592E00C279D9 /* QNFeedModel.m in Sources */,
 				617975092154A10E00142DD9 /* Yoga.c in Sources */,
 				3C6DE0232165ADFF00BDC6E6 /* QNBaseDataModel.m in Sources */,
 				61062F6D215B599600C279D9 /* QNFeedViewDataModel.m in Sources */,
 				6179750C2154A18E00142DD9 /* QNLayout.m in Sources */,
 				3C2FEC72217B63890046ED62 /* QNLayoutStrDiv.m in Sources */,
+				3CD840832184125C0037E673 /* QNBaseLayoutModel.m in Sources */,
 				61062F66215B57B100C279D9 /* QNBaseViewModel.m in Sources */,
 				61062F70215B59F700C279D9 /* QNFeedViewModel.m in Sources */,
 				61062F65215B57B100C279D9 /* QNBaseView.m in Sources */,

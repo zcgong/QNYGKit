@@ -8,6 +8,8 @@
 
 #import "QNFeedView.h"
 #import "QNFlexBoxLayout.h"
+#import "QNFeedViewLayoutModel.h"
+#import "QNFeedViewDataModel.h"
 
 @interface QNFeedView ()
 
@@ -29,17 +31,11 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self p_createViews];
-        [self p_layoutViews];
     }
     return self;
 }
 
-+ (Class)do_viewModelClass {
-    return [QNFeedViewModel class];
-}
-
 - (void)p_createViews {
-    
     _titleLabel = [UILabel new];
     _titleLabel.numberOfLines = 2;
     _titleLabel.backgroundColor = [UIColor redColor];
@@ -64,6 +60,7 @@
     _timeLabel.backgroundColor = [UIColor lightTextColor];
     _timeLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:_timeLabel];
+    self.backgroundColor = [UIColor orangeColor];
 }
 
 - (void)applyDataModel:(QNFeedViewDataModel *)dataModel {
@@ -72,9 +69,19 @@
     _contentImageView.image = dataModel.contentImage;
     _usernameLabel.attributedText = dataModel.nameAttr;
     _timeLabel.attributedText = dataModel.timeAttr;
-    [self qn_markDirty];
-    [self p_layoutViews];
-    [self qn_layoutWithFixedWidth];
+//    [self qn_markDirty];
+//    [self p_layoutViews];
+//    [self qn_layoutWithFixedWidth];
+}
+
+- (void)applyLayoutModel:(id<QNLayoutModelProtocol>)layoutModel {
+    [super applyLayoutModel:layoutModel];
+    QNFeedViewLayoutModel *fLayoutModel = (QNFeedViewLayoutModel *)layoutModel;
+    self.titleLabel.frame = fLayoutModel.titleFrame;
+    self.contentLabel.frame = fLayoutModel.contentStrFrame;
+    self.contentImageView.frame = fLayoutModel.contentImageFrame;
+    self.usernameLabel.frame = fLayoutModel.userStrFrame;
+    self.timeLabel.frame = fLayoutModel.timeStrFrame;
 }
 
 - (void)p_layoutViews {

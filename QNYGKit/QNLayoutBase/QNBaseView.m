@@ -10,21 +10,17 @@
 
 @implementation QNBaseView
 
-+ (instancetype)defaultView {
-    return [[self alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0)];
-}
-
-- (void)applyModel:(id<QNModelProtocol>)model {
-    
-}
-
 - (void)applyDataModel:(id<QNDataModelProtocol>)dataModel {
     
 }
 
+- (void)applyLayoutModel:(id<QNLayoutModelProtocol>)layoutModel {
+    self.frame = layoutModel.frame;
+}
+
 - (void)applyViewModelItem:(QNViewModelItem *)viewModelItem {
     [self applyDataModel:viewModelItem.dataModel];
-    [self.qn_layout applyLayoutCache:viewModelItem.layoutCache];
+    [self applyLayoutModel:viewModelItem.layoutModel];
 }
 
 @end

@@ -8,11 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "QNViewProtocol.h"
-#import "QNViewModelProtocol.h"
 #import "UIView+QNLayout.h"
 
 @interface QNBaseView : UIView<QNViewProtocol>
-
-//+ (Class)do_viewModelClass;
 
 @end

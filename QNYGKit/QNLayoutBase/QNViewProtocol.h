@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "QNModelProtocol.h"
 #import "QNDataModelProtocol.h"
+#import "QNLayoutModelProtocol.h"
 #import "QNViewModelItem.h"
 
 @protocol QNViewProtocol <NSObject>
 
-+ (instancetype)defaultView;
-- (void)applyModel:(id<QNModelProtocol>)model;
 - (void)applyDataModel:(id<QNDataModelProtocol>)dataModel;
+- (void)applyLayoutModel:(id<QNLayoutModelProtocol>)layoutModel;
 - (void)applyViewModelItem:(QNViewModelItem *)viewModelItem;
 
 @end

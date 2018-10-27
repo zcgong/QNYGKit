@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol QNViewModelProtocol <NSObject>
 
 + (QNViewModelItem *)getViewModelItemWithModel:(id<QNModelProtocol>)model;
-+ (NSArray<QNViewModelItem *> *)getViewModelItemsWithModels:(NSArray<id<QNModelProtocol>> *)models;
 
 @end
 

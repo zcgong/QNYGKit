@@ -13,47 +13,20 @@
 
 + (QNViewModelItem *)getViewModelItemWithModel:(id<QNModelProtocol>)model {
     id<QNDataModelProtocol> dataModel = [[[self.class do_dataModelClass] alloc] initWithModel:model];
-    QNLayoutCache *cache = [self cacheWithDataModel:dataModel];
+    id<QNLayoutModelProtocol> layoutModel = [[[self.class do_layoutModelClass] alloc] initWithDataModel:dataModel];
     QNViewModelItem *modelItem = [[QNViewModelItem alloc] init];
     modelItem.model = model;
     modelItem.dataModel = dataModel;
-    modelItem.layoutCache = cache;
+    modelItem.layoutModel = layoutModel;
     return modelItem;
-}
-
-+ (NSArray<QNViewModelItem *> *)getViewModelItemsWithModels:(NSArray<id<QNModelProtocol>> *)models {
-    NSMutableArray *result = [NSMutableArray array];
-    for (id<QNModelProtocol> model in models) {
-        id<QNDataModelProtocol> dataModel = [[[self do_dataModelClass] alloc] initWithModel:model];
-        QNLayoutCache *cache = [self.class cacheWithDataModel:dataModel];
-        QNViewModelItem *modelItem = [[QNViewModelItem alloc] init];
-        modelItem.model = model;
-        modelItem.dataModel = dataModel;
-        modelItem.layoutCache = cache;
-        [result addObject:modelItem];
-    }
-    return [result copy];
 }
 
 + (Class)do_dataModelClass {
     return nil;
 }
 
-+ (Class)do_viewClass {
++ (Class)do_layoutModelClass {
     return nil;
-}
-
-+ (QNYGViewLayoutType)do_viewLayoutType {
-    return kQNYGViewLayoutTypeWrap;
-}
-
-+ (QNLayoutCache *)cacheWithDataModel:(id<QNDataModelProtocol>)dataModel {
-    UIView<QNViewProtocol> *cView = [[self do_viewClass] defaultView];
-    [cView applyDataModel:dataModel];
-    
-    [cView qn_layoutWithLayoutType:[self do_viewLayoutType]];
-    QNLayoutCache *cache = [cView.qn_layout layoutCache];
-    return cache;
 }
 
 @end

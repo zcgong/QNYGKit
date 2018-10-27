@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "QNModelProtocol.h"
 #import "QNDataModelProtocol.h"
-#import "QNLayoutCache.h"
+#import "QNLayoutModelProtocol.h"
+//#import "QNLayoutCache.h"
 
 @interface QNViewModelItem : NSObject
 @property(nonatomic, strong) id<QNModelProtocol> model;
 @property(nonatomic, strong) id<QNDataModelProtocol> dataModel;
-@property(nonatomic, strong) QNLayoutCache *layoutCache;
+@property(nonatomic, strong) id<QNLayoutModelProtocol> layoutModel;
 @end
