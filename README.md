@@ -22,6 +22,12 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 * 相对完善的单元测试
 ***
 
+### 实现原理
+![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnlayouta.png)
+![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnlayoutb.png)
+![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnlayoutc.png)
+***
+
 ### 使用举例
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnygkit.png)
 ```objective-c
