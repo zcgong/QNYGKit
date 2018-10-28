@@ -32,17 +32,12 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ### 使用举例
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnygkit.png)
 ```objective-c
-//
-//  ViewController.m
-//  QNYGKit
-//
-//  Created by jayhuan on 2018/9/21.
-//  Copyright © 2018 jayhuan. All rights reserved.
-//
 
 #import "ViewController.h"
 #import "QNFlexBoxLayout.h"
 #import "UIView+ZJ.h"
+#import "QNFeedView.h"
+#import "QNFeedModel.h"
 
 #define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
 
@@ -57,7 +52,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     labelA.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:labelA];
     [labelA qn_layoutWithWrapContent];
-    labelA.top = 75;
+    labelA.top = 35;
     
     // 2、自适应，长度固定，高度不限制。
     UILabel *labelB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
@@ -100,7 +95,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     }];
     
     QNLayoutDiv *imageDiv = [QNLayoutDiv linerLayoutDiv];
-    UIImageView *imageViewA = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 124, 78)];
+    UIImageView *imageViewA = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 114, 68)];
     imageViewA.image = [UIImage imageNamed:@"moment_picA"];
     [imageViewA qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize(); // 固定大小，效果同下面imageViewB
@@ -108,13 +103,13 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     UIImageView *imageViewB = [[UIImageView alloc] initWithFrame:CGRectZero];
     imageViewB.image = [UIImage imageNamed:@"moment_picB"];
     [imageViewB qn_makeLayout:^(QNLayout *layout) {
-        layout.size.equalToSize(CGSizeMake(124, 78));
+        layout.size.equalToSize(CGSizeMake(114, 68));
     }];
     
     UIImageView *imageViewC = [[UIImageView alloc] initWithFrame:CGRectZero];
     imageViewC.image = [UIImage imageNamed:@"moment_picC"];
     [imageViewC qn_makeLayout:^(QNLayout *layout) {
-        layout.size.equalToSize(CGSizeMake(124, 78));
+        layout.size.equalToSize(CGSizeMake(114, 68));
     }];
     [imageDiv qn_makeLayout:^(QNLayout *layout) {
         layout.flexDirection.equalTo(@(QNFlexDirectionRow));    // 水平布局
@@ -124,7 +119,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     
     [mainView qn_makeLayout:^(QNLayout *layout) {
         layout.flexDirection.equalTo(@(QNFlexDirectionColumn)); // 垂直布局
-        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 15, 10, 15));
+        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 10, 10, 10));
         layout.children(@[labelTitle, imageDiv]);
     }];
     
@@ -134,7 +129,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     [mainView addSubview:imageViewC];
     [self.view addSubview:mainView];
     [mainView qn_layoutWithFixedWidth];
-    mainView.top = labelD.bottom + 20;
+    mainView.top = labelD.bottom + 10;
     
     // 6、完全使用Div计算view的frame
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
@@ -143,9 +138,9 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     [titleDiv qn_makeLayout:^(QNLayout *layout) {
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 0, 10, 0));
     }];
-    QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(124, 78)];
-    QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(124, 78)];
-    QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(124, 78)];
+    QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(114, 68)];
     QNLayoutDiv *linearDiv = [QNLayoutDiv linerLayoutDiv];
     [linearDiv qn_makeLayout:^(QNLayout *layout) {
         layout.justifyContent.equalTo(@(QNJustifySpaceBetween));    // 分散排列，平分间距
@@ -154,7 +149,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     
     QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayoutDiv];
     [mainDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 15, 10, 15));
+        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 10, 10, 10));
         layout.children(@[titleDiv, linearDiv]);
     }];
     [mainDiv qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
@@ -163,6 +158,26 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     NSAssert(CGRectEqualToRect(divA.frame, imageViewA.frame), @"A frame not equal");
     NSAssert(CGRectEqualToRect(divB.frame, imageViewB.frame), @"B frame not equal");
     NSAssert(CGRectEqualToRect(divC.frame, imageViewC.frame), @"C frame not equal");
+    
+    // 7、使用model、dataModel、layoutModel实现view的布局
+    NSString *dataFilePath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
+    NSDictionary *rootDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    NSArray *feedDicts = rootDict[@"feed"];
+    
+    NSMutableArray *feeds = @[].mutableCopy;
+    
+    [feedDicts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [feeds addObject:[[QNFeedModel alloc] initWithDictionary:obj]];
+    }];
+    
+    QNFeedModel *feedModel = [feeds objectAtIndex:0];
+    QNFeedView *feedView = [QNFeedView defaultFeedView];
+    QNViewModelItem *viewModelItem = [QNFeedViewModel getViewModelItemWithModel:feedModel];
+    [feedView applyViewModelItem:viewModelItem];
+    feedView.top = mainView.bottom + 10;
+    feedView.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:feedView];
 }
 @end
 ```
