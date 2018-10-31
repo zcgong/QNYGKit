@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QNLayoutFixedSizeDiv : QNLayoutDiv
-+ (instancetype)layoutFixedSizeDivWithFixedSize:(CGSize)fixedSize;
++ (instancetype)divWithFixedSize:(CGSize)fixedSize;
 @end
 
 NS_ASSUME_NONNULL_END

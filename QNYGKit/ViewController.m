@@ -107,13 +107,13 @@
     // 6、完全使用Div计算view的frame
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
     NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。" attributes:attrDict];
-    QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv layoutStrDivWithCalAttrStr:[mAttrString copy]];
+    QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv divWithCalAttrStr:[mAttrString copy]];
     [titleDiv qn_makeLayout:^(QNLayout *layout) {
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 0, 10, 0));
     }];
-    QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
     QNLayoutDiv *linearDiv = [QNLayoutDiv linerLayoutDiv];
     [linearDiv qn_makeLayout:^(QNLayout *layout) {
         layout.justifyContent.equalTo(@(QNJustifySpaceBetween));    // 分散排列，平分间距

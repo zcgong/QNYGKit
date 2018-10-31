@@ -22,19 +22,18 @@
 
 - (void)applyDataModel:(id<QNDataModelProtocol>)dataModel {
     QNFeedViewDataModel *fViewModel = (QNFeedViewDataModel *)dataModel;
-    QNLayoutStrDiv *titleStrDiv = [QNLayoutStrDiv layoutStrDivWithCalAttrStr:fViewModel.titleAttr];
-    QNLayoutStrDiv *contentStrDiv = [QNLayoutStrDiv layoutStrDivWithCalAttrStr:fViewModel.contentAttr];
+    QNLayoutStrDiv *titleStrDiv = [QNLayoutStrDiv divWithCalAttrStr:fViewModel.titleAttr];
+    QNLayoutStrDiv *contentStrDiv = [QNLayoutStrDiv divWithCalAttrStr:fViewModel.contentAttr];
     [contentStrDiv qn_makeLayout:^(QNLayout *layout) {
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(5, 0, 5, 0));
     }];
     
-    QNLayoutFixedSizeDiv *contentImageDiv = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(100, 100)];
+    QNLayoutFixedSizeDiv *contentImageDiv = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 100)];
     
     QNLayoutDiv *div = [QNLayoutDiv linerLayoutDiv];
     
-    
-    QNLayoutStrDiv *userStrDiv = [QNLayoutStrDiv layoutStrDivWithCalAttrStr:fViewModel.nameAttr];
-    QNLayoutStrDiv *timeStrDiv = [QNLayoutStrDiv layoutStrDivWithCalAttrStr:fViewModel.timeAttr];
+    QNLayoutStrDiv *userStrDiv = [QNLayoutStrDiv divWithCalAttrStr:fViewModel.nameAttr];
+    QNLayoutStrDiv *timeStrDiv = [QNLayoutStrDiv divWithCalAttrStr:fViewModel.timeAttr];
     
     [div qn_makeLayout:^(QNLayout *layout) {
         layout.justifyContent.equalTo(@(QNJustifySpaceBetween));
