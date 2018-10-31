@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol QNViewModelProtocol <NSObject>
 
 + (QNViewModelItem *)getViewModelItemWithModel:(id<QNModelProtocol>)model;
++ (void)updateVideoModelItem:(QNViewModelItem *)videoModelItem;
 
 @end
 

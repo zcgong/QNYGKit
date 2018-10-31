@@ -150,6 +150,13 @@
     feedView.top = mainView.bottom + 10;
     feedView.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:feedView];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 可以模拟文字颜色变化的等情况，dataModel需要变化，layoutModel不需要变化
+        [viewModelItem markDataModelDirty];
+        [QNFeedViewModel updateVideoModelItem:viewModelItem];
+        [feedView applyViewModelItem:viewModelItem];
+        feedView.top = mainView.bottom + 10;
+    });
 }
 
 @end

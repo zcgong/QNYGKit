@@ -10,4 +10,12 @@
 
 @implementation QNViewModelItem
 
+- (void)markDataModelDirty {
+    self.dataModel.isInvalid =  YES;
+}
+
+- (void)markLayoutModelDirty {
+    self.layoutModel.isInvalid =  YES;
+}
+
 @end

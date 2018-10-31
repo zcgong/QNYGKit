@@ -69,9 +69,6 @@
     _contentImageView.image = dataModel.contentImage;
     _usernameLabel.attributedText = dataModel.nameAttr;
     _timeLabel.attributedText = dataModel.timeAttr;
-//    [self qn_markDirty];
-//    [self p_layoutViews];
-//    [self qn_layoutWithFixedWidth];
 }
 
 - (void)applyLayoutModel:(id<QNLayoutModelProtocol>)layoutModel {
@@ -84,6 +81,7 @@
     self.timeLabel.frame = fLayoutModel.timeStrFrame;
 }
 
+/*
 - (void)p_layoutViews {
     [_titleLabel qn_makeLayout:^(QNLayout *layout) {
         layout.wrapContent();
@@ -119,5 +117,6 @@
         layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(10, 10, 10, 10));
     }];
 }
+ */
 
 @end

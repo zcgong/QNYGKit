@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QNBaseDataModel : NSObject<QNDataModelProtocol>
 - (void)applyModel:(id<QNModelProtocol>)model;
+@property(nonatomic, assign) BOOL isInvalid;
 @end
 
 NS_ASSUME_NONNULL_END

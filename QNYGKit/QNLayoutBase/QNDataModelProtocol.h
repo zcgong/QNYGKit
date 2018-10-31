@@ -11,4 +11,5 @@
 
 @protocol QNDataModelProtocol <NSObject>
 - (instancetype)initWithModel:(id<QNModelProtocol>)model;
+@property(nonatomic, assign) BOOL isInvalid;
 @end

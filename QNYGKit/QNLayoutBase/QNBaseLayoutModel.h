@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QNBaseLayoutModel : NSObject<QNLayoutModelProtocol>
 @property(nonatomic, assign) CGRect frame;
+@property(nonatomic, assign) BOOL isInvalid;
 - (void)applyDataModel:(id<QNDataModelProtocol>)dataModel;
 @end
 

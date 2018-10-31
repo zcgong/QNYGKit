@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol QNLayoutModelProtocol <NSObject>
 @property(nonatomic, assign) CGRect frame;
 - (instancetype)initWithDataModel:(id<QNDataModelProtocol>)dataModel;
+@property(nonatomic, assign) BOOL isInvalid;
 @end
 
 NS_ASSUME_NONNULL_END

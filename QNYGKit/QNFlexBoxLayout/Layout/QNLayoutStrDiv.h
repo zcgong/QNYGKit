@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QNLayoutStrDiv : QNLayoutDiv<QNLayoutCalProtocol>
 @property(nonatomic, copy, readonly) NSAttributedString *calAttributedStr;
 + (instancetype)layoutStrDivWithCalAttrStr:(NSAttributedString *)calAttrStr;
++ (instancetype)layoutStrDivWithCalAttrStr:(NSAttributedString *)calAttrStr lineNum:(NSUInteger)lineNum;
 @end
 
 NS_ASSUME_NONNULL_END
