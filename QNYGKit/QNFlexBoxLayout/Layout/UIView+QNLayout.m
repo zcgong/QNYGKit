@@ -15,14 +15,6 @@ extern void YGSetMesure(QNLayout *layout);
 
 @implementation UIView (QNLayout)
 
-- (void)setQnStyles:(NSDictionary *)qnStyles {
-    [self qn_layout].qnStyles = qnStyles;
-}
-
-- (NSDictionary *)qnStyles {
-    return [self qn_layout].qnStyles;
-}
-
 - (void)setQn_children:(NSArray<id<QNLayoutProtocol>> *)children {
     if ([self qn_children] == children) {
         return;

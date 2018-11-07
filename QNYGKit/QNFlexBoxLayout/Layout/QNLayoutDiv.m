@@ -28,11 +28,6 @@
     return self;
 }
 
-- (void)setQnStyles:(NSDictionary *)qnStyles {
-    _qnStyles = qnStyles;
-    self.qn_layout.qnStyles = qnStyles;
-}
-
 - (void)setQn_children:(NSArray<id<QNLayoutProtocol>> *)children {
     if (self.mChildren == children) {
         return;
@@ -44,6 +39,10 @@
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
         [self.qn_layout addChild:layoutElement.qn_layout];
     }
+}
+
+- (NSArray *)qn_children {
+    return [self.mChildren copy];
 }
 
 - (void)qn_addChild:(id<QNLayoutProtocol>)layout {
@@ -132,10 +131,6 @@
     self.qn_children = [self.mChildren copy];
 }
 
-+ (instancetype)defaultLayoutDiv {
-    return [self layoutDivWithFlexDirection:QNFlexDirectionRow];
-}
-
 + (instancetype)linerLayoutDiv {
     return [self layoutDivWithFlexDirection:QNFlexDirectionRow];
 }
@@ -164,10 +159,6 @@
     }];
     [layoutDiv setQn_children:children];
     return layoutDiv;
-}
-
-- (NSArray *)qn_children {
-    return [self.mChildren copy];
 }
 
 @end

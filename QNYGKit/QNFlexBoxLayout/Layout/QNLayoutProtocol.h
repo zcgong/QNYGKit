@@ -18,7 +18,7 @@
 @property(nonatomic, assign) CGRect frame;
 @property(nonatomic, copy) NSArray<id<QNLayoutProtocol>> *qn_children;
 
-@property(nonatomic, copy) NSDictionary *qnStyles;
+//@property(nonatomic, copy) NSDictionary *qnStyles;
 
 - (void)qn_addChild:(id<QNLayoutProtocol>)layout;
 

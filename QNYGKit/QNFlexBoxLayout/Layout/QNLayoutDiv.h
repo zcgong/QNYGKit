@@ -14,8 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QNLayoutDiv : NSObject<QNLayoutProtocol>
 
 @property(nonatomic, assign) CGRect frame;
-@property(nonatomic, copy) NSDictionary *qnStyles;
-@property(nonatomic, copy) NSArray<id<QNLayoutProtocol>> *qnchildren;
+@property(nonatomic, strong, readonly) QNLayout *qn_layout;
 
 + (instancetype)linerLayoutDiv;
 
