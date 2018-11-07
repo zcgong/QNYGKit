@@ -30,8 +30,6 @@
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout;
 
-//- (void)qn_removeAllChildren;
-
 - (void)qn_applyLayoutToViewHierachy;
 
 - (void)qn_layoutWithSize:(CGSize)size;

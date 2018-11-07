@@ -1,6 +1,6 @@
 //
 //  QNAsyncLayoutTransaction.m
-//  QQNews
+//  QNYGKit
 //
 //  Created by jayhuan on 2018/10/15.
 //  Copyright © 2018 Tencent. All rights reserved.

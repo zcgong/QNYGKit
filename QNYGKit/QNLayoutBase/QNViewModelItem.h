@@ -1,9 +1,9 @@
 //
 //  QNViewModelItem.h
-//  FlexBoxLayout_Example
+//  QNYGKit
 //
 //  Created by Zhengjie Huan on 2018/9/17.
-//  Copyright © 2018 qiang.shen. All rights reserved.
+//  Copyright © 2018 jayhuan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
