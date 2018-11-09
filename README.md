@@ -32,7 +32,6 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ### 使用举例
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnygkit.png)
 ```objective-c
-
 #import "ViewController.h"
 #import "QNFlexBoxLayout.h"
 #import "UIView+ZJ.h"
@@ -134,13 +133,13 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     // 6、完全使用Div计算view的frame
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
     NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。" attributes:attrDict];
-    QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv layoutStrDivWithCalAttrStr:[mAttrString copy]];
+    QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv divWithCalAttrStr:[mAttrString copy]];
     [titleDiv qn_makeLayout:^(QNLayout *layout) {
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 0, 10, 0));
     }];
-    QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
     QNLayoutDiv *linearDiv = [QNLayoutDiv linerLayoutDiv];
     [linearDiv qn_makeLayout:^(QNLayout *layout) {
         layout.justifyContent.equalTo(@(QNJustifySpaceBetween));    // 分散排列，平分间距
@@ -159,7 +158,6 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     NSAssert(CGRectEqualToRect(divB.frame, imageViewB.frame), @"B frame not equal");
     NSAssert(CGRectEqualToRect(divC.frame, imageViewC.frame), @"C frame not equal");
     
-    // 7、使用model、dataModel、layoutModel实现view的布局
     NSString *dataFilePath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
     NSDictionary *rootDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -178,6 +176,13 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     feedView.top = mainView.bottom + 10;
     feedView.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:feedView];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 可以模拟文字颜色变化的等情况，dataModel需要变化，layoutModel不需要变化
+        [viewModelItem markDataModelDirty];
+        [QNFeedViewModel updateVideoModelItem:viewModelItem];
+        [feedView applyViewModelItem:viewModelItem];
+        feedView.top = mainView.bottom + 10;
+    });
 }
 @end
 ```
