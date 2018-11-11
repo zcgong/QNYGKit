@@ -18,7 +18,8 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 * 基于Yoga实现，遵循FlexBox协议，性能高，对项目侵入性较低
 * QNLayout布局方便，支持链式操作，虚拟视图Div，异步计算size，多种方式计算size，布局缓存与失效
 * 完全使用Div计算view的frame体系，无需创建真实view，把view的布局计算完全独立开来
-* 基于协议实现兼容UITableView的使用
+* 基于协议实现兼容UITableView的使用，将数据、布局、view三者逻辑上独立
+* 性能和Native基本一致
 * 相对完善的单元测试
 ***
 
@@ -27,6 +28,10 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnlayoutd.png)
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnlayouta.png)
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnlayoutc.png)
+***
+
+### 性能测试
+![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/performance.png)
 ***
 
 ### 使用举例
