@@ -11,6 +11,13 @@
 #import "QNLayout+Private.h"
 #import "QNAsyncLayoutTransaction.h"
 
+typedef NS_ENUM(NSInteger, QNYGViewLayoutType) {
+    kQNYGViewLayoutTypeWrap,
+    kQNYGViewLayoutTypeWidth,
+    kQNYGViewLayoutTypeHeight,
+    kQNYGViewLayoutTypeSize
+};
+
 extern void YGSetMesure(QNLayout *layout);
 
 @implementation UIView (QNLayout)
