@@ -31,7 +31,8 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ***
 
 ### 6、性能测试
-在相同测试环境下于Native以及基于AutoLayout实现的Masonry框架进行比较。
+在相同测试环境下与Native以及基于AutoLayout实现的Masonry框架进行比较。
+
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/performance.png)
 ***
 
