@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QNFeedModel : QNBaseModel
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy, readonly) NSString *title;
 @property (nonatomic, copy, readonly) NSString *content;
 @property (nonatomic, copy, readonly) NSString *username;
 @property (nonatomic, copy, readonly) NSString *time;

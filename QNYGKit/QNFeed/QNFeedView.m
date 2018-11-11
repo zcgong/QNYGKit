@@ -38,7 +38,6 @@
 - (void)p_createViews {
     _titleLabel = [UILabel new];
     _titleLabel.numberOfLines = 2;
-    _titleLabel.backgroundColor = [UIColor redColor];
     [self addSubview:_titleLabel];
     _titleLabel.backgroundColor = [UIColor greenColor];
     
@@ -50,10 +49,9 @@
     _contentImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     _contentImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_contentImageView];
-    _contentImageView.backgroundColor = [UIColor purpleColor];
     
     _usernameLabel = [UILabel new];
-    _usernameLabel.backgroundColor = [UIColor lightGrayColor];
+    _usernameLabel.backgroundColor = [UIColor lightTextColor];
     [self addSubview:_usernameLabel];
     
     _timeLabel = [UILabel new];

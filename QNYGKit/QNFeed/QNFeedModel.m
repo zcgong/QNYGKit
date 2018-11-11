@@ -10,7 +10,7 @@
 
 @interface QNFeedModel()
 
-//@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *time;

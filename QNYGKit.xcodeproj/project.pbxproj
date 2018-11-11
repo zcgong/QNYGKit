@@ -18,6 +18,7 @@
 		3C6DE0262165AF0700BDC6E6 /* QNBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DE0252165AF0700BDC6E6 /* QNBaseModel.m */; };
 		3CD840832184125C0037E673 /* QNBaseLayoutModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD840822184125C0037E673 /* QNBaseLayoutModel.m */; };
 		3CD84086218414FE0037E673 /* QNFeedViewLayoutModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD84085218414FE0037E673 /* QNFeedViewLayoutModel.m */; };
+		3CF7BB352198046F00BE74CD /* news_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3CF7BB342198046F00BE74CD /* news_logo.jpg */; };
 		61062F55215B505300C279D9 /* UIView+QNLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F54215B505300C279D9 /* UIView+QNLayout.m */; };
 		61062F58215B514300C279D9 /* QNLayoutDiv.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F57215B514200C279D9 /* QNLayoutDiv.m */; };
 		61062F64215B57B100C279D9 /* QNViewModelItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F5A215B57B100C279D9 /* QNViewModelItem.m */; };
@@ -83,6 +84,7 @@
 		3CD840822184125C0037E673 /* QNBaseLayoutModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNBaseLayoutModel.m; sourceTree = "<group>"; };
 		3CD84084218414FE0037E673 /* QNFeedViewLayoutModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNFeedViewLayoutModel.h; sourceTree = "<group>"; };
 		3CD84085218414FE0037E673 /* QNFeedViewLayoutModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNFeedViewLayoutModel.m; sourceTree = "<group>"; };
+		3CF7BB342198046F00BE74CD /* news_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = news_logo.jpg; sourceTree = "<group>"; };
 		61062F52215B500D00C279D9 /* QNLayout+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QNLayout+Private.h"; sourceTree = "<group>"; };
 		61062F53215B505300C279D9 /* UIView+QNLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+QNLayout.h"; sourceTree = "<group>"; };
 		61062F54215B505300C279D9 /* UIView+QNLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+QNLayout.m"; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		3C32B1AB217C58AB00DF30FB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3CF7BB342198046F00BE74CD /* news_logo.jpg */,
 				3C32B1AE217C59AA00DF30FB /* moment_picA@2x.png */,
 				3C32B1AD217C59AA00DF30FB /* moment_picB@2x.png */,
 				3C32B1AC217C59AA00DF30FB /* moment_picC@2x.png */,
@@ -434,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C32B1B0217C59AA00DF30FB /* moment_picB@2x.png in Resources */,
+				3CF7BB352198046F00BE74CD /* news_logo.jpg in Resources */,
 				617974DC21549FE000142DD9 /* LaunchScreen.storyboard in Resources */,
 				617974D921549FE000142DD9 /* Assets.xcassets in Resources */,
 				617974D421549FDE00142DD9 /* Main.storyboard in Resources */,
