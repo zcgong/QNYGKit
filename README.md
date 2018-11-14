@@ -10,6 +10,8 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 弹性布局（flexible box）模块（目前是w3c候选的推荐）旨在提供一个更加有效的方式来布置，对齐和分布在容器之间的各项内容，即使它们的大小是未知或者动态变化的。
 弹性布局的主要思想是让容器有能力来改变子项目的宽度和高度，以填满可用空间（主要是为了容纳所有类型的显示设备和屏幕尺寸）的能力。
 
+目前在RN、ASDK（Texture）、ComponentKit、Weex等框架都支持FlexBox布局。
+
 [FlexBox入门教程](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)  
 
 ***
