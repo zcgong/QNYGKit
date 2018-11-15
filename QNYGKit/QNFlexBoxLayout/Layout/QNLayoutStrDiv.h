@@ -11,6 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ 动态计算字符串size的div，可以用来计算label的size
+ */
 @interface QNLayoutStrDiv : QNLayoutDiv<QNLayoutCalProtocol>
 @property(nonatomic, copy, readonly) NSAttributedString *calAttributedStr;
 + (instancetype)divWithCalAttrStr:(NSAttributedString *)calAttrStr;

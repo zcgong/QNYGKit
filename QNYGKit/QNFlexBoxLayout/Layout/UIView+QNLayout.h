@@ -13,18 +13,30 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIView (QNLayout)<QNLayoutProtocol, QNLayoutCalProtocol>
-//- (void)qn_layoutWithLayoutType:(QNYGViewLayoutType)layoutType;
+
+/**
+ 固定宽度的布局
+ */
 - (void)qn_layoutWithFixedWidth;
+
+/**
+ 固定高度的布局
+ */
 - (void)qn_layoutWithFixedHeight;
+
+/**
+ 固定size的布局
+ */
 - (void)qn_layoutWithFixedSize;
 
-//- (void)qn_layoutOriginWithLayoutType:(QNYGViewLayoutType)layoutType;
-//- (void)qn_layoutOriginWithWrapContent;
-//- (void)qn_layoutOriginWithFixedWidth;
-//- (void)qn_layoutOriginWithFixedHeight;
-//- (void)qn_layoutOriginWithFixedSize;
-
+/**
+ 根据给定的尺寸布局，不改变view的origin坐标
+ */
 - (void)qn_layoutOriginWithSize:(CGSize)size;
+
+/**
+ 根据给定的尺寸异步布局，不改变view的origin坐标
+ */
 - (void)qn_asyncLayoutOriginWithSize:(CGSize)size;
 
 - (void)qn_setFlexDirection:(QNFlexDirection)direction

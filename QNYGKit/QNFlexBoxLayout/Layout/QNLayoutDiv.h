@@ -16,8 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect frame;
 @property(nonatomic, strong, readonly) QNLayout *qn_layout;
 
+/**
+ 水平布局的div
+ */
 + (instancetype)linerLayoutDiv;
 
+/**
+ 垂直方向的Div
+ */
 + (instancetype)verticalLayoutDiv;
 
 + (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction;
