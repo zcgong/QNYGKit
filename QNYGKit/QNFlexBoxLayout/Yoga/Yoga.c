@@ -2335,6 +2335,7 @@ static inline bool YGMeasureModeOldSizeIsUnspecifiedAndStillFits(YGMeasureMode s
          size >= lastComputedSize;
 }
 
+/*
 static inline bool YGMeasureModeNewMeasureSizeIsStricterAndStillValid(YGMeasureMode sizeMode,
                                                                       float size,
                                                                       YGMeasureMode lastSizeMode,
@@ -2343,6 +2344,7 @@ static inline bool YGMeasureModeNewMeasureSizeIsStricterAndStillValid(YGMeasureM
   return lastSizeMode == YGMeasureModeAtMost && sizeMode == YGMeasureModeAtMost &&
          lastSize > size && lastComputedSize <= size;
 }
+ */
 
 bool YGNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
                                    const float width,
@@ -2356,6 +2358,8 @@ bool YGNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
                                    const float lastComputedHeight,
                                    const float marginRow,
                                    const float marginColumn) {
+    return false;
+    /*
   if (lastComputedHeight < 0 || lastComputedWidth < 0) {
     return false;
   }
@@ -2386,6 +2390,7 @@ bool YGNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
           heightMode, height - marginColumn, lastHeightMode, lastHeight, lastComputedHeight);
 
   return widthIsCompatible && heightIsCompatible;
+     */
 }
 
 //

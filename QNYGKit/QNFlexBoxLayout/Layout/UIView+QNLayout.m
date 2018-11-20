@@ -178,11 +178,11 @@ extern void YGSetMesure(QNLayout *layout);
 }
 
 - (QNLayout *)qn_layout {
-    QNLayout *layout = objc_getAssociatedObject(self, _cmd);
+    QNLayout *layout = objc_getAssociatedObject(self, @selector(qn_layout));
     if (!layout) {
         layout = [QNLayout new];
         layout.context = self;
-        objc_setAssociatedObject(self, _cmd, layout, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, @selector(qn_layout), layout, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
     return layout;
@@ -231,6 +231,11 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (QNLayout *)qn_makeLayout:(void(^)(QNLayout *layout))layout {
     if (layout) {
+        QNLayout *mLayout = objc_getAssociatedObject(self, @selector(qn_layout));
+        if (mLayout) {
+            [self p_removeAllChildren];
+            objc_setAssociatedObject(self, @selector(qn_layout), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
         layout([self qn_layout]);
     }
     return [self qn_layout];
