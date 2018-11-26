@@ -123,7 +123,6 @@
         [layoutElement qn_markDirty];
     }
     [self p_removeAllChildren];
-    self.qn_layout = nil;
 }
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
