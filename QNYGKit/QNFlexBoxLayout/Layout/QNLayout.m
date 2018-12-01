@@ -102,8 +102,6 @@ void YGSetMesure(QNLayout *layout) {
 @property(nonatomic, assign) YGNodeRef qnNode;
 
 @property(nonatomic, assign) CGRect frame;
-
-@property(nonatomic, assign) CGSize mesureSize;
 @end
 
 @implementation QNLayout
