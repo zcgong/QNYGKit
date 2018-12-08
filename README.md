@@ -41,6 +41,14 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ### 7、使用举例（可将工程下载到本地测试）
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnygkit.png)
 ```objective-c
+//
+//  ViewController.m
+//  QNYGKit
+//
+//  Created by jayhuan on 2018/9/21.
+//  Copyright © 2018 jayhuan. All rights reserved.
+//
+
 #import "ViewController.h"
 #import "QNFlexBoxLayout.h"
 #import "UIView+ZJ.h"
@@ -99,10 +107,9 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     labelTitle.backgroundColor = [UIColor orangeColor];
     [labelTitle qn_makeLayout:^(QNLayout *layout) {
         layout.wrapContent();   // 自适应大小
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 0, 10, 0));
+        layout.marginB.equalTo(@(10));
     }];
     
-    QNLayoutDiv *imageDiv = [QNLayoutDiv linerLayoutDiv];
     UIImageView *imageViewA = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 114, 68)];
     imageViewA.image = [UIImage imageNamed:@"moment_picA"];
     [imageViewA qn_makeLayout:^(QNLayout *layout) {
@@ -119,14 +126,12 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     [imageViewC qn_makeLayout:^(QNLayout *layout) {
         layout.size.equalToSize(CGSizeMake(114, 68));
     }];
-    [imageDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionRow));    // 水平布局
-        layout.justifyContent.equalTo(@(QNJustifySpaceBetween));    // 分散排列，平分间距
+    QNLayoutDiv *imageDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
+        layout.spaceBetween();    // 分散排列，平分间距
         layout.children(@[imageViewA, imageViewB, imageViewC]); // 设置子view
     }];
     
-    [mainView qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionColumn)); // 垂直布局
+    [mainView qn_makeVerticalLayout:^(QNLayout *layout) {
         layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 10, 10, 10));
         layout.children(@[labelTitle, imageDiv]);
     }];
@@ -142,24 +147,23 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     // 6、完全使用Div计算view的frame
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
     NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。" attributes:attrDict];
-    QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv divWithCalAttrStr:[mAttrString copy]];
+    QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv divWithAttributedString:[mAttrString copy]];
     [titleDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 0, 10, 0));
+        layout.marginB.equalTo(@(10));
     }];
     QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
     QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
     QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutDiv *linearDiv = [QNLayoutDiv linerLayoutDiv];
-    [linearDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.justifyContent.equalTo(@(QNJustifySpaceBetween));    // 分散排列，平分间距
+    QNLayoutDiv *linearDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
+        layout.spaceBetween();    // 分散排列，平分间距
         layout.children(@[divA, divB, divC]); // 设置子view
     }];
     
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayoutDiv];
-    [mainDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalDivWithLayout:^(QNLayout *layout) {
         layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 10, 10, 10));
         layout.children(@[titleDiv, linearDiv]);
     }];
+
     [mainDiv qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
     NSAssert(CGSizeEqualToSize(mainDiv.frame.size, mainView.frame.size), @"main frame not equal");
     NSAssert(CGRectEqualToRect(labelTitle.frame, titleDiv.frame), @"title frame not equal");
