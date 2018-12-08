@@ -14,10 +14,10 @@ extern const CGSize QNUndefinedSize;
 extern const CGFloat QNUndefinedValue;
 
 typedef enum QNFlexDirection {
-    QNFlexDirectionColumn,
-    QNFlexDirectionColumnReverse,
-    QNFlexDirectionRow,
-    QNFlexDirectionRowReverse,
+    QNFlexDirectionColumn,          // 垂直布局
+    QNFlexDirectionColumnReverse,   // 垂直反向布局
+    QNFlexDirectionRow,             // 线性布局
+    QNFlexDirectionRowReverse,      // 线性反向布局
 } QNFlexDirection;
 
 typedef enum QNMeasureMode {
@@ -58,7 +58,7 @@ typedef enum QNJustify {
     QNJustifyFlexStart,
     QNJustifyCenter,
     QNJustifyFlexEnd,
-    QNJustifySpaceBetween,
+    QNJustifySpaceBetween,  // 两端对齐，间隔平分
     QNJustifySpaceAround,
 } QNJustify;
 
@@ -77,8 +77,8 @@ typedef enum QNLogLevel {
 } QNLogLevel;
 
 typedef enum QNWrap {
-    QNWrapNoWrap,
-    QNWrapWrap,
+    QNWrapNoWrap,   // 不换行
+    QNWrapWrap,     // 换行
     QNWrapCount,
 } QNWrap;
 
@@ -120,7 +120,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (QNLayout *)margin;
 
+- (QNLayout *)marginT;
+
+- (QNLayout *)marginL;
+
+- (QNLayout *)marginB;
+
+- (QNLayout *)marginR;
+
 - (QNLayout *)padding;
+
+- (QNLayout *)paddingT;
+
+- (QNLayout *)paddingL;
+
+- (QNLayout *)paddingB;
+
+- (QNLayout *)paddingR;
 
 - (QNLayout *)width;
 
@@ -149,17 +165,55 @@ NS_ASSUME_NONNULL_BEGIN
 - (QNLayout * (^)(UIEdgeInsets attr))equalToEdgeInsets;
 
 /**
- 必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效
+ 自适应大小（最大尺寸），必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效
  */
 - (QNLayout * (^)(void))wrapContent;
 
+/**
+ 自适应大小（最小尺寸），必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效
+ */
+- (QNLayout * (^)(void))wrapExactContent;
+
+/**
+ 固定尺寸布局（只能是UIView才可以使用）
+ */
 - (QNLayout * (^)(void))wrapSize;
+
+/**
+ 固定高度（只能是UIView才可以使用）
+ */
+- (QNLayout * (^)(void))wrapHeight;
+
+/**
+ 固定宽度（只能是UIView才可以使用）
+ */
+- (QNLayout * (^)(void))wrapWidth;
+
+/**
+ 自身位于父元素中间位置
+ */
+- (QNLayout * (^)(void))alignSelfCenter;
+
+/**
+ 自身位于父元素最后位置
+ */
+- (QNLayout * (^)(void))alignSelfEnd;
+
+/**
+ 内部子元素居中排列
+ */
+- (QNLayout * (^)(void))alignItemsCenter;
+
+/**
+ 两端对齐，子元素之间间隔相等
+ */
+- (QNLayout * (^)(void))spaceBetween;
 
 - (QNLayout * (^)(NSArray*))children;
 
 - (void)applyLayoutCache:(QNLayoutCache *)layoutCache;
 
-- (QNLayoutCache *)layoutCache;;
+- (QNLayoutCache *)layoutCache;
 
 @end
 NS_ASSUME_NONNULL_END

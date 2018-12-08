@@ -42,7 +42,7 @@
 }
 
 - (NSArray *)qn_children {
-    return [self.mChildren copy];
+    return self.mChildren ? [self.mChildren copy] : [NSMutableArray array];
 }
 
 - (void)qn_addChild:(id<QNLayoutProtocol>)layout {
@@ -130,12 +130,22 @@
     self.qn_children = [self.mChildren copy];
 }
 
-+ (instancetype)linerLayoutDiv {
-    return [self layoutDivWithFlexDirection:QNFlexDirectionRow];
++ (instancetype)linearDivWithLayout:(void(^)(QNLayout *layout))layout {
+    QNLayoutDiv *layoutDiv = [self new];
+    [layoutDiv qn_makeLayout:layout];
+    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.flexDirection.equalTo(@(QNFlexDirectionRow));
+    }];
+    return layoutDiv;
 }
 
-+ (instancetype)verticalLayoutDiv {
-    return [self layoutDivWithFlexDirection:QNFlexDirectionColumn];
++ (instancetype)verticalDivWithLayout:(void(^)(QNLayout *layout))layout {
+    QNLayoutDiv *layoutDiv = [self new];
+    [layoutDiv qn_makeLayout:layout];
+    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.flexDirection.equalTo(@(QNFlexDirectionColumn));
+    }];
+    return layoutDiv;
 }
 
 + (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction {
@@ -143,6 +153,18 @@
     [layoutDiv qn_makeLayout:^(QNLayout *layout) {
         [layout setFlexDirection:direction];
     }];
+    return layoutDiv;
+}
+
++ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction
+                            justifyContent:(QNJustify)justifyContent
+                                  children:(NSArray<id<QNLayoutProtocol>>*)children {
+    QNLayoutDiv *layoutDiv = [self new];
+    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+        [layout setFlexDirection:direction];
+        [layout setJustifyContent:justifyContent];
+    }];
+    [layoutDiv setQn_children:children];
     return layoutDiv;
 }
 

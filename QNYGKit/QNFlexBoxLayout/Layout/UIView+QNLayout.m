@@ -22,6 +22,17 @@ extern void YGSetMesure(QNLayout *layout);
 
 @implementation UIView (QNLayout)
 
+- (QNLayout *)qn_makeLinearLayout:(void(^)(QNLayout *layout))layout {
+    QNLayout *linearLayout = [self qn_makeLayout:layout];
+    linearLayout.flexDirection.equalTo(@(QNFlexDirectionRow));
+    return linearLayout;
+}
+- (QNLayout *)qn_makeVerticalLayout:(void(^)(QNLayout *layout))layout {
+    QNLayout *linearLayout = [self qn_makeLayout:layout];
+    linearLayout.flexDirection.equalTo(@(QNFlexDirectionColumn));
+    return linearLayout;
+}
+
 - (void)setQn_children:(NSArray<id<QNLayoutProtocol>> *)children {
     if ([self qn_children] == children) {
         return;
@@ -106,7 +117,7 @@ extern void YGSetMesure(QNLayout *layout);
 - (void)qn_layoutOriginWithWrapContent {
     [self qn_layout].wrapContent();
     [[self qn_layout] calculateLayoutWithSize:QNUndefinedSize];
-    [self qn_size:[self qn_layout].frame.size];
+    [self qn_layoutSize:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
 }
 
@@ -150,31 +161,19 @@ extern void YGSetMesure(QNLayout *layout);
 - (void)qn_layoutOriginWithFixedWidth {
     [self qn_layout].wrapContent();
     [[self qn_layout] calculateLayoutWithSize:CGSizeMake(self.frame.size.width, QNUndefinedValue)];
-    [self qn_size:[self qn_layout].frame.size];
+    [self qn_layoutSize:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
 }
 
 - (void)qn_layoutOriginWithFixedHeight {
     [self qn_layout].wrapContent();
     [[self qn_layout] calculateLayoutWithSize:CGSizeMake(QNUndefinedValue, self.frame.size.height)];
-    [self qn_size:[self qn_layout].frame.size];
+    [self qn_layoutSize:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
 }
 
 - (void)qn_layoutOriginWithFixedSize {
     [self qn_layoutOriginWithSize:self.frame.size];
-}
-
-- (void)qn_setFlexDirection:(QNFlexDirection)direction
-             justifyContent:(QNJustify)justifyContent
-                 alignItems:(QNAlign)alignItems
-                   children:(NSArray<id<QNLayoutProtocol>>*)children {
-    [self qn_makeLayout:^(QNLayout *layout) {
-        [layout setFlexDirection:direction];
-        [layout setJustifyContent:justifyContent];
-        [layout setAlignItems:alignItems];
-    }];
-    [self setQn_children:children];
 }
 
 - (QNLayout *)qn_layout {
@@ -209,7 +208,7 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_layoutOriginWithSize:(CGSize)size {
     [[self qn_layout] calculateLayoutWithSize:size];
-    [self qn_size:[self qn_layout].frame.size];
+    [self qn_layoutSize:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
 }
 
@@ -217,7 +216,7 @@ extern void YGSetMesure(QNLayout *layout);
     [QNAsyncLayoutTransaction addCalculateBlock:^{
         [self.qn_layout calculateLayoutWithSize:size];
     } complete:^{
-        [self qn_size:[self qn_layout].frame.size];
+        [self qn_layoutSize:[self qn_layout].frame.size];
         [self qn_applyLayoutToViewHierachy];
     }];
 }
@@ -252,7 +251,7 @@ extern void YGSetMesure(QNLayout *layout);
     return CGSizeMake(ceil(calSize.width), ceil(calSize.height));
 }
 
-- (void)qn_size:(CGSize)size {
+- (void)qn_layoutSize:(CGSize)size {
     CGRect newframe = self.frame;
     newframe.size = size;
     self.frame = newframe;

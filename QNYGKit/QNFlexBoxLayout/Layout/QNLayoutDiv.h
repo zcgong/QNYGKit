@@ -9,30 +9,54 @@
 #import <Foundation/Foundation.h>
 #import "QNLayoutProtocol.h"
 
-NS_ASSUME_NONNULL_BEGIN
 
+/**
+ Div布局，方便布局，同时减少View的层级
+ */
 @interface QNLayoutDiv : NSObject<QNLayoutProtocol>
 
 @property(nonatomic, assign) CGRect frame;
 @property(nonatomic, strong, readonly) QNLayout *qn_layout;
 
 /**
- 水平布局的div
+ 线性布局Div
  */
-+ (instancetype)linerLayoutDiv;
++ (instancetype)linearDivWithLayout:(void(^)( QNLayout *layout))layout;
 
 /**
- 垂直方向的Div
+ 垂直布局Div
  */
-+ (instancetype)verticalLayoutDiv;
++ (instancetype)verticalDivWithLayout:(void(^)( QNLayout *layout))layout;
 
+/**
+ 根据布局方向自定义Div
+ 
+ @param direction 方向
+ */
 + (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction;
 
+/**
+ 根据布局方向、对齐方式、子元素自定义Div
+ 
+ @param direction 方向
+ @param justifyContent 对齐方式（主轴）
+ @param children 子元素
+ */
++ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction
+                            justifyContent:(QNJustify)justifyContent
+                                  children:(NSArray<id<QNLayoutProtocol>>*)children;
+
+/**
+ 根据布局方向、对齐方式、子元素自定义Div
+ 
+ @param direction 方向
+ @param justifyContent 对齐方式（主轴）
+ @param alignItems 对齐方式（交叉轴）
+ @param children 子元素
+ */
 + (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction
                             justifyContent:(QNJustify)justifyContent
                                 alignItems:(QNAlign)alignItems
                                   children:(NSArray<id<QNLayoutProtocol>>*)children;
 
 @end
-
-NS_ASSUME_NONNULL_END

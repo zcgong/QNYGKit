@@ -15,13 +15,12 @@
 
 @implementation QNLayoutStrDiv
 
-+ (instancetype)divWithCalAttrStr:(NSAttributedString *)calAttrStr {
++ (instancetype)divWithAttributedString:(NSAttributedString *)calAttrStr {
     return [self divWithCalAttrStr:calAttrStr lineNum:0];
 }
 
 + (instancetype)divWithCalAttrStr:(NSAttributedString *)calAttrStr lineNum:(NSUInteger)lineNum {
-    QNLayoutStrDiv *div = [self linerLayoutDiv];
-    [div qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutStrDiv *div = [self linearDivWithLayout:^(QNLayout *layout) {
         layout.wrapContent();
     }];
     div.calAttributedStr = calAttrStr;

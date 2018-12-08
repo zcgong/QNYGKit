@@ -10,40 +10,45 @@
 #import "QNLayoutProtocol.h"
 #import "QNLayoutCalProtocol.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface UIView (QNLayout)<QNLayoutProtocol, QNLayoutCalProtocol>
 
 /**
- 固定宽度的布局
+ 线性布局
+ */
+- (QNLayout *)qn_makeLinearLayout:(void(^)(QNLayout *layout))layout;
+
+/**
+ 垂直布局
+ */
+- (QNLayout *)qn_makeVerticalLayout:(void(^)(QNLayout *layout))layout;
+
+/**
+ 固定宽度布局
  */
 - (void)qn_layoutWithFixedWidth;
 
 /**
- 固定高度的布局
+ 固定高度布局
  */
 - (void)qn_layoutWithFixedHeight;
 
 /**
- 固定size的布局
+ 固定尺寸布局
  */
 - (void)qn_layoutWithFixedSize;
 
 /**
- 根据给定的尺寸布局，不改变view的origin坐标
+ 根据size进行布局（同步）
+ 
+ @param size 尺寸参数
  */
 - (void)qn_layoutOriginWithSize:(CGSize)size;
 
 /**
- 根据给定的尺寸异步布局，不改变view的origin坐标
+ 根据size进行布局（异步）
+ 
+ @param size 尺寸参数
  */
 - (void)qn_asyncLayoutOriginWithSize:(CGSize)size;
 
-- (void)qn_setFlexDirection:(QNFlexDirection)direction
-             justifyContent:(QNJustify)justifyContent
-                 alignItems:(QNAlign)alignItems
-                   children:(NSArray<id<QNLayoutProtocol>>*)children;
-
 @end
-
-NS_ASSUME_NONNULL_END
