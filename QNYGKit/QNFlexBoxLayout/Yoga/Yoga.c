@@ -2321,6 +2321,7 @@ static const char *YGMeasureModeName(const YGMeasureMode mode, const bool perfor
   return performLayout ? kLayoutModeNames[mode] : kMeasureModeNames[mode];
 }
 
+/*
 static inline bool YGMeasureModeSizeIsExactAndMatchesOldMeasuredSize(YGMeasureMode sizeMode,
                                                                      float size,
                                                                      float lastComputedSize) {
@@ -2335,7 +2336,6 @@ static inline bool YGMeasureModeOldSizeIsUnspecifiedAndStillFits(YGMeasureMode s
          size >= lastComputedSize;
 }
 
-/*
 static inline bool YGMeasureModeNewMeasureSizeIsStricterAndStillValid(YGMeasureMode sizeMode,
                                                                       float size,
                                                                       YGMeasureMode lastSizeMode,
