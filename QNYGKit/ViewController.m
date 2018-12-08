@@ -159,7 +159,6 @@
     UIView *viewC = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
     [viewA qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize();
-        layout.marginL.equalTo(@(-60));
     }];
     [viewB qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize();
@@ -167,10 +166,10 @@
     }];
     [viewC qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize();
-        layout.marginR.equalTo(@(-60));
     }];
     QNLayoutDiv *tDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
         layout.children(@[viewA, viewB, viewC]);
+        layout.justifyCenter();
     }];
     [tDiv qn_layoutWithSize:CGSizeMake(80, 60)];
     [self.view addSubview:viewA];

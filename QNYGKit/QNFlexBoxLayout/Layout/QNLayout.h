@@ -200,9 +200,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (QNLayout * (^)(void))alignSelfEnd;
 
 /**
- 内部子元素居中排列
+ 内部子元素居中排列（交叉轴）
  */
 - (QNLayout * (^)(void))alignItemsCenter;
+
+/**
+ 内部子元素居中排列（主轴）
+ */
+- (QNLayout * (^)(void))justifyCenter;
 
 /**
  两端对齐，子元素之间间隔相等

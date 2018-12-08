@@ -706,6 +706,13 @@ if ([self.styleNames containsObject:@""#key]) {\
     };
 }
 
+- (QNLayout * (^)(void))justifyCenter {
+    return ^QNLayout* () {
+        [self setJustifyContent:QNJustifyCenter];
+        return self;
+    };
+}
+
 - (QNLayout * (^)(NSArray* children))children {
     return ^QNLayout* (NSArray* children) {
         [((id<QNLayoutProtocol>)self.context) qn_addChildren:children];
