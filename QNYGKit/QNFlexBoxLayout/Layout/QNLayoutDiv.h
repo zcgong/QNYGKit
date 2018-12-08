@@ -16,7 +16,6 @@
 @interface QNLayoutDiv : NSObject<QNLayoutProtocol>
 
 @property(nonatomic, assign) CGRect frame;
-@property(nonatomic, strong, readonly) QNLayout *qn_layout;
 
 /**
  线性布局Div

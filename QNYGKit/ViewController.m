@@ -153,6 +153,38 @@
         [feedView applyViewModelItem:viewModelItem];
         feedView.top = mainView.bottom + 10;
     });
+    
+    UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    UIView *viewC = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    [viewA qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapSize();
+        layout.marginL.equalTo(@(-60));
+    }];
+    [viewB qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapSize();
+        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 10, 0, 10));
+    }];
+    [viewC qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapSize();
+        layout.marginR.equalTo(@(-60));
+    }];
+    QNLayoutDiv *tDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
+        layout.children(@[viewA, viewB, viewC]);
+    }];
+    [tDiv qn_layoutWithSize:CGSizeMake(80, 60)];
+    [self.view addSubview:viewA];
+    [self.view addSubview:viewB];
+    [self.view addSubview:viewC];
+    viewA.backgroundColor = [UIColor purpleColor];
+    viewB.backgroundColor = [UIColor greenColor];
+    viewC.backgroundColor = [UIColor grayColor];
+    viewA.left += 100;
+    viewB.left += 100;
+    viewC.left += 100;
+    viewA.top = feedView.bottom + 10;
+    viewB.top = feedView.bottom + 10;
+    viewC.top = feedView.bottom + 10;
 }
 
 @end

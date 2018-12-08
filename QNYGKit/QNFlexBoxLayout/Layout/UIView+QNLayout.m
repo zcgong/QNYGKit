@@ -47,7 +47,7 @@ extern void YGSetMesure(QNLayout *layout);
 }
 
 - (NSArray *)qn_children {
-    return objc_getAssociatedObject(self, _cmd) ?:[NSMutableArray array];
+    return objc_getAssociatedObject(self, _cmd) ?: @[];
 }
 
 - (void)qn_addChild:(id<QNLayoutProtocol>)layout {
@@ -55,17 +55,6 @@ extern void YGSetMesure(QNLayout *layout);
     NSMutableArray *newChildren = [[self qn_children] mutableCopy];
     [newChildren addObject:layout];
     self.qn_children = newChildren;
-}
-
-- (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index {
-    NSAssert([layout conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
-    NSMutableArray *newChildren = [[self qn_children] mutableCopy];
-    [newChildren insertObject:layout atIndex:index];
-    self.qn_children = newChildren;
-}
-
-- (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index {
-    return [[self qn_children] objectAtIndex:index];
 }
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {

@@ -12,7 +12,7 @@
 #import "QNAsyncLayoutTransaction.h"
 
 @interface QNLayoutDiv()
-@property(nonatomic, strong) NSMutableArray *mChildren;
+@property(nonatomic, strong) NSMutableArray *children;
 @property(nonatomic, strong) QNLayout *qn_layout;
 
 @end
@@ -21,7 +21,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.mChildren = [NSMutableArray array];
+        self.children = [NSMutableArray array];
         self.qn_layout = [QNLayout new];
         self.qn_layout.context = self;
     }
@@ -29,10 +29,10 @@
 }
 
 - (void)setQn_children:(NSArray<id<QNLayoutProtocol>> *)children {
-    if (self.mChildren == children) {
+    if (self.children == children) {
         return;
     }
-    self.mChildren = [children copy];
+    self.children = [children mutableCopy];
     [self.qn_layout removeAllChildren];
     
     for (id<QNLayoutProtocol> layoutElement in children) {
@@ -42,12 +42,12 @@
 }
 
 - (NSArray *)qn_children {
-    return self.mChildren ? [self.mChildren copy] : [NSMutableArray array];
+    return self.children ? [self.children copy] : @[];
 }
 
 - (void)qn_addChild:(id<QNLayoutProtocol>)layout {
     NSAssert([layout conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
-    NSMutableArray *newChildren = [self.mChildren mutableCopy];
+    NSMutableArray *newChildren = [self.children mutableCopy];
     [newChildren addObject:layout];
     self.qn_children = newChildren;
 }
@@ -66,7 +66,7 @@
 
 
 - (void)qn_applyLayoutToViewHierachy {
-    for (id<QNLayoutProtocol> layoutElement in self.mChildren) {
+    for (id<QNLayoutProtocol> layoutElement in self.children) {
         
         layoutElement.frame = (CGRect) {
             .origin = {
@@ -93,17 +93,6 @@
     }];
 }
 
-- (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index {
-    return [self.qn_children objectAtIndex:index];
-}
-
-
-- (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index {
-    [self.mChildren insertObject:layout atIndex:index];
-    self.qn_children = self.mChildren;
-}
-
-
 - (QNLayout *)qn_makeLayout:(void (^)(QNLayout *))layout {
     if (layout) {
         layout(self.qn_layout);
@@ -126,8 +115,8 @@
 }
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
-    [self.mChildren removeObject:layout];
-    self.qn_children = [self.mChildren copy];
+    [self.children removeObject:layout];
+    self.qn_children = [self.children copy];
 }
 
 + (instancetype)linearDivWithLayout:(void(^)(QNLayout *layout))layout {

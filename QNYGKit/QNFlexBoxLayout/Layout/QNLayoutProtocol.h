@@ -23,10 +23,6 @@
 
 - (void)qn_addChildren:(NSArray<id<QNLayoutProtocol>> *)children;
 
-- (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index;
-
-- (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index;
-
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout;
 
 - (void)qn_applyLayoutToViewHierachy;
