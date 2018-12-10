@@ -184,6 +184,20 @@
     viewA.top = feedView.bottom + 10;
     viewB.top = feedView.bottom + 10;
     viewC.top = feedView.bottom + 10;
+    
+    // 绝对布局
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
+    bottomView.backgroundColor = [UIColor blueColor];
+    [bottomView qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapSize().absoluteLayout();
+        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(self.view.height - 180, SCREEN_WIDTH - 180, 0, 0));
+    }];
+    [self.view qn_makeLayout:^(QNLayout *layout) {
+        layout.children(@[bottomView]);
+    }];
+    [self.view addSubview:bottomView];
+    [self.view qn_layoutWithFixedSize];
+    NSLog(@"");
 }
 
 @end

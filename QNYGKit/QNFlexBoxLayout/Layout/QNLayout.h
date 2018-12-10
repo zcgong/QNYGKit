@@ -214,6 +214,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (QNLayout * (^)(void))spaceBetween;
 
+/**
+ 绝对布局
+ */
+- (QNLayout * (^)(void))absoluteLayout;
+
 - (QNLayout * (^)(NSArray*))children;
 
 - (void)applyLayoutCache:(QNLayoutCache *)layoutCache;

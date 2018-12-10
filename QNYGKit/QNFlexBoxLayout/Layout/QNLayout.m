@@ -631,18 +631,6 @@ if ([self.styleNames containsObject:@""#key]) {\
     };
 }
 
-- (QNLayout * (^)(void))wrapExactContent {
-    return ^QNLayout* () {
-        if ([self.context conformsToProtocol:@protocol(QNLayoutCalProtocol)]) {
-            CGSize originSize = [((id<QNLayoutCalProtocol>)(self.context)) calculateSizeWithSize:QNUndefinedSize];
-            [self setSize:originSize];
-        } else {
-            NSAssert(NO, @"context is not view");
-        }
-        return self;
-    };
-}
-
 - (QNLayout * (^)(void))wrapSize {
     return ^QNLayout* () {
         if ([self.context isKindOfClass:[UIView class]]) {
@@ -709,6 +697,26 @@ if ([self.styleNames containsObject:@""#key]) {\
 - (QNLayout * (^)(void))justifyCenter {
     return ^QNLayout* () {
         [self setJustifyContent:QNJustifyCenter];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(void))wrapExactContent {
+    return ^QNLayout* () {
+        if ([self.context conformsToProtocol:@protocol(QNLayoutCalProtocol)]) {
+            CGSize currentSize = CGSizeMake(YGNodeStyleGetWidth(self.qnNode), YGNodeStyleGetHeight(self.qnNode));
+            CGSize originSize = [((id<QNLayoutCalProtocol>)(self.context)) calculateSizeWithSize:QNUndefinedSize];
+            [self setSize:CGSizeMake(currentSize.width == QNUndefinedValue ? originSize.width : currentSize.width, currentSize.height == QNUndefinedValue ? originSize.height : currentSize.height)];
+        } else {
+            NSAssert(NO, @"context is not view");
+        }
+        return self;
+    };
+}
+
+- (QNLayout * (^)(void))absoluteLayout {
+    return ^QNLayout* () {
+        [self setPositionType:QNPositionTypeAbsolute];
         return self;
     };
 }
