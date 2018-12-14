@@ -59,6 +59,7 @@
 }
 
 - (void)qn_layoutWithSize:(CGSize)size {
+    self.qn_layout.wrapContent();
     [self.qn_layout resetUndefinedSize];
     [self.qn_layout calculateLayoutWithSize:size];
     self.frame = self.qn_layout.frame;

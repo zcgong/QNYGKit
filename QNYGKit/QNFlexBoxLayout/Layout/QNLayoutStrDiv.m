@@ -29,9 +29,10 @@
 }
 
 - (void)qn_layoutWithWrapContent {
-    self.qn_layout.wrapContent();
-    [super qn_layoutWithSize:QNUndefinedSize];
+    [self qn_layoutWithSize:QNUndefinedSize];
 }
+
+#pragma mark - QNLayoutCalProtocol
 
 - (CGSize)calculateSizeWithSize:(CGSize)size {
     CGSize calSize = CGSizeZero;
