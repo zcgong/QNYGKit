@@ -88,6 +88,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setAspectRatio:(CGFloat)aspectRatio;
 
+- (void)resetUndefinedSize;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -396,6 +396,10 @@ if (value) {\
     YGNodeStyleSetAspectRatio(self.qnNode, aspectRatio);
 }
 
+- (void)resetUndefinedSize {
+    [self setSize:QNUndefinedSize];
+}
+
 #define CACHE_STYLES_NAME(name)  [self.styleNames addObject:@""#name]; \
 return self;
 

@@ -32,7 +32,7 @@
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
     NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"我是字符串，我是字符串，我是字符串，我是字符串，我是字符串" attributes:attrDict];
     NSAttributedString *attrString = [mAttrString copy];
-    QNLayoutStrDiv *strDiv = [QNLayoutStrDiv layoutStrDivWithCalAttrStr:attrString];
+    QNLayoutStrDiv *strDiv = [QNLayoutStrDiv divWithAttributedString:attrString];
     [strDiv qn_layoutWithWrapContent];
     CGRect strFrame = [attrString boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
     strFrame = CGRectMake(0, 0, ceil(strFrame.size.width), ceil(strFrame.size.height));
@@ -40,18 +40,17 @@
 }
 
 - (void)testVerticalLayout {
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayoutDiv];
-    QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(100, 50)];
+    QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
     [fixedSizeDivA qn_makeLayout:^(QNLayout *layout) {
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(5, 10, 12, 0));
     }];
     
-    QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(100, 50)];
+    QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
     [fixedSizeDivB qn_makeLayout:^(QNLayout *layout) {
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(12, 5, 8, 0));
     }];
     
-    [mainDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalDivWithLayout:^(QNLayout *layout) {
         layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(3, 4, 5, 6));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);
     }];
@@ -62,18 +61,17 @@
 }
 
 - (void)testLinearLayout {
-    QNLayoutDiv *mainDiv = [QNLayoutDiv linerLayoutDiv];
-    QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(100, 50)];
+    QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
     [fixedSizeDivA qn_makeLayout:^(QNLayout *layout) {
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(5, 10, 12, 10));
     }];
     
-    QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(100, 60)];
+    QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 60)];
     [fixedSizeDivB qn_makeLayout:^(QNLayout *layout) {
         layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(12, 5, 8, 0));
     }];
     
-    [mainDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalDivWithLayout:^(QNLayout *layout) {
         layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(3, 4, 5, 6));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);
     }];
@@ -84,17 +82,10 @@
 }
 
 - (void)testJustify {
-    QNLayoutDiv *mainDiv = [QNLayoutDiv linerLayoutDiv];
-    QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(100, 50)];
-    [fixedSizeDivA qn_makeLayout:^(QNLayout *layout) {
-        //        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 10, 0, 10));
-    }];
+    QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
     
-    QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv layoutFixedSizeDivWithFixedSize:CGSizeMake(100, 60)];
-    [fixedSizeDivB qn_makeLayout:^(QNLayout *layout) {
-        //        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(0, 10, 0, 0));
-    }];
-    [mainDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 60)];
+    QNLayoutDiv *mainDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
         layout.justifyContent.equalTo(@(QNJustifySpaceBetween));
         layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(10, 12, 15, 18));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);

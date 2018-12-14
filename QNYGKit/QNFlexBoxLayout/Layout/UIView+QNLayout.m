@@ -98,6 +98,7 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_layoutWithWrapContent {
     [self qn_layout].wrapContent();
+    [[self qn_layout] resetUndefinedSize];
     [[self qn_layout] calculateLayoutWithSize:QNUndefinedSize];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
@@ -105,6 +106,7 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_layoutOriginWithWrapContent {
     [self qn_layout].wrapContent();
+    [[self qn_layout] resetUndefinedSize];
     [[self qn_layout] calculateLayoutWithSize:QNUndefinedSize];
     [self qn_layoutSize:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
@@ -112,6 +114,7 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_layoutWithFixedWidth {
     [self qn_layout].wrapContent();
+    [[self qn_layout] resetUndefinedSize];
     [[self qn_layout] calculateLayoutWithSize:CGSizeMake(self.frame.size.width, QNUndefinedValue)];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
@@ -119,6 +122,7 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_layoutWithFixedHeight {
     [self qn_layout].wrapContent();
+    [[self qn_layout] resetUndefinedSize];
     [[self qn_layout] calculateLayoutWithSize:CGSizeMake(QNUndefinedValue, self.frame.size.height)];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
@@ -126,43 +130,6 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_layoutWithFixedSize {
     [self qn_layoutWithSize:self.frame.size];
-}
-
-- (void)qn_layoutOriginWithLayoutType:(QNYGViewLayoutType)layoutType {
-    switch (layoutType) {
-        case kQNYGViewLayoutTypeWrap:
-            [self qn_layoutOriginWithWrapContent];
-            break;
-        case kQNYGViewLayoutTypeWidth:
-            [self qn_layoutOriginWithFixedWidth];
-            break;
-        case kQNYGViewLayoutTypeHeight:
-            [self qn_layoutOriginWithFixedHeight];
-            break;
-        case kQNYGViewLayoutTypeSize:
-            [self qn_layoutOriginWithFixedSize];
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)qn_layoutOriginWithFixedWidth {
-    [self qn_layout].wrapContent();
-    [[self qn_layout] calculateLayoutWithSize:CGSizeMake(self.frame.size.width, QNUndefinedValue)];
-    [self qn_layoutSize:[self qn_layout].frame.size];
-    [self qn_applyLayoutToViewHierachy];
-}
-
-- (void)qn_layoutOriginWithFixedHeight {
-    [self qn_layout].wrapContent();
-    [[self qn_layout] calculateLayoutWithSize:CGSizeMake(QNUndefinedValue, self.frame.size.height)];
-    [self qn_layoutSize:[self qn_layout].frame.size];
-    [self qn_applyLayoutToViewHierachy];
-}
-
-- (void)qn_layoutOriginWithFixedSize {
-    [self qn_layoutOriginWithSize:self.frame.size];
 }
 
 - (QNLayout *)qn_layout {
@@ -180,6 +147,7 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_layoutWithSize:(CGSize)size {
     [self qn_layout].wrapContent();
+    [[self qn_layout] resetUndefinedSize];
     [[self qn_layout] calculateLayoutWithSize:size];
     self.frame = [self qn_layout].frame;
     [self qn_applyLayoutToViewHierachy];
@@ -188,6 +156,7 @@ extern void YGSetMesure(QNLayout *layout);
 - (void)qn_asyncLayoutWithSize:(CGSize)size {
     [QNAsyncLayoutTransaction addCalculateBlock:^{
         [self qn_layout].wrapContent();
+        [[self qn_layout] resetUndefinedSize];
         [self.qn_layout calculateLayoutWithSize:size];
     } complete:^{
         self.frame = self.qn_layout.frame;
@@ -196,6 +165,8 @@ extern void YGSetMesure(QNLayout *layout);
 }
 
 - (void)qn_layoutOriginWithSize:(CGSize)size {
+    [self qn_layout].wrapContent();
+    [[self qn_layout] resetUndefinedSize];
     [[self qn_layout] calculateLayoutWithSize:size];
     [self qn_layoutSize:[self qn_layout].frame.size];
     [self qn_applyLayoutToViewHierachy];
@@ -203,6 +174,8 @@ extern void YGSetMesure(QNLayout *layout);
 
 - (void)qn_asyncLayoutOriginWithSize:(CGSize)size {
     [QNAsyncLayoutTransaction addCalculateBlock:^{
+        [self qn_layout].wrapContent();
+        [[self qn_layout] resetUndefinedSize];
         [self.qn_layout calculateLayoutWithSize:size];
     } complete:^{
         [self qn_layoutSize:[self qn_layout].frame.size];
