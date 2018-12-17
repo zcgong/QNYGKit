@@ -18,10 +18,17 @@
     linearLayout.flexDirection.equalTo(@(QNFlexDirectionRow));
     return linearLayout;
 }
+
 - (QNLayout *)qn_makeVerticalLayout:(void(^)(QNLayout *layout))layout {
     QNLayout *linearLayout = [self qn_makeLayout:layout];
     linearLayout.flexDirection.equalTo(@(QNFlexDirectionColumn));
     return linearLayout;
+}
+
+- (QNLayout *)qn_makeAbsoluteLayout:(void(^)(QNLayout *layout))layout {
+    QNLayout *absoluteLayout = [self qn_makeLayout:layout];
+    absoluteLayout.absoluteLayout();
+    return absoluteLayout;
 }
 
 - (void)setQn_children:(NSArray<id<QNLayoutProtocol>> *)children {

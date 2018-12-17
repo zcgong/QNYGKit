@@ -28,11 +28,9 @@
 + (instancetype)verticalDivWithLayout:(void(^)( QNLayout *layout))layout;
 
 /**
- 根据布局方向自定义Div
- 
- @param direction 方向
- */
-+ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction;
+绝对布局
+*/
++ (instancetype)absoluteLayout:(void(^)(QNLayout *layout))layout;
 
 /**
  根据布局方向、对齐方式、子元素自定义Div

@@ -23,6 +23,11 @@
 - (QNLayout *)qn_makeVerticalLayout:(void(^)(QNLayout *layout))layout;
 
 /**
+ 绝对布局
+ */
+- (QNLayout *)qn_makeAbsoluteLayout:(void(^)(QNLayout *layout))layout;
+
+/**
  固定宽度布局
  */
 - (void)qn_layoutWithFixedWidth;

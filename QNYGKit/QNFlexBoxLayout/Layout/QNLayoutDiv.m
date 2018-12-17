@@ -28,6 +28,59 @@
     return self;
 }
 
++ (instancetype)linearDivWithLayout:(void(^)(QNLayout *layout))layout {
+    QNLayoutDiv *layoutDiv = [self new];
+    [layoutDiv qn_makeLayout:layout];
+    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.flexDirection.equalTo(@(QNFlexDirectionRow));
+    }];
+    return layoutDiv;
+}
+
++ (instancetype)verticalDivWithLayout:(void(^)(QNLayout *layout))layout {
+    QNLayoutDiv *layoutDiv = [self new];
+    [layoutDiv qn_makeLayout:layout];
+    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.flexDirection.equalTo(@(QNFlexDirectionColumn));
+    }];
+    return layoutDiv;
+}
+
++ (instancetype)absoluteLayout:(void(^)(QNLayout *layout))layout {
+    QNLayoutDiv *layoutDiv = [self new];
+    [layoutDiv qn_makeLayout:layout];
+    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+        layout.absoluteLayout();
+    }];
+    return layoutDiv;
+}
+
++ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction
+                            justifyContent:(QNJustify)justifyContent
+                                  children:(NSArray<id<QNLayoutProtocol>>*)children {
+    QNLayoutDiv *layoutDiv = [self new];
+    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+        [layout setFlexDirection:direction];
+        [layout setJustifyContent:justifyContent];
+    }];
+    [layoutDiv setQn_children:children];
+    return layoutDiv;
+}
+
++ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction
+                            justifyContent:(QNJustify)justifyContent
+                                alignItems:(QNAlign)alignItems
+                                  children:(NSArray <id<QNLayoutProtocol>>*)children {
+    QNLayoutDiv *layoutDiv = [self new];
+    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+        [layout setFlexDirection:direction];
+        [layout setJustifyContent:justifyContent];
+        [layout setAlignItems:alignItems];
+    }];
+    [layoutDiv setQn_children:children];
+    return layoutDiv;
+}
+
 - (void)setQn_children:(NSArray<id<QNLayoutProtocol>> *)children {
     if (self.children == children) {
         return;
@@ -119,58 +172,6 @@
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
     [self.children removeObject:layout];
     self.qn_children = [self.children copy];
-}
-
-+ (instancetype)linearDivWithLayout:(void(^)(QNLayout *layout))layout {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:layout];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionRow));
-    }];
-    return layoutDiv;
-}
-
-+ (instancetype)verticalDivWithLayout:(void(^)(QNLayout *layout))layout {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:layout];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionColumn));
-    }];
-    return layoutDiv;
-}
-
-+ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        [layout setFlexDirection:direction];
-    }];
-    return layoutDiv;
-}
-
-+ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction
-                            justifyContent:(QNJustify)justifyContent
-                                  children:(NSArray<id<QNLayoutProtocol>>*)children {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        [layout setFlexDirection:direction];
-        [layout setJustifyContent:justifyContent];
-    }];
-    [layoutDiv setQn_children:children];
-    return layoutDiv;
-}
-
-+ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction
-                            justifyContent:(QNJustify)justifyContent
-                                alignItems:(QNAlign)alignItems
-                                  children:(NSArray <id<QNLayoutProtocol>>*)children {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        [layout setFlexDirection:direction];
-        [layout setJustifyContent:justifyContent];
-        [layout setAlignItems:alignItems];
-    }];
-    [layoutDiv setQn_children:children];
-    return layoutDiv;
 }
 
 @end
