@@ -23,6 +23,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 * 基于协议实现兼容UITableView的使用，将数据、布局、view三者逻辑上独立
 * 性能和Native基本一致
 * 相对完善的单元测试
+* 支持链式书写UI，提高开发效率
 ***
 
 ### 5、实现原理
@@ -41,14 +42,6 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ### 7、使用举例（可将工程下载到本地测试）
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnygkit.png)
 ```objective-c
-//
-//  ViewController.m
-//  QNYGKit
-//
-//  Created by jayhuan on 2018/9/21.
-//  Copyright © 2018 jayhuan. All rights reserved.
-//
-
 #import "ViewController.h"
 #import "QNFlexBoxLayout.h"
 #import "UIView+ZJ.h"
@@ -62,67 +55,52 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 - (void)viewDidLoad {
     [super viewDidLoad];
     // 1、自适应，长度和高度都不限制，类似sizeToFit。
-    UILabel *labelA = [[UILabel alloc] initWithFrame:CGRectZero];
-    labelA.numberOfLines = 0;
-    labelA.text = @"1、自适应，长度和高度都不限制。（我是补充文字，我是补充文字，我是补充文字。）";
-    labelA.backgroundColor = [UIColor orangeColor];
+    UILabel *labelA = QN_Label.lines(0).bgColor([UIColor orangeColor]);
+    labelA.txt(@"1、自适应，长度和高度都不限制。（我是补充文字，我是补充文字，我是补充文字。）");
     [self.view addSubview:labelA];
     [labelA qn_layoutWithWrapContent];
     labelA.top = 35;
     
     // 2、自适应，长度固定，高度不限制。
-    UILabel *labelB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
-    labelB.numberOfLines = 0;
-    labelB.text = @"2、自适应，长度固定，高度不限制。（我是补充文字，我是补充文字，我是补充文字。）";
-    labelB.backgroundColor = [UIColor orangeColor];
+    UILabel *labelB = QN_Label_Rect(RECT_WH(SCREEN_WIDTH, 0)).lines(0).bgColor([UIColor orangeColor]);
+    labelB.txt(@"2、自适应，长度固定，高度不限制。（我是补充文字，我是补充文字，我是补充文字。）");
     [self.view addSubview:labelB];
     [labelB qn_layoutWithFixedWidth];
     labelB.top = labelA.bottom + 10;
     
     // 3、自适应，高度固定，长度不限制。
-    UILabel *labelC = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 50)];
-    labelC.numberOfLines = 0;
-    labelC.text = @"3、自适应，高度固定，长度不限制。（我是补充文字，我是补充文字，我是补充文字。）";
-    labelC.backgroundColor = [UIColor orangeColor];
+    UILabel *labelC = QN_Label_Rect(RECT_WH(0, 50)).lines(0).bgColor([UIColor orangeColor]);
+    labelC.txt(@"3、自适应，高度固定，长度不限制。（我是补充文字，我是补充文字，我是补充文字。）");
     [self.view addSubview:labelC];
     [labelC qn_layoutWithFixedHeight];
     labelC.top = labelB.bottom + 10;
     
     // 4、直接固定size。
-    UILabel *labelD = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 42)];
-    labelD.numberOfLines = 0;
-    labelD.text = @"4、直接固定size。（我是补充文字，我是补充文字，我是补充文字。）";
-    labelD.backgroundColor = [UIColor orangeColor];
+    UILabel *labelD = QN_Label_Rect(RECT_WH(300, 42)).lines(0).bgColor([UIColor orangeColor]);
+    labelD.txt(@"4、直接固定size。（我是补充文字，我是补充文字，我是补充文字。）");
     [self.view addSubview:labelD];
     [labelD qn_layoutWithFixedSize];
     labelD.top = labelC.bottom + 10;
     
     // 5、组合view，水平、垂直布局等
-    UIView *mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
-    mainView.backgroundColor = [UIColor yellowColor];
-    UILabel *labelTitle = [[UILabel alloc] initWithFrame:CGRectZero];
-    labelTitle.numberOfLines = 0;
-    labelTitle.font = [UIFont systemFontOfSize:15];
-    labelTitle.text = @"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。";
-    labelTitle.backgroundColor = [UIColor orangeColor];
+    UIView *mainView = QN_View_Rect(RECT_WH(SCREEN_WIDTH, 0)).bgColor([UIColor yellowColor]);
+    UILabel *labelTitle = QN_Label.lines(0).fnt(15).bgColor([UIColor orangeColor]);
+    labelTitle.txt(@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。");
     [labelTitle qn_makeLayout:^(QNLayout *layout) {
         layout.wrapContent();   // 自适应大小
         layout.marginB.equalTo(@(10));
     }];
     
-    UIImageView *imageViewA = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 114, 68)];
-    imageViewA.image = [UIImage imageNamed:@"moment_picA"];
+    UIImageView *imageViewA = QN_ImageView_Rect(RECT_WH(114, 68)).imgName(@"moment_picA");
     [imageViewA qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize(); // 固定大小，效果同下面imageViewB
     }];
-    UIImageView *imageViewB = [[UIImageView alloc] initWithFrame:CGRectZero];
-    imageViewB.image = [UIImage imageNamed:@"moment_picB"];
+    UIImageView *imageViewB = QN_ImageView.imgName(@"moment_picB");
     [imageViewB qn_makeLayout:^(QNLayout *layout) {
         layout.size.equalToSize(CGSizeMake(114, 68));
     }];
     
-    UIImageView *imageViewC = [[UIImageView alloc] initWithFrame:CGRectZero];
-    imageViewC.image = [UIImage imageNamed:@"moment_picC"];
+    UIImageView *imageViewC = QN_ImageView.imgName(@"moment_picC");
     [imageViewC qn_makeLayout:^(QNLayout *layout) {
         layout.size.equalToSize(CGSizeMake(114, 68));
     }];
@@ -132,7 +110,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     }];
     
     [mainView qn_makeVerticalLayout:^(QNLayout *layout) {
-        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 10, 10, 10));
+        layout.padding.equalToEdgeInsets(QN_INSETS(15, 10, 10, 10));
         layout.children(@[labelTitle, imageDiv]);
     }];
     
@@ -160,7 +138,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     }];
     
     QNLayoutDiv *mainDiv = [QNLayoutDiv verticalDivWithLayout:^(QNLayout *layout) {
-        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(15, 10, 10, 10));
+        layout.padding.equalToEdgeInsets(QN_INSETS(15, 10, 10, 10));
         layout.children(@[titleDiv, linearDiv]);
     }];
 
@@ -196,6 +174,44 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
         [feedView applyViewModelItem:viewModelItem];
         feedView.top = mainView.bottom + 10;
     });
+    
+    UIView *viewA = QN_View_Rect(RECT_WH(60, 60)).bgColor([UIColor purpleColor]);
+    UIView *viewB = QN_View_Rect(RECT_WH(60, 60)).bgColor([UIColor greenColor]);
+    UIView *viewC = QN_View_Rect(RECT_WH(60, 60)).bgColor([UIColor grayColor]);
+    [viewA qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapSize();
+    }];
+    [viewB qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapSize().margin.equalToEdgeInsets(QN_INSETS(0, 10, 0, 10));
+    }];
+    [viewC qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapSize();
+    }];
+    QNLayoutDiv *tDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
+        layout.justifyCenter().children(@[viewA, viewB, viewC]);
+    }];
+    [tDiv qn_layoutWithSize:CGSizeMake(80, 60)];
+    [self.view addSubview:viewA];
+    [self.view addSubview:viewB];
+    [self.view addSubview:viewC];
+    viewA.left += 100;
+    viewB.left += 100;
+    viewC.left += 100;
+    viewA.top = feedView.bottom + 10;
+    viewB.top = feedView.bottom + 10;
+    viewC.top = feedView.bottom + 10;
+    
+    // 绝对布局
+    UIView *bottomView = QN_View_Rect(RECT_WH(150, 150)).bgColor([UIColor blueColor]);
+    [bottomView qn_makeLayout:^(QNLayout *layout) {
+        layout.wrapSize().absoluteLayout();
+        layout.margin.equalToEdgeInsets(QN_INSETS(self.view.height - 180, SCREEN_WIDTH - 180, 0, 0));
+    }];
+    [self.view qn_makeLayout:^(QNLayout *layout) {
+        layout.children(@[bottomView]);
+    }];
+    [self.view addSubview:bottomView];
+    [self.view qn_layoutWithFixedSize];
 }
 @end
 ```
