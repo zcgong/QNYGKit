@@ -14,6 +14,10 @@
 		3C32B1AF217C59AA00DF30FB /* moment_picC@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C32B1AC217C59AA00DF30FB /* moment_picC@2x.png */; };
 		3C32B1B0217C59AA00DF30FB /* moment_picB@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C32B1AD217C59AA00DF30FB /* moment_picB@2x.png */; };
 		3C32B1B1217C59AA00DF30FB /* moment_picA@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C32B1AE217C59AA00DF30FB /* moment_picA@2x.png */; };
+		3C35674421CD1D9B006342D8 /* UIView+Chainable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C35673E21CD1D9B006342D8 /* UIView+Chainable.m */; };
+		3C35674521CD1D9B006342D8 /* UIImageView+Chainable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C35674021CD1D9B006342D8 /* UIImageView+Chainable.m */; };
+		3C35674621CD1D9B006342D8 /* UILabel+Chainable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C35674121CD1D9B006342D8 /* UILabel+Chainable.m */; };
+		3C35674721CD1D9B006342D8 /* UIButton+Chainable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C35674321CD1D9B006342D8 /* UIButton+Chainable.m */; };
 		3C6DE0232165ADFF00BDC6E6 /* QNBaseDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DE0222165ADFF00BDC6E6 /* QNBaseDataModel.m */; };
 		3C6DE0262165AF0700BDC6E6 /* QNBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6DE0252165AF0700BDC6E6 /* QNBaseModel.m */; };
 		3CD840832184125C0037E673 /* QNBaseLayoutModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD840822184125C0037E673 /* QNBaseLayoutModel.m */; };
@@ -74,6 +78,15 @@
 		3C32B1AC217C59AA00DF30FB /* moment_picC@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moment_picC@2x.png"; sourceTree = "<group>"; };
 		3C32B1AD217C59AA00DF30FB /* moment_picB@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moment_picB@2x.png"; sourceTree = "<group>"; };
 		3C32B1AE217C59AA00DF30FB /* moment_picA@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moment_picA@2x.png"; sourceTree = "<group>"; };
+		3C35673B21CD1D9B006342D8 /* QNLayoutDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNLayoutDef.h; sourceTree = "<group>"; };
+		3C35673C21CD1D9B006342D8 /* UILabel+Chainable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Chainable.h"; sourceTree = "<group>"; };
+		3C35673D21CD1D9B006342D8 /* UIImageView+Chainable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Chainable.h"; sourceTree = "<group>"; };
+		3C35673E21CD1D9B006342D8 /* UIView+Chainable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Chainable.m"; sourceTree = "<group>"; };
+		3C35673F21CD1D9B006342D8 /* UIView+Chainable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Chainable.h"; sourceTree = "<group>"; };
+		3C35674021CD1D9B006342D8 /* UIImageView+Chainable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Chainable.m"; sourceTree = "<group>"; };
+		3C35674121CD1D9B006342D8 /* UILabel+Chainable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Chainable.m"; sourceTree = "<group>"; };
+		3C35674221CD1D9B006342D8 /* UIButton+Chainable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Chainable.h"; sourceTree = "<group>"; };
+		3C35674321CD1D9B006342D8 /* UIButton+Chainable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Chainable.m"; sourceTree = "<group>"; };
 		3C6DE0212165ADFF00BDC6E6 /* QNBaseDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNBaseDataModel.h; sourceTree = "<group>"; };
 		3C6DE0222165ADFF00BDC6E6 /* QNBaseDataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNBaseDataModel.m; sourceTree = "<group>"; };
 		3C6DE0242165AF0700BDC6E6 /* QNBaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNBaseModel.h; sourceTree = "<group>"; };
@@ -184,6 +197,22 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		3C35673A21CD1D78006342D8 /* Chainable */ = {
+			isa = PBXGroup;
+			children = (
+				3C35673B21CD1D9B006342D8 /* QNLayoutDef.h */,
+				3C35673F21CD1D9B006342D8 /* UIView+Chainable.h */,
+				3C35673E21CD1D9B006342D8 /* UIView+Chainable.m */,
+				3C35673C21CD1D9B006342D8 /* UILabel+Chainable.h */,
+				3C35674121CD1D9B006342D8 /* UILabel+Chainable.m */,
+				3C35674221CD1D9B006342D8 /* UIButton+Chainable.h */,
+				3C35674321CD1D9B006342D8 /* UIButton+Chainable.m */,
+				3C35673D21CD1D9B006342D8 /* UIImageView+Chainable.h */,
+				3C35674021CD1D9B006342D8 /* UIImageView+Chainable.m */,
+			);
+			path = Chainable;
+			sourceTree = "<group>";
+		};
 		61062F59215B579200C279D9 /* QNLayoutBase */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				61062F79215B60F300C279D9 /* QNFlexBoxLayout.h */,
+				3C35673A21CD1D78006342D8 /* Chainable */,
 				61062F77215B609500C279D9 /* Yoga */,
 				61062F78215B60C500C279D9 /* Layout */,
 			);
@@ -474,16 +504,20 @@
 				61062F55215B505300C279D9 /* UIView+QNLayout.m in Sources */,
 				61062F73215B5A3700C279D9 /* QNFeedView.m in Sources */,
 				617974DF21549FE000142DD9 /* main.m in Sources */,
+				3C35674621CD1D9B006342D8 /* UILabel+Chainable.m in Sources */,
 				61062F58215B514300C279D9 /* QNLayoutDiv.m in Sources */,
 				3C0AD586217D83510029F680 /* QNAsyncLayoutTransaction.m in Sources */,
 				617975102154A45100142DD9 /* QNLayoutCache.m in Sources */,
 				3CD84086218414FE0037E673 /* QNFeedViewLayoutModel.m in Sources */,
+				3C35674421CD1D9B006342D8 /* UIView+Chainable.m in Sources */,
 				61062F6A215B592E00C279D9 /* QNFeedModel.m in Sources */,
 				617975092154A10E00142DD9 /* Yoga.c in Sources */,
 				3C6DE0232165ADFF00BDC6E6 /* QNBaseDataModel.m in Sources */,
+				3C35674721CD1D9B006342D8 /* UIButton+Chainable.m in Sources */,
 				61062F6D215B599600C279D9 /* QNFeedViewDataModel.m in Sources */,
 				6179750C2154A18E00142DD9 /* QNLayout.m in Sources */,
 				3C2FEC72217B63890046ED62 /* QNLayoutStrDiv.m in Sources */,
+				3C35674521CD1D9B006342D8 /* UIImageView+Chainable.m in Sources */,
 				3CD840832184125C0037E673 /* QNBaseLayoutModel.m in Sources */,
 				61062F66215B57B100C279D9 /* QNBaseViewModel.m in Sources */,
 				61062F70215B59F700C279D9 /* QNFeedViewModel.m in Sources */,

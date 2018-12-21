@@ -15,5 +15,10 @@
 #import "QNLayoutFixedSizeDiv.h"
 #import "QNLayoutProtocol.h"
 #import "UIView+QNLayout.h"
+#import "QNLayoutDef.h"
+#import "UIView+Chainable.h"
+#import "UILabel+Chainable.h"
+#import "UIButton+Chainable.h"
+#import "UIImageView+Chainable.h"
 
 #endif /* QNFlexBoxLayout_h */
