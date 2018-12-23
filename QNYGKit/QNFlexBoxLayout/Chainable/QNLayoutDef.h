@@ -34,6 +34,10 @@
 
 #define RECT_WH(width, height)      CGRectMake(0, 0, width, height)
 #define QN_INSETS(t,l,b,r)          UIEdgeInsetsMake(t,l,b,r)
+#define QN_INSETS_TB(t,b)          UIEdgeInsetsMake(t,0,b,0)
+#define QN_INSETS_LR(l,r)          UIEdgeInsetsMake(0,l,0,r)
+#define QN_INSETS_TL(t,l)          UIEdgeInsetsMake(t,l,0,0)
+#define QN_INSETS_TLBR(s)          UIEdgeInsetsMake(s,s,s,s)
 
 #define QN_View                     [UIView new]
 #define QN_View_Rect(frame)         [[UIView alloc] initWithFrame:frame]

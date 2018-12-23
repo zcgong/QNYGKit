@@ -160,6 +160,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (QNLayout * (^)(id attr))equalTo;
 
+- (QNLayout * (^)(CGSize attr))et_size;
+
+- (QNLayout * (^)(UIEdgeInsets attr))et_insets;
+
 - (QNLayout * (^)(CGSize attr))equalToSize;
 
 - (QNLayout * (^)(UIEdgeInsets attr))equalToEdgeInsets;

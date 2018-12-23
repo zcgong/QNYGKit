@@ -628,6 +628,14 @@ if ([self.styleNames containsObject:@""#key]) {\
     };
 }
 
+- (QNLayout * (^)(CGSize attr))et_size {
+    return [self equalToSize];
+}
+
+- (QNLayout * (^)(UIEdgeInsets attr))et_insets {
+    return [self equalToEdgeInsets];
+}
+
 - (QNLayout * (^)(void))wrapContent {
     return ^QNLayout* () {
         YGSetMesure(self);
