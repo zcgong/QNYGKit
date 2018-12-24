@@ -715,10 +715,29 @@ if ([self.styleNames containsObject:@""#key]) {\
 
 - (QNLayout * (^)(void))wrapExactContent {
     return ^QNLayout* () {
-        if ([self.context conformsToProtocol:@protocol(QNLayoutCalProtocol)]) {
+        if ([self.context conformsToProtocol:@protocol(QNLayoutCalProtocol)] && self.allChildren.count == 0) {
             CGSize currentSize = CGSizeMake(YGNodeStyleGetWidth(self.qnNode), YGNodeStyleGetHeight(self.qnNode));
             CGSize originSize = [((id<QNLayoutCalProtocol>)(self.context)) calculateSizeWithSize:QNUndefinedSize];
-            [self setSize:CGSizeMake(currentSize.width == QNUndefinedValue ? originSize.width : currentSize.width, currentSize.height == QNUndefinedValue ? originSize.height : currentSize.height)];
+            CGFloat paddingT = YGNodeStyleGetPadding(self.qnNode, YGEdgeTop);
+            CGFloat paddingL = YGNodeStyleGetPadding(self.qnNode, YGEdgeLeft);
+            CGFloat paddingB = YGNodeStyleGetPadding(self.qnNode, YGEdgeBottom);
+            CGFloat paddingR = YGNodeStyleGetPadding(self.qnNode, YGEdgeRight);
+            if (YGValueIsUndefined(paddingT)) {
+                paddingT = 0;
+            }
+            if (YGValueIsUndefined(paddingL)) {
+                paddingL = 0;
+            }
+            if (YGValueIsUndefined(paddingB)) {
+                paddingB = 0;
+            }
+            if (YGValueIsUndefined(paddingR)) {
+                paddingR = 0;
+            }
+            CGSize exactSize = CGSizeMake(YGValueIsUndefined(currentSize.width) ? originSize.width + (paddingL + paddingR) : currentSize.width, YGValueIsUndefined(currentSize.height) ? originSize.height + (paddingT + paddingB) : currentSize.height);
+            [self setSize:exactSize];
+            [self setMinSize:exactSize];
+            [self setMaxSize:exactSize];
         } else {
             NSAssert(NO, @"context is not view");
         }

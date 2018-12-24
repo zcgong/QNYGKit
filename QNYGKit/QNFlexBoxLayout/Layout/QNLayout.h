@@ -174,7 +174,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (QNLayout * (^)(void))wrapContent;
 
 /**
- 自适应大小（最小尺寸），必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效
+ 自适应大小（最小尺寸），必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效。
+ 如需设置padding，在设置padding之后调用生效。
  */
 - (QNLayout * (^)(void))wrapExactContent;
 
