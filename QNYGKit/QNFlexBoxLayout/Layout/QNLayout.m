@@ -551,32 +551,56 @@ if ([self.styleNames containsObject:@""#key]) {\
 }\
 } while(0);
 
-- (QNLayout * (^)(id attr))equalTo {
-    return ^QNLayout* (id attr) {
-        if ([attr conformsToProtocol:NSProtocolFromString(@"QNLayoutProtocol")]) {
-            YGNodeCopyStyle(self.qnNode, [(id<QNLayoutProtocol>)attr qn_layout].qnNode);
-            return self;
-        }
-        QN_STYLE(Direction,attr)
-        QN_STYLE(FlexDirection,attr)
-        QN_STYLE(JustifyContent,attr)
-        QN_STYLE(AlignContent,attr)
-        QN_STYLE(AlignItems,attr)
-        QN_STYLE(AlignSelf,attr)
-        QN_STYLE(PositionType,attr)
-        QN_STYLE(FlexWrap,attr)
-        QN_STYLE(FlexGrow,attr)
-        QN_STYLE(FlexShrink,attr)
-        QN_STYLE(FlexBasis,attr)
-        QN_STYLE(Width,attr)
-        QN_STYLE(Height,attr)
-        QN_STYLE(MinWidth,attr)
-        QN_STYLE(MinHeight,attr)
-        QN_STYLE(MaxWidth,attr)
-        QN_STYLE(MaxHeight,attr)
-        QN_STYLE(AspectRatio,attr)
+- (QNLayout * (^)(CGSize attr))equalToSize {
+    return ^QNLayout* (CGSize attr) {
+        QN_STYLE_ALL_SIZE(Size,attr)
+        QN_STYLE_ALL_SIZE(MinSize,attr)
+        QN_STYLE_ALL_SIZE(MaxSize,attr)
+        [self.styleNames removeAllObjects];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(UIEdgeInsets attr))equalToEdgeInsets {
+    return ^QNLayout* (UIEdgeInsets attr) {
+        QN_STYLE_ALL_DIRECTION(Position,attr)
+        QN_STYLE_ALL_DIRECTION(Margin,attr)
+        QN_STYLE_ALL_DIRECTION(Padding,attr)
+        [self.styleNames removeAllObjects];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGSize attr))et_size {
+    return [self equalToSize];
+}
+
+- (QNLayout * (^)(UIEdgeInsets attr))et_insets {
+    return [self equalToEdgeInsets];
+}
+
+- (QNLayout * (^)(CGFloat attr))eq {
+    return ^QNLayout* (CGFloat attr) {
+        QN_STYLE(Direction,@(attr))
+        QN_STYLE(FlexDirection,@(attr))
+        QN_STYLE(JustifyContent,@(attr))
+        QN_STYLE(AlignContent,@(attr))
+        QN_STYLE(AlignItems,@(attr))
+        QN_STYLE(AlignSelf,@(attr))
+        QN_STYLE(PositionType,@(attr))
+        QN_STYLE(FlexWrap,@(attr))
+        QN_STYLE(FlexGrow,@(attr))
+        QN_STYLE(FlexShrink,@(attr))
+        QN_STYLE(FlexBasis,@(attr))
+        QN_STYLE(Width,@(attr))
+        QN_STYLE(Height,@(attr))
+        QN_STYLE(MinWidth,@(attr))
+        QN_STYLE(MinHeight,@(attr))
+        QN_STYLE(MaxWidth,@(attr))
+        QN_STYLE(MaxHeight,@(attr))
+        QN_STYLE(AspectRatio,@(attr))
         
-        CGFloat value = [(NSNumber *)attr floatValue];
+        CGFloat value = attr;
         if ([self.styleNames containsObject:@"marginT"]) {
             [self setMargin:value forEdge:QNEdgeTop];
         }
@@ -608,7 +632,7 @@ if ([self.styleNames containsObject:@""#key]) {\
     };
 }
 
-- (QNLayout * (^)(CGSize attr))equalToSize {
+- (QNLayout * (^)(CGSize attr))eq_size {
     return ^QNLayout* (CGSize attr) {
         QN_STYLE_ALL_SIZE(Size,attr)
         QN_STYLE_ALL_SIZE(MinSize,attr)
@@ -618,7 +642,7 @@ if ([self.styleNames containsObject:@""#key]) {\
     };
 }
 
-- (QNLayout * (^)(UIEdgeInsets attr))equalToEdgeInsets {
+- (QNLayout * (^)(UIEdgeInsets attr))eq_insets  {
     return ^QNLayout* (UIEdgeInsets attr) {
         QN_STYLE_ALL_DIRECTION(Position,attr)
         QN_STYLE_ALL_DIRECTION(Margin,attr)
@@ -626,14 +650,6 @@ if ([self.styleNames containsObject:@""#key]) {\
         [self.styleNames removeAllObjects];
         return self;
     };
-}
-
-- (QNLayout * (^)(CGSize attr))et_size {
-    return [self equalToSize];
-}
-
-- (QNLayout * (^)(UIEdgeInsets attr))et_insets {
-    return [self equalToEdgeInsets];
 }
 
 - (QNLayout * (^)(void))wrapContent {
@@ -646,31 +662,15 @@ if ([self.styleNames containsObject:@""#key]) {\
 - (QNLayout * (^)(void))wrapSize {
     return ^QNLayout* () {
         if ([self.context isKindOfClass:[UIView class]]) {
-            [self setSize:((UIView *)(self.context)).frame.size];
-        } else {
-            NSAssert(NO, @"context is not view");
-        }
-        return self;
-    };
-}
-
-- (QNLayout * (^)(void))wrapHeight {
-    return ^QNLayout* () {
-        if ([self.context isKindOfClass:[UIView class]]) {
-            [self setSize:CGSizeMake(QNUndefinedValue, CGRectGetHeight(((UIView *)(self.context)).frame))];
-            YGSetMesure(self);
-        } else {
-            NSAssert(NO, @"context is not view");
-        }
-        return self;
-    };
-}
-
-- (QNLayout * (^)(void))wrapWidth {
-    return ^QNLayout* () {
-        if ([self.context isKindOfClass:[UIView class]]) {
-            [self setSize:CGSizeMake(CGRectGetWidth(((UIView *)(self.context)).frame), QNUndefinedValue)];
-            YGSetMesure(self);
+            CGSize oriSize = ((UIView *)(self.context)).frame.size;
+            if (oriSize.width <= 0) {
+                oriSize.width = QNUndefinedValue;
+            }
+            
+            if (oriSize.height <= 0) {
+                oriSize.height = QNUndefinedValue;
+            }
+            [self setSize:oriSize];
         } else {
             NSAssert(NO, @"context is not view");
         }

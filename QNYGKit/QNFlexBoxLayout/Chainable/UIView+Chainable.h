@@ -19,6 +19,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof UIView * (^)(void))hide;
 - (__kindof UIView * (^)(void))enable;
 - (__kindof UIView * (^)(void))disable;
+- (void)qn_addSubviews:(NSArray *)subViews;
+- (void)qn_centerTo:(UIView *)view;
+- (void)qn_centerToX:(UIView *)view;
+- (void)qn_centerToY:(UIView *)view;
 
 @end
 

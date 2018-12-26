@@ -32,7 +32,7 @@
     QNLayoutDiv *layoutDiv = [self new];
     [layoutDiv qn_makeLayout:layout];
     [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionRow));
+        layout.flexDirection.eq(QNFlexDirectionRow);
     }];
     return layoutDiv;
 }
@@ -41,7 +41,7 @@
     QNLayoutDiv *layoutDiv = [self new];
     [layoutDiv qn_makeLayout:layout];
     [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionColumn));
+        layout.flexDirection.eq(QNFlexDirectionColumn);
     }];
     return layoutDiv;
 }
@@ -133,11 +133,46 @@
                 .height = layoutElement.qn_layout.frame.size.height,
             },
         };
-        
+        [self p_updateAbsoluteSubLayoutElementFrame:layoutElement];
         [layoutElement qn_applyLayoutToViewHierachy];
     }
 }
 
+- (void)p_updateAbsoluteSubLayoutElementFrame:(id<QNLayoutProtocol>)layoutElement {
+    YGNodeRef node = layoutElement.qn_layout.qnNode;
+    if (YGNodeStyleGetPositionType(node) != YGPositionTypeAbsolute) {
+        return;
+    }
+    if (YGNodeStyleGetAlignSelf(node) == YGAlignCenter) {
+        if (YGNodeStyleGetDirection(node) == YGFlexDirectionRow) {
+            CGFloat y = (CGRectGetHeight(self.frame) - CGRectGetHeight(layoutElement.frame)) / 2;
+            y += self.frame.origin.y;
+            layoutElement.frame = CGRectMake(CGRectGetMinX(layoutElement.frame), y, CGRectGetWidth(layoutElement.frame), CGRectGetHeight(layoutElement.frame));
+        } else if (YGNodeStyleGetDirection(node) == YGFlexDirectionColumn) {
+            CGFloat x = (CGRectGetWidth(self.frame) - CGRectGetWidth(layoutElement.frame)) / 2;
+            x += self.frame.origin.x;
+            layoutElement.frame = CGRectMake(x, CGRectGetMinY(layoutElement.frame), CGRectGetWidth(layoutElement.frame), CGRectGetHeight(layoutElement.frame));
+        }
+    } else if (YGNodeStyleGetAlignSelf(node) == YGAlignFlexEnd) {
+        if (YGNodeStyleGetDirection(node) == YGFlexDirectionRow) {
+            CGFloat y = CGRectGetHeight(self.frame) - CGRectGetHeight(layoutElement.frame);
+            CGFloat marginB = YGNodeStyleGetMargin(node, YGEdgeBottom);
+            if (!YGValueIsUndefined(marginB)) {
+                y -= marginB;
+            }
+            y += self.frame.origin.y;
+            layoutElement.frame = CGRectMake(CGRectGetMinX(layoutElement.frame), y, CGRectGetWidth(layoutElement.frame), CGRectGetHeight(layoutElement.frame));
+        } else if (YGNodeStyleGetDirection(node) == YGFlexDirectionColumn) {
+            CGFloat x = CGRectGetWidth(self.frame) - CGRectGetWidth(layoutElement.frame);
+            CGFloat marginR = YGNodeStyleGetMargin(node, YGEdgeRight);
+            if (!YGValueIsUndefined(marginR)) {
+                x -= marginR;
+            }
+            x += self.frame.origin.x;
+            layoutElement.frame = CGRectMake(x, CGRectGetMinY(layoutElement.frame), CGRectGetWidth(layoutElement.frame), CGRectGetHeight(layoutElement.frame));
+        }
+    }
+}
 
 - (void)qn_asyncLayoutWithSize:(CGSize)size {
     [QNAsyncLayoutTransaction addCalculateBlock:^{

@@ -52,7 +52,7 @@
     labelTitle.txt(@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。");
     [labelTitle qn_makeLayout:^(QNLayout *layout) {
         layout.wrapContent();   // 自适应大小
-        layout.marginB.equalTo(@(10));
+        layout.marginB.eq(10);
     }];
     
     UIImageView *imageViewA = QN_ImageView_Rect(RECT_WH(114, 68)).imgName(@"moment_picA");
@@ -61,12 +61,12 @@
     }];
     UIImageView *imageViewB = QN_ImageView.imgName(@"moment_picB");
     [imageViewB qn_makeLayout:^(QNLayout *layout) {
-        layout.size.et_size(CGSizeMake(114, 68));
+        layout.size.eq_size(CGSizeMake(114, 68));
     }];
     
     UIImageView *imageViewC = QN_ImageView.imgName(@"moment_picC");
     [imageViewC qn_makeLayout:^(QNLayout *layout) {
-        layout.size.et_size(CGSizeMake(114, 68));
+        layout.size.eq_size(CGSizeMake(114, 68));
     }];
     QNLayoutDiv *imageDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
         layout.spaceBetween();    // 分散排列，平分间距
@@ -74,7 +74,7 @@
     }];
     
     [mainView qn_makeVerticalLayout:^(QNLayout *layout) {
-        layout.padding.et_insets(QN_INSETS(15, 10, 10, 10));
+        layout.padding.eq_insets(QN_INSETS(15, 10, 10, 10));
         layout.children(@[labelTitle, imageDiv]);
     }];
     
@@ -91,7 +91,7 @@
     NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。" attributes:attrDict];
     QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv divWithAttributedString:[mAttrString copy]];
     [titleDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.marginB.equalTo(@(10));
+        layout.marginB.eq(10);
     }];
     QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
     QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
@@ -102,7 +102,7 @@
     }];
     
     QNLayoutDiv *mainDiv = [QNLayoutDiv verticalDivWithLayout:^(QNLayout *layout) {
-        layout.padding.et_insets(QN_INSETS(15, 10, 10, 10));
+        layout.padding.eq_insets(QN_INSETS(15, 10, 10, 10));
         layout.children(@[titleDiv, linearDiv]);
     }];
 
@@ -146,7 +146,7 @@
         layout.wrapSize();
     }];
     [viewB qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapSize().margin.et_insets(QN_INSETS_LR(10, 10));
+        layout.wrapSize().margin.eq_insets(QN_INSETS_LR(10, 10));
     }];
     [viewC qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize();
@@ -169,7 +169,7 @@
     UIView *bottomView = QN_View_Rect(RECT_WH(150, 150)).bgColor([UIColor blueColor]);
     [bottomView qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize().absoluteLayout();
-        layout.margin.et_insets(QN_INSETS_TL(self.view.height - 180, SCREEN_WIDTH - 180));
+        layout.margin.eq_insets(QN_INSETS_TL(self.view.height - 180, SCREEN_WIDTH - 180));
     }];
     [self.view qn_makeLayout:^(QNLayout *layout) {
         layout.children(@[bottomView]);

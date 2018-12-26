@@ -25,7 +25,7 @@
     QNLayoutStrDiv *titleStrDiv = [QNLayoutStrDiv divWithAttributedString:fViewModel.titleAttr];
     QNLayoutStrDiv *contentStrDiv = [QNLayoutStrDiv divWithAttributedString:fViewModel.contentAttr];
     [contentStrDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(5, 0, 5, 0));
+        layout.margin.eq_insets(UIEdgeInsetsMake(5, 0, 5, 0));
     }];
     
     QNLayoutFixedSizeDiv *contentImageDiv = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 100)];
@@ -36,11 +36,11 @@
     QNLayoutDiv *div = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
         layout.spaceBetween();
         layout.children(@[userStrDiv, timeStrDiv]);
-        layout.marginT.equalTo(@(5));
+        layout.marginT.eq(5);
     }];
     QNLayoutDiv *mainDiv = [QNLayoutDiv verticalDivWithLayout:^(QNLayout *layout) {
         layout.children(@[titleStrDiv, contentStrDiv, contentImageDiv, div]);
-        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(5, 5, 5, 5));
+        layout.padding.eq_insets(UIEdgeInsetsMake(5, 5, 5, 5));
     }];
     [mainDiv qn_layoutWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, QNUndefinedValue)];
     self.titleFrame = titleStrDiv.frame;

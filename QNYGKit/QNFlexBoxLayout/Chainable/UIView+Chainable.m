@@ -59,4 +59,29 @@
     };
 }
 
+- (void)qn_addSubviews:(NSArray *)subViews {
+    if (subViews.count <= 0) {
+        return;
+    }
+    for (id subView in subViews) {
+        if ([subView isKindOfClass:[UIView class]]) {
+            [self addSubview:subView];
+        } else {
+            NSAssert(NO, @"%@ is invalid view", subView);
+        }
+    }
+}
+
+- (void)qn_centerTo:(UIView *)view {
+    self.center = view.center;
+}
+
+- (void)qn_centerToX:(UIView *)view {
+    self.center = CGPointMake(view.center.x, self.center.y);
+}
+
+- (void)qn_centerToY:(UIView *)view {
+    self.center = CGPointMake(self.center.x, view.center.y);
+}
+
 @end

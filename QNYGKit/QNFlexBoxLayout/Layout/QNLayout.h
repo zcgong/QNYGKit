@@ -158,15 +158,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (QNLayout *)aspectRatio;
 
-- (QNLayout * (^)(id attr))equalTo;
+- (QNLayout * (^)(CGFloat attr))eq;
 
-- (QNLayout * (^)(CGSize attr))et_size;
+- (QNLayout * (^)(CGSize attr))eq_size;
 
-- (QNLayout * (^)(UIEdgeInsets attr))et_insets;
-
-- (QNLayout * (^)(CGSize attr))equalToSize;
-
-- (QNLayout * (^)(UIEdgeInsets attr))equalToEdgeInsets;
+- (QNLayout * (^)(UIEdgeInsets attr))eq_insets;
 
 /**
  自适应大小（最大尺寸），必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效
@@ -183,16 +179,6 @@ NS_ASSUME_NONNULL_BEGIN
  固定尺寸布局（只能是UIView才可以使用）
  */
 - (QNLayout * (^)(void))wrapSize;
-
-/**
- 固定高度（只能是UIView才可以使用）
- */
-- (QNLayout * (^)(void))wrapHeight;
-
-/**
- 固定宽度（只能是UIView才可以使用）
- */
-- (QNLayout * (^)(void))wrapWidth;
 
 /**
  自身位于父元素中间位置
