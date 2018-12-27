@@ -42,16 +42,16 @@
 - (void)testVerticalLayout {
     QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
     [fixedSizeDivA qn_makeLayout:^(QNLayout *layout) {
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(5, 10, 12, 0));
+        layout.margin(UIEdgeInsetsMake(5, 10, 12, 0));
     }];
     
     QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
     [fixedSizeDivB qn_makeLayout:^(QNLayout *layout) {
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(12, 5, 8, 0));
+        layout.margin(UIEdgeInsetsMake(12, 5, 8, 0));
     }];
     
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalDivWithLayout:^(QNLayout *layout) {
-        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(3, 4, 5, 6));
+    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayout:^(QNLayout *layout) {
+        layout.padding(UIEdgeInsetsMake(3, 4, 5, 6));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);
     }];
     [mainDiv qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
@@ -63,16 +63,16 @@
 - (void)testLinearLayout {
     QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
     [fixedSizeDivA qn_makeLayout:^(QNLayout *layout) {
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(5, 10, 12, 10));
+        layout.margin(UIEdgeInsetsMake(5, 10, 12, 10));
     }];
     
     QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 60)];
     [fixedSizeDivB qn_makeLayout:^(QNLayout *layout) {
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(12, 5, 8, 0));
+        layout.margin(UIEdgeInsetsMake(12, 5, 8, 0));
     }];
     
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalDivWithLayout:^(QNLayout *layout) {
-        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(3, 4, 5, 6));
+    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayout:^(QNLayout *layout) {
+        layout.padding(UIEdgeInsetsMake(3, 4, 5, 6));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);
     }];
     [mainDiv qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
@@ -85,9 +85,9 @@
     QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
     
     QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 60)];
-    QNLayoutDiv *mainDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
-        layout.justifyContent.equalTo(@(QNJustifySpaceBetween));
-        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(10, 12, 15, 18));
+    QNLayoutDiv *mainDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+        layout.justifyContent(QNJustifySpaceBetween);
+        layout.padding(UIEdgeInsetsMake(10, 12, 15, 18));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);
     }];
     [mainDiv qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];

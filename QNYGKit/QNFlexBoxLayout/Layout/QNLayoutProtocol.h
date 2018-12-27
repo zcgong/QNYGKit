@@ -16,14 +16,18 @@
 
 @property(nonatomic, strong, readonly) QNLayout *qn_layout;
 @property(nonatomic, assign) CGRect frame;
-@property(nonatomic, copy) NSArray<id<QNLayoutProtocol>> *qn_children;
-
 
 - (void)qn_addChild:(id<QNLayoutProtocol>)layout;
 
 - (void)qn_addChildren:(NSArray<id<QNLayoutProtocol>> *)children;
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout;
+
+- (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index;
+
+- (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index;
+
+- (NSUInteger)qn_childrenCount;
 
 - (void)qn_applyLayoutToViewHierachy;
 

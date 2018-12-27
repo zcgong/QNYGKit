@@ -146,13 +146,13 @@ static void YGSetMesure(QNLayout *layout) {
 - (void)applyLayoutCache:(QNLayoutCache *)layoutCache {
     id<QNLayoutProtocol> view = self.context;
     view.frame = layoutCache.frame;
-    if (view.qn_children.count != layoutCache.subLayoutCaches.count) {
+    if (view.qn_childrenCount != layoutCache.subLayoutCaches.count) {
         return;
     }
     
     for (int i = 0; i < layoutCache.subLayoutCaches.count; i++) {
         QNLayoutCache* childLayoutCache = layoutCache.subLayoutCaches[i];
-        id<QNLayoutProtocol> childView = view.qn_children[i];
+        id<QNLayoutProtocol> childView = [view qn_childLayoutAtIndex:i];
         [childView.qn_layout applyLayoutCache:childLayoutCache];
     }
 }

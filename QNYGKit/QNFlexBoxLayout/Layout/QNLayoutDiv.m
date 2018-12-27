@@ -12,16 +12,14 @@
 #import "QNAsyncLayoutTransaction.h"
 
 @interface QNLayoutDiv()
-@property(nonatomic, strong) NSMutableArray *children;
 @property(nonatomic, strong) QNLayout *qn_layout;
-
+@property(nonatomic, copy) NSArray<id<QNLayoutProtocol>> *qn_children;
 @end
 
 @implementation QNLayoutDiv
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.children = [NSMutableArray array];
         self.qn_layout = [QNLayout new];
         self.qn_layout.context = self;
     }
@@ -63,7 +61,7 @@
         [layout setFlexDirection:direction];
         [layout setJustifyContent:justifyContent];
     }];
-    [layoutDiv setQn_children:children];
+    [layoutDiv p_updateChlidren:children];
     return layoutDiv;
 }
 
@@ -77,15 +75,15 @@
         [layout setJustifyContent:justifyContent];
         [layout setAlignItems:alignItems];
     }];
-    [layoutDiv setQn_children:children];
+    [layoutDiv p_updateChlidren:children];
     return layoutDiv;
 }
 
-- (void)setQn_children:(NSArray<id<QNLayoutProtocol>> *)children {
-    if (self.children == children) {
+- (void)p_updateChlidren:(NSArray<id<QNLayoutProtocol>> *)children {
+    if (self.qn_children == children) {
         return;
     }
-    self.children = [children mutableCopy];
+    self.qn_children = [children copy];
     [self.qn_layout removeAllChildren];
     
     for (id<QNLayoutProtocol> layoutElement in children) {
@@ -94,34 +92,33 @@
     }
 }
 
-- (NSArray *)qn_children {
-    return self.children ? [self.children copy] : @[];
+- (NSUInteger)qn_childrenCount {
+    return self.qn_children.count;
 }
 
 - (void)qn_addChild:(id<QNLayoutProtocol>)layout {
     NSAssert([layout conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
-    NSMutableArray *newChildren = [self.children mutableCopy];
+    NSMutableArray *newChildren = [self p_newChildren];
     [newChildren addObject:layout];
-    self.qn_children = newChildren;
+    [self p_updateChlidren:[newChildren copy]];
 }
 
 - (void)qn_addChildren:(NSArray<id<QNLayoutProtocol>> *)children {
-    NSMutableArray *newChildren = [self.qn_children mutableCopy];
+    NSMutableArray *newChildren = [self p_newChildren];
     [newChildren addObjectsFromArray:children];
-    self.qn_children = newChildren;
+    [self p_updateChlidren:[newChildren copy]];
 }
 
 - (void)qn_layoutWithSize:(CGSize)size {
-    self.qn_layout.wrapContent();
-    [self.qn_layout resetUndefinedSize];
+    [self qn_layout].wrapContent();
+    [[self qn_layout] resetUndefinedSize];
     [self.qn_layout calculateLayoutWithSize:size];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
 }
 
-
 - (void)qn_applyLayoutToViewHierachy {
-    for (id<QNLayoutProtocol> layoutElement in self.children) {
+    for (id<QNLayoutProtocol> layoutElement in self.qn_children) {
         
         layoutElement.frame = (CGRect) {
             .origin = {
@@ -183,6 +180,16 @@
     }];
 }
 
+- (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index {
+    return [self.qn_children objectAtIndex:index];
+}
+
+- (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index {
+    NSMutableArray *newChildren = [self p_newChildren];
+    [newChildren insertObject:layout atIndex:index];
+    [self p_updateChlidren:[newChildren copy]];
+}
+
 - (QNLayout *)qn_makeLayout:(void (^)(QNLayout *))layout {
     if (layout) {
         layout(self.qn_layout);
@@ -190,14 +197,12 @@
     return self.qn_layout;
 }
 
-
 - (void)p_removeAllChildren {
-    self.qn_children = nil;
+    [self p_updateChlidren:nil];
 }
 
 - (void)qn_markDirty {
-    NSArray *children = [self qn_children];
-    for (id<QNLayoutProtocol> layoutElement in children) {
+    for (id<QNLayoutProtocol> layoutElement in self.qn_children) {
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
         [layoutElement qn_markDirty];
     }
@@ -205,8 +210,13 @@
 }
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
-    [self.children removeObject:layout];
-    self.qn_children = [self.children copy];
+    NSMutableArray *newChildren = [self p_newChildren];
+    [newChildren removeObject:layout];
+    [self p_updateChlidren:[newChildren copy]];
+}
+
+- (NSMutableArray *)p_newChildren {
+    return self.qn_children ? [self.qn_children mutableCopy] : [NSMutableArray array];
 }
 
 @end
