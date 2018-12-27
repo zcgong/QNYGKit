@@ -42,6 +42,14 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ### 7、使用举例（可将工程下载到本地测试）
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnygkit.png)
 ```objective-c
+//
+//  ViewController.m
+//  QNYGKit
+//
+//  Created by jayhuan on 2018/9/21.
+//  Copyright © 2018 jayhuan. All rights reserved.
+//
+
 #import "ViewController.h"
 #import "QNFlexBoxLayout.h"
 #import "UIView+ZJ.h"
@@ -88,7 +96,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     labelTitle.txt(@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。");
     [labelTitle qn_makeLayout:^(QNLayout *layout) {
         layout.wrapContent();   // 自适应大小
-        layout.marginB.equalTo(@(10));
+        layout.marginB(10);
     }];
     
     UIImageView *imageViewA = QN_ImageView_Rect(RECT_WH(114, 68)).imgName(@"moment_picA");
@@ -97,20 +105,20 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     }];
     UIImageView *imageViewB = QN_ImageView.imgName(@"moment_picB");
     [imageViewB qn_makeLayout:^(QNLayout *layout) {
-        layout.size.equalToSize(CGSizeMake(114, 68));
+        layout.size(CGSizeMake(114, 68));
     }];
     
     UIImageView *imageViewC = QN_ImageView.imgName(@"moment_picC");
     [imageViewC qn_makeLayout:^(QNLayout *layout) {
-        layout.size.equalToSize(CGSizeMake(114, 68));
+        layout.size(CGSizeMake(114, 68));
     }];
-    QNLayoutDiv *imageDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
+    QNLayoutDiv *imageDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
         layout.spaceBetween();    // 分散排列，平分间距
         layout.children(@[imageViewA, imageViewB, imageViewC]); // 设置子view
     }];
     
     [mainView qn_makeVerticalLayout:^(QNLayout *layout) {
-        layout.padding.equalToEdgeInsets(QN_INSETS(15, 10, 10, 10));
+        layout.padding(QN_INSETS(15, 10, 10, 10));
         layout.children(@[labelTitle, imageDiv]);
     }];
     
@@ -127,18 +135,18 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。" attributes:attrDict];
     QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv divWithAttributedString:[mAttrString copy]];
     [titleDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.marginB.equalTo(@(10));
+        layout.marginB(10);
     }];
     QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
     QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
     QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutDiv *linearDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
+    QNLayoutDiv *linearDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
         layout.spaceBetween();    // 分散排列，平分间距
         layout.children(@[divA, divB, divC]); // 设置子view
     }];
     
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalDivWithLayout:^(QNLayout *layout) {
-        layout.padding.equalToEdgeInsets(QN_INSETS(15, 10, 10, 10));
+    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayout:^(QNLayout *layout) {
+        layout.padding(QN_INSETS(15, 10, 10, 10));
         layout.children(@[titleDiv, linearDiv]);
     }];
 
@@ -182,12 +190,12 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
         layout.wrapSize();
     }];
     [viewB qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapSize().margin.equalToEdgeInsets(QN_INSETS(0, 10, 0, 10));
+        layout.wrapSize().margin(QN_INSETS_LR(10, 10));
     }];
     [viewC qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize();
     }];
-    QNLayoutDiv *tDiv = [QNLayoutDiv linearDivWithLayout:^(QNLayout *layout) {
+    QNLayoutDiv *tDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
         layout.justifyCenter().children(@[viewA, viewB, viewC]);
     }];
     [tDiv qn_layoutWithSize:CGSizeMake(80, 60)];
@@ -205,7 +213,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     UIView *bottomView = QN_View_Rect(RECT_WH(150, 150)).bgColor([UIColor blueColor]);
     [bottomView qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize().absoluteLayout();
-        layout.margin.equalToEdgeInsets(QN_INSETS(self.view.height - 180, SCREEN_WIDTH - 180, 0, 0));
+        layout.margin(QN_INSETS_TL(self.view.height - 180, SCREEN_WIDTH - 180));
     }];
     [self.view qn_makeLayout:^(QNLayout *layout) {
         layout.children(@[bottomView]);
