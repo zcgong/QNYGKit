@@ -15,13 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QNLayout (Private)
 
 @property(nonatomic, weak) id context;
-
 @property(nonatomic, weak) QNLayout *parent;
-
-@property(nonatomic, copy) NSDictionary *qnStyles;
-
 @property(nonatomic, assign) YGNodeRef qnNode;
-
 @property(nonatomic, assign) CGRect frame;
 
 - (NSArray *)allChildren;

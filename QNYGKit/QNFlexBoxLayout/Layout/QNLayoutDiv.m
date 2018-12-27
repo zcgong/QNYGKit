@@ -28,20 +28,20 @@
     return self;
 }
 
-+ (instancetype)linearDivWithLayout:(void(^)(QNLayout *layout))layout {
++ (instancetype)linearLayout:(void(^)(QNLayout *layout))layout {
     QNLayoutDiv *layoutDiv = [self new];
     [layoutDiv qn_makeLayout:layout];
     [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.eq(QNFlexDirectionRow);
+        layout.flexDirection(QNFlexDirectionRow);
     }];
     return layoutDiv;
 }
 
-+ (instancetype)verticalDivWithLayout:(void(^)(QNLayout *layout))layout {
++ (instancetype)verticalLayout:(void(^)(QNLayout *layout))layout {
     QNLayoutDiv *layoutDiv = [self new];
     [layoutDiv qn_makeLayout:layout];
     [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.eq(QNFlexDirectionColumn);
+        layout.flexDirection(QNFlexDirectionColumn);
     }];
     return layoutDiv;
 }

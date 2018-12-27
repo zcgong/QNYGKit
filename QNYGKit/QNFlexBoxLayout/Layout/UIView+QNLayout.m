@@ -15,13 +15,13 @@
 
 - (QNLayout *)qn_makeLinearLayout:(void(^)(QNLayout *layout))layout {
     QNLayout *linearLayout = [self qn_makeLayout:layout];
-    linearLayout.flexDirection.eq(QNFlexDirectionRow);
+    linearLayout.flexDirection(QNFlexDirectionRow);
     return linearLayout;
 }
 
 - (QNLayout *)qn_makeVerticalLayout:(void(^)(QNLayout *layout))layout {
     QNLayout *linearLayout = [self qn_makeLayout:layout];
-    linearLayout.flexDirection.eq(QNFlexDirectionColumn);
+    linearLayout.flexDirection(QNFlexDirectionColumn);
     return linearLayout;
 }
 

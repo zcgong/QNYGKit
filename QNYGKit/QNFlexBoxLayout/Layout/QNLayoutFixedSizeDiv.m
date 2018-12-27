@@ -14,8 +14,8 @@
 
 @implementation QNLayoutFixedSizeDiv
 + (instancetype)divWithFixedSize:(CGSize)fixedSize {
-    QNLayoutFixedSizeDiv *div = [self linearDivWithLayout:^(QNLayout *layout) {
-        layout.size.eq_size(fixedSize);
+    QNLayoutFixedSizeDiv *div = [self linearLayout:^(QNLayout *layout) {
+        layout.size(fixedSize);
     }];
     div.fixedSize = fixedSize;
     return div;

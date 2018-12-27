@@ -96,73 +96,50 @@ NS_ASSUME_NONNULL_BEGIN
 @class QNLayoutCache;
 @interface QNLayout : NSObject
 
-- (QNLayout *)flexDirection;
+- (QNLayout * (^)(QNFlexDirection attr))flexDirection;
 
-- (QNLayout *)justifyContent;
+- (QNLayout * (^)(QNJustify attr))justifyContent;
 
-- (QNLayout *)alignContent;
+- (QNLayout * (^)(QNAlign attr))alignContent;
+- (QNLayout * (^)(QNAlign attr))alignItems;
+- (QNLayout * (^)(QNAlign attr))alignSelf;
 
-- (QNLayout *)alignItems;
+- (QNLayout * (^)(QNPositionType attr))positionType;
 
-- (QNLayout *)alignSelf;
+- (QNLayout * (^)(QNWrap attr))flexWrap;
 
-- (QNLayout *)positionType;
+- (QNLayout * (^)(CGFloat attr))flexGrow;
 
-- (QNLayout *)flexWrap;
+- (QNLayout * (^)(CGFloat attr))flexShrink;
+- (QNLayout * (^)(CGFloat attr))flexBasiss;
 
-- (QNLayout *)flexGrow;
+- (QNLayout * (^)(UIEdgeInsets attr))position;
 
-- (QNLayout *)flexShrink;
+- (QNLayout * (^)(UIEdgeInsets attr))margin;
+- (QNLayout * (^)(CGFloat attr))marginT;
+- (QNLayout * (^)(CGFloat attr))marginL;
+- (QNLayout * (^)(CGFloat attr))marginB;
+- (QNLayout * (^)(CGFloat attr))marginR;
 
-- (QNLayout *)flexBasiss;
+- (QNLayout * (^)(UIEdgeInsets attr))padding;
+- (QNLayout * (^)(CGFloat attr))paddingT;
+- (QNLayout * (^)(CGFloat attr))paddingL;
+- (QNLayout * (^)(CGFloat attr))paddingB;
+- (QNLayout * (^)(CGFloat attr))paddingR;
 
-- (QNLayout *)position;
+- (QNLayout * (^)(CGFloat attr))width;
+- (QNLayout * (^)(CGFloat attr))height;
 
-- (QNLayout *)margin;
+- (QNLayout * (^)(CGFloat attr))minWidth;
+- (QNLayout * (^)(CGFloat attr))minHeight;
+- (QNLayout * (^)(CGFloat attr))maxWidth;
+- (QNLayout * (^)(CGFloat attr))maxHeight;
 
-- (QNLayout *)marginT;
+- (QNLayout * (^)(CGSize attr))size;
+- (QNLayout * (^)(CGSize attr))minSize;
+- (QNLayout * (^)(CGSize attr))maxSize;
 
-- (QNLayout *)marginL;
-
-- (QNLayout *)marginB;
-
-- (QNLayout *)marginR;
-
-- (QNLayout *)padding;
-
-- (QNLayout *)paddingT;
-
-- (QNLayout *)paddingL;
-
-- (QNLayout *)paddingB;
-
-- (QNLayout *)paddingR;
-
-- (QNLayout *)width;
-
-- (QNLayout *)height;
-
-- (QNLayout *)minWidth;
-
-- (QNLayout *)minHeight;
-
-- (QNLayout *)maxWidth;
-
-- (QNLayout *)maxHeight;
-
-- (QNLayout *)size;
-
-- (QNLayout *)maxSize;
-
-- (QNLayout *)minSize;
-
-- (QNLayout *)aspectRatio;
-
-- (QNLayout * (^)(CGFloat attr))eq;
-
-- (QNLayout * (^)(CGSize attr))eq_size;
-
-- (QNLayout * (^)(UIEdgeInsets attr))eq_insets;
+- (QNLayout * (^)(CGFloat attr))aspectRatio;
 
 /**
  自适应大小（最大尺寸），必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效
@@ -170,8 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (QNLayout * (^)(void))wrapContent;
 
 /**
- 自适应大小（最小尺寸），必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效。
- 如需设置padding，在设置padding之后调用生效。
+ 自适应大小（最小尺寸），必须是叶子结点并且继承自协议QNLayoutCalProtocolc设置才生效
  */
 - (QNLayout * (^)(void))wrapExactContent;
 
@@ -181,12 +157,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (QNLayout * (^)(void))wrapSize;
 
 /**
- 自身位于父元素中间位置
+ 自身位于父元素中间位置（交叉轴）
  */
 - (QNLayout * (^)(void))alignSelfCenter;
 
 /**
- 自身位于父元素最后位置
+ 自身位于父元素最后位置（交叉轴）
  */
 - (QNLayout * (^)(void))alignSelfEnd;
 
@@ -201,12 +177,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (QNLayout * (^)(void))justifyCenter;
 
 /**
- 两端对齐，子元素之间间隔相等
+ 两端对齐，子元素之间间隔相等（主轴）
  */
 - (QNLayout * (^)(void))spaceBetween;
 
 /**
- 绝对布局
+ 使用绝对布局方式
  */
 - (QNLayout * (^)(void))absoluteLayout;
 

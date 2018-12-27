@@ -92,17 +92,9 @@ static void YGSetMesure(QNLayout *layout) {
 @interface QNLayout()
 
 @property(nonatomic, strong) NSMutableArray *mChildren;
-
-@property(nonatomic, strong) NSMutableArray *styleNames;
-
 @property(nonatomic, weak) id context;
-
 @property(nonatomic, weak) QNLayout *parent;
-
-@property(nonatomic, copy) NSDictionary *QNStyles;
-
 @property(nonatomic, assign) YGNodeRef qnNode;
-
 @property(nonatomic, assign) CGRect frame;
 
 @end
@@ -112,10 +104,15 @@ static void YGSetMesure(QNLayout *layout) {
 - (instancetype)init {
     if (self = [super init]) {
         self.qnNode = YGNodeNew();
-        self.mChildren = [NSMutableArray array];
-        self.styleNames = [NSMutableArray array];
     }
     return self;
+}
+
+- (NSMutableArray *)mChildren {
+    if (!_mChildren) {
+        _mChildren = [NSMutableArray array];
+    }
+    return _mChildren;
 }
 
 - (void)setContext:(id)context {
@@ -216,65 +213,6 @@ static void YGSetMesure(QNLayout *layout) {
 }
 
 #pragma mark - QN styles
-
-#define QN_STYLE_FILL(key)\
-do {\
-id value = self.qnStyles[@"QN"#key"AttributeName"];\
-if (value) {\
-[self set##key:[(NSNumber *)value floatValue]];\
-}\
-} while(0);
-
-#define QN_STYLE_FILL_ALL_DIRECTION(key) \
-do {\
-id value = self.qnStyles[@"QN"#key"AttributeName"];\
-if (value) {\
-[self set##key:[(NSValue *)value UIEdgeInsetsValue].left forEdge:QNEdgeLeft];\
-[self set##key:[(NSValue *)value UIEdgeInsetsValue].top forEdge:QNEdgeTop];\
-[self set##key:[(NSValue *)value UIEdgeInsetsValue].right forEdge:QNEdgeRight];\
-[self set##key:[(NSValue *)value UIEdgeInsetsValue].bottom forEdge:QNEdgeBottom];\
-}\
-} while(0);
-
-#define QN_STYLE_FILL_ALL_SIZE(key) \
-do {\
-id value = self.qnStyles[@"QN"#key"AttributeName"];\
-if (value) {\
-[self set##key:[(NSValue *)value CGSizeValue]];\
-}\
-} while(0);
-
-- (void)setQNStyles:(NSDictionary *)qnStyles {
-    
-    if (self.qnStyles == qnStyles) {
-        return;
-    }
-    self.qnStyles = qnStyles;
-    QN_STYLE_FILL(Direction)
-    QN_STYLE_FILL(FlexDirection)
-    QN_STYLE_FILL(JustifyContent)
-    QN_STYLE_FILL(AlignContent)
-    QN_STYLE_FILL(AlignItems)
-    QN_STYLE_FILL(AlignSelf)
-    QN_STYLE_FILL(PositionType)
-    QN_STYLE_FILL(FlexWrap)
-    QN_STYLE_FILL(FlexGrow)
-    QN_STYLE_FILL(FlexShrink)
-    QN_STYLE_FILL(FlexBasis)
-    QN_STYLE_FILL_ALL_DIRECTION(Position)
-    QN_STYLE_FILL_ALL_DIRECTION(Margin)
-    QN_STYLE_FILL_ALL_DIRECTION(Padding)
-    QN_STYLE_FILL(Width)
-    QN_STYLE_FILL(Height)
-    QN_STYLE_FILL(MinWidth)
-    QN_STYLE_FILL(MinHeight)
-    QN_STYLE_FILL(MaxWidth)
-    QN_STYLE_FILL(MaxHeight)
-    QN_STYLE_FILL(AspectRatio)
-    QN_STYLE_FILL_ALL_SIZE(Size)
-    QN_STYLE_FILL_ALL_SIZE(MinSize)
-    QN_STYLE_FILL_ALL_SIZE(MaxSize)
-}
 
 - (void)setDirection:(QNDirection)direction
 {
@@ -400,254 +338,228 @@ if (value) {\
     [self setSize:QNUndefinedSize];
 }
 
-#define CACHE_STYLES_NAME(name)  [self.styleNames addObject:@""#name]; \
-return self;
-
-- (QNLayout *)flexDirection {
-    CACHE_STYLES_NAME(FlexDirection)
-}
-
-- (QNLayout *)justifyContent {
-    CACHE_STYLES_NAME(JustifyContent)
-}
-
-- (QNLayout *)alignContent {
-    CACHE_STYLES_NAME(AlignContent)
-}
-
-- (QNLayout *)alignItems {
-    CACHE_STYLES_NAME(AlignItems)
-}
-
-- (QNLayout *)alignSelf {
-    CACHE_STYLES_NAME(AlignSelf)
-}
-
-- (QNLayout *)positionType {
-    CACHE_STYLES_NAME(PositionType)
-}
-
-- (QNLayout *)flexWrap {
-    CACHE_STYLES_NAME(FlexWrap)
-}
-
-- (QNLayout *)flexGrow {
-    CACHE_STYLES_NAME(FlexGrow)
-}
-
-- (QNLayout *)flexShrink {
-    CACHE_STYLES_NAME(FlexShrink)
-}
-
-- (QNLayout *)flexBasiss {
-    CACHE_STYLES_NAME(FlexBasiss)
-}
-
-- (QNLayout *)position {
-    CACHE_STYLES_NAME(Position)
-}
-
-- (QNLayout *)margin {
-    CACHE_STYLES_NAME(Margin)
-}
-
-- (QNLayout *)marginT {
-    CACHE_STYLES_NAME(marginT);
-}
-
-- (QNLayout *)marginL {
-    CACHE_STYLES_NAME(marginL);
-}
-
-- (QNLayout *)marginB {
-    CACHE_STYLES_NAME(marginB);
-}
-
-- (QNLayout *)marginR {
-    CACHE_STYLES_NAME(marginR);
-}
-
-- (QNLayout *)padding {
-    CACHE_STYLES_NAME(Padding)
-}
-
-- (QNLayout *)paddingT {
-    CACHE_STYLES_NAME(paddingT);
-}
-
-- (QNLayout *)paddingL {
-    CACHE_STYLES_NAME(paddingL);
-}
-
-- (QNLayout *)paddingB {
-    CACHE_STYLES_NAME(paddingB);
-}
-
-- (QNLayout *)paddingR {
-    CACHE_STYLES_NAME(paddingR);
-}
-
-- (QNLayout *)width {
-    CACHE_STYLES_NAME(Width)
-}
-
-- (QNLayout *)height {
-    CACHE_STYLES_NAME(Height)
-}
-
-- (QNLayout *)minWidth {
-    CACHE_STYLES_NAME(MinWidth)
-}
-
-- (QNLayout *)minHeight {
-    CACHE_STYLES_NAME(MinHeight)
-}
-
-- (QNLayout *)maxWidth {
-    CACHE_STYLES_NAME(MaxWidth)
-}
-
-- (QNLayout *)maxHeight {
-    CACHE_STYLES_NAME(MaxHeight)
-}
-
-- (QNLayout *)maxSize {
-    CACHE_STYLES_NAME(MaxSize)
-}
-
-- (QNLayout *)minSize {
-    CACHE_STYLES_NAME(MinSize)
-}
-
-- (QNLayout *)aspectRatio {
-    CACHE_STYLES_NAME(AspectRatio)
-}
-
-- (QNLayout *)size {
-    CACHE_STYLES_NAME(Size)
-}
-
-#define QN_STYLE(key, value)\
-do {\
-if ([self.styleNames containsObject:@""#key]) {\
-[self set##key:[(NSNumber *)value floatValue]];\
-}\
-} while(0);
-
-#define QN_STYLE_ALL_DIRECTION(key, value) \
-do {\
-if ([self.styleNames containsObject:@""#key]) {\
-[self set##key:value.left forEdge:QNEdgeLeft];\
-[self set##key:value.top forEdge:QNEdgeTop];\
-[self set##key:value.right forEdge:QNEdgeRight];\
-[self set##key:value.bottom forEdge:QNEdgeBottom];\
-}\
-} while(0);
-
-#define QN_STYLE_ALL_SIZE(key, value) \
-do {\
-if ([self.styleNames containsObject:@""#key]) {\
-[self set##key:value];\
-}\
-} while(0);
-
-- (QNLayout * (^)(CGSize attr))equalToSize {
-    return ^QNLayout* (CGSize attr) {
-        QN_STYLE_ALL_SIZE(Size,attr)
-        QN_STYLE_ALL_SIZE(MinSize,attr)
-        QN_STYLE_ALL_SIZE(MaxSize,attr)
-        [self.styleNames removeAllObjects];
+- (QNLayout * (^)(QNFlexDirection attr))flexDirection {
+    return ^QNLayout* (QNFlexDirection attr) {
+        [self setFlexDirection:attr];
         return self;
     };
 }
 
-- (QNLayout * (^)(UIEdgeInsets attr))equalToEdgeInsets {
-    return ^QNLayout* (UIEdgeInsets attr) {
-        QN_STYLE_ALL_DIRECTION(Position,attr)
-        QN_STYLE_ALL_DIRECTION(Margin,attr)
-        QN_STYLE_ALL_DIRECTION(Padding,attr)
-        [self.styleNames removeAllObjects];
+- (QNLayout * (^)(QNJustify attr))justifyContent {
+    return ^QNLayout* (QNJustify attr) {
+        [self setJustifyContent:attr];
         return self;
     };
 }
 
-- (QNLayout * (^)(CGSize attr))et_size {
-    return [self equalToSize];
+- (QNLayout * (^)(QNAlign attr))alignContent {
+    return ^QNLayout* (QNAlign attr) {
+        [self setAlignContent:attr];
+        return self;
+    };
 }
 
-- (QNLayout * (^)(UIEdgeInsets attr))et_insets {
-    return [self equalToEdgeInsets];
+- (QNLayout * (^)(QNAlign attr))alignItems {
+    return ^QNLayout* (QNAlign attr) {
+        [self setAlignItems:attr];
+        return self;
+    };
 }
 
-- (QNLayout * (^)(CGFloat attr))eq {
+- (QNLayout * (^)(QNAlign attr))alignSelf {
+    return ^QNLayout* (QNAlign attr) {
+        [self setAlignSelf:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(QNPositionType attr))positionType {
+    return ^QNLayout* (QNPositionType attr) {
+        [self setPositionType:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(QNWrap attr))flexWrap {
+    return ^QNLayout* (QNWrap attr) {
+        [self setFlexWrap:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))flexGrow {
     return ^QNLayout* (CGFloat attr) {
-        QN_STYLE(Direction,@(attr))
-        QN_STYLE(FlexDirection,@(attr))
-        QN_STYLE(JustifyContent,@(attr))
-        QN_STYLE(AlignContent,@(attr))
-        QN_STYLE(AlignItems,@(attr))
-        QN_STYLE(AlignSelf,@(attr))
-        QN_STYLE(PositionType,@(attr))
-        QN_STYLE(FlexWrap,@(attr))
-        QN_STYLE(FlexGrow,@(attr))
-        QN_STYLE(FlexShrink,@(attr))
-        QN_STYLE(FlexBasis,@(attr))
-        QN_STYLE(Width,@(attr))
-        QN_STYLE(Height,@(attr))
-        QN_STYLE(MinWidth,@(attr))
-        QN_STYLE(MinHeight,@(attr))
-        QN_STYLE(MaxWidth,@(attr))
-        QN_STYLE(MaxHeight,@(attr))
-        QN_STYLE(AspectRatio,@(attr))
-        
-        CGFloat value = attr;
-        if ([self.styleNames containsObject:@"marginT"]) {
-            [self setMargin:value forEdge:QNEdgeTop];
-        }
-        if ([self.styleNames containsObject:@"marginL"]) {
-            [self setMargin:value forEdge:QNEdgeLeft];
-        }
-        if ([self.styleNames containsObject:@"marginB"]) {
-            [self setMargin:value forEdge:QNEdgeBottom];
-        }
-        if ([self.styleNames containsObject:@"marginR"]) {
-            [self setMargin:value forEdge:QNEdgeRight];
-        }
-        
-        if ([self.styleNames containsObject:@"paddingT"]) {
-            [self setPadding:value forEdge:QNEdgeTop];
-        }
-        if ([self.styleNames containsObject:@"paddingL"]) {
-            [self setPadding:value forEdge:QNEdgeLeft];
-        }
-        if ([self.styleNames containsObject:@"paddingB"]) {
-            [self setPadding:value forEdge:QNEdgeBottom];
-        }
-        if ([self.styleNames containsObject:@"paddingR"]) {
-            [self setPadding:value forEdge:QNEdgeRight];
-        }
-        
-        [self.styleNames removeAllObjects];
+        [self setFlexGrow:attr];
         return self;
     };
 }
 
-- (QNLayout * (^)(CGSize attr))eq_size {
-    return ^QNLayout* (CGSize attr) {
-        QN_STYLE_ALL_SIZE(Size,attr)
-        QN_STYLE_ALL_SIZE(MinSize,attr)
-        QN_STYLE_ALL_SIZE(MaxSize,attr)
-        [self.styleNames removeAllObjects];
+- (QNLayout * (^)(CGFloat attr))flexShrink {
+    return ^QNLayout* (CGFloat attr) {
+        [self setFlexShrink:attr];
         return self;
     };
 }
 
-- (QNLayout * (^)(UIEdgeInsets attr))eq_insets  {
+- (QNLayout * (^)(CGFloat attr))flexBasiss {
+    return ^QNLayout* (CGFloat attr) {
+        [self setFlexBasis:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(UIEdgeInsets attr))position {
     return ^QNLayout* (UIEdgeInsets attr) {
-        QN_STYLE_ALL_DIRECTION(Position,attr)
-        QN_STYLE_ALL_DIRECTION(Margin,attr)
-        QN_STYLE_ALL_DIRECTION(Padding,attr)
-        [self.styleNames removeAllObjects];
+        [self setPosition:attr.top forEdge:QNEdgeTop];
+        [self setPosition:attr.left forEdge:QNEdgeLeft];
+        [self setPosition:attr.bottom forEdge:QNEdgeBottom];
+        [self setPosition:attr.right forEdge:QNEdgeRight];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(UIEdgeInsets attr))margin {
+    return ^QNLayout* (UIEdgeInsets attr) {
+        [self setMargin:attr.top forEdge:QNEdgeTop];
+        [self setMargin:attr.left forEdge:QNEdgeLeft];
+        [self setMargin:attr.bottom forEdge:QNEdgeBottom];
+        [self setMargin:attr.right forEdge:QNEdgeRight];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))marginT {
+    return ^QNLayout* (CGFloat attr) {
+        [self setMargin:attr forEdge:QNEdgeTop];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))marginL {
+    return ^QNLayout* (CGFloat attr) {
+        [self setMargin:attr forEdge:QNEdgeLeft];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))marginB {
+    return ^QNLayout* (CGFloat attr) {
+        [self setMargin:attr forEdge:QNEdgeBottom];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))marginR {
+    return ^QNLayout* (CGFloat attr) {
+        [self setMargin:attr forEdge:QNEdgeRight];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(UIEdgeInsets attr))padding {
+    return ^QNLayout* (UIEdgeInsets attr) {
+        [self setPadding:attr.top forEdge:QNEdgeTop];
+        [self setPadding:attr.left forEdge:QNEdgeLeft];
+        [self setPadding:attr.bottom forEdge:QNEdgeBottom];
+        [self setPadding:attr.right forEdge:QNEdgeRight];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))paddingT {
+    return ^QNLayout* (CGFloat attr) {
+        [self setPadding:attr forEdge:QNEdgeTop];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))paddingL {
+    return ^QNLayout* (CGFloat attr) {
+        [self setPadding:attr forEdge:QNEdgeLeft];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))paddingB {
+    return ^QNLayout* (CGFloat attr) {
+        [self setPadding:attr forEdge:QNEdgeBottom];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))paddingR {
+    return ^QNLayout* (CGFloat attr) {
+        [self setPadding:attr forEdge:QNEdgeRight];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))width {
+    return ^QNLayout* (CGFloat attr) {
+        [self setWidth:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))height {
+    return ^QNLayout* (CGFloat attr) {
+        [self setHeight:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))minWidth {
+    return ^QNLayout* (CGFloat attr) {
+        [self setMinWidth:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))minHeight {
+    return ^QNLayout* (CGFloat attr) {
+        [self setMinHeight:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))maxWidth {
+    return ^QNLayout* (CGFloat attr) {
+        [self setMaxWidth:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))maxHeight {
+    return ^QNLayout* (CGFloat attr) {
+        [self setMaxHeight:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGSize attr))size {
+    return ^QNLayout* (CGSize attr) {
+        [self setSize:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGSize attr))minSize {
+    return ^QNLayout* (CGSize attr) {
+        [self setMinSize:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGSize attr))maxSize {
+    return ^QNLayout* (CGSize attr) {
+        [self setMaxSize:attr];
+        return self;
+    };
+}
+
+- (QNLayout * (^)(CGFloat attr))aspectRatio {
+    return ^QNLayout* (CGFloat attr) {
+        [self setAspectRatio:attr];
         return self;
     };
 }
@@ -655,6 +567,38 @@ if ([self.styleNames containsObject:@""#key]) {\
 - (QNLayout * (^)(void))wrapContent {
     return ^QNLayout* () {
         YGSetMesure(self);
+        return self;
+    };
+}
+
+- (QNLayout * (^)(void))wrapExactContent {
+    return ^QNLayout* () {
+        if ([self.context conformsToProtocol:@protocol(QNLayoutCalProtocol)] && self.allChildren.count == 0) {
+            CGSize currentSize = CGSizeMake(YGNodeStyleGetWidth(self.qnNode), YGNodeStyleGetHeight(self.qnNode));
+            CGSize originSize = [((id<QNLayoutCalProtocol>)(self.context)) calculateSizeWithSize:QNUndefinedSize];
+            CGFloat paddingT = YGNodeStyleGetPadding(self.qnNode, YGEdgeTop);
+            CGFloat paddingL = YGNodeStyleGetPadding(self.qnNode, YGEdgeLeft);
+            CGFloat paddingB = YGNodeStyleGetPadding(self.qnNode, YGEdgeBottom);
+            CGFloat paddingR = YGNodeStyleGetPadding(self.qnNode, YGEdgeRight);
+            if (YGValueIsUndefined(paddingT)) {
+                paddingT = 0;
+            }
+            if (YGValueIsUndefined(paddingL)) {
+                paddingL = 0;
+            }
+            if (YGValueIsUndefined(paddingB)) {
+                paddingB = 0;
+            }
+            if (YGValueIsUndefined(paddingR)) {
+                paddingR = 0;
+            }
+            CGSize exactSize = CGSizeMake(YGValueIsUndefined(currentSize.width) ? originSize.width + (paddingL + paddingR) : currentSize.width, YGValueIsUndefined(currentSize.height) ? originSize.height + (paddingT + paddingB) : currentSize.height);
+            [self setSize:exactSize];
+            [self setMinSize:exactSize];
+            [self setMaxSize:exactSize];
+        } else {
+            NSAssert(NO, @"context is not view");
+        }
         return self;
     };
 }
@@ -699,13 +643,6 @@ if ([self.styleNames containsObject:@""#key]) {\
     };
 }
 
-- (QNLayout * (^)(void))spaceBetween {
-    return ^QNLayout* () {
-        [self setJustifyContent:QNJustifySpaceBetween];
-        return self;
-    };
-}
-
 - (QNLayout * (^)(void))justifyCenter {
     return ^QNLayout* () {
         [self setJustifyContent:QNJustifyCenter];
@@ -713,41 +650,16 @@ if ([self.styleNames containsObject:@""#key]) {\
     };
 }
 
-- (QNLayout * (^)(void))wrapExactContent {
+- (QNLayout * (^)(void))absoluteLayout {
     return ^QNLayout* () {
-        if ([self.context conformsToProtocol:@protocol(QNLayoutCalProtocol)] && self.allChildren.count == 0) {
-            CGSize currentSize = CGSizeMake(YGNodeStyleGetWidth(self.qnNode), YGNodeStyleGetHeight(self.qnNode));
-            CGSize originSize = [((id<QNLayoutCalProtocol>)(self.context)) calculateSizeWithSize:QNUndefinedSize];
-            CGFloat paddingT = YGNodeStyleGetPadding(self.qnNode, YGEdgeTop);
-            CGFloat paddingL = YGNodeStyleGetPadding(self.qnNode, YGEdgeLeft);
-            CGFloat paddingB = YGNodeStyleGetPadding(self.qnNode, YGEdgeBottom);
-            CGFloat paddingR = YGNodeStyleGetPadding(self.qnNode, YGEdgeRight);
-            if (YGValueIsUndefined(paddingT)) {
-                paddingT = 0;
-            }
-            if (YGValueIsUndefined(paddingL)) {
-                paddingL = 0;
-            }
-            if (YGValueIsUndefined(paddingB)) {
-                paddingB = 0;
-            }
-            if (YGValueIsUndefined(paddingR)) {
-                paddingR = 0;
-            }
-            CGSize exactSize = CGSizeMake(YGValueIsUndefined(currentSize.width) ? originSize.width + (paddingL + paddingR) : currentSize.width, YGValueIsUndefined(currentSize.height) ? originSize.height + (paddingT + paddingB) : currentSize.height);
-            [self setSize:exactSize];
-            [self setMinSize:exactSize];
-            [self setMaxSize:exactSize];
-        } else {
-            NSAssert(NO, @"context is not view");
-        }
+        [self setPositionType:QNPositionTypeAbsolute];
         return self;
     };
 }
 
-- (QNLayout * (^)(void))absoluteLayout {
+- (QNLayout * (^)(void))spaceBetween {
     return ^QNLayout* () {
-        [self setPositionType:QNPositionTypeAbsolute];
+        [self setJustifyContent:QNJustifySpaceBetween];
         return self;
     };
 }

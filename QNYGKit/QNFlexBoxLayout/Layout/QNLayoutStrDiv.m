@@ -20,7 +20,7 @@
 }
 
 + (instancetype)divWithAttributedString:(NSAttributedString *)calAttrStr lineNum:(NSUInteger)lineNum {
-    QNLayoutStrDiv *div = [self linearDivWithLayout:^(QNLayout *layout) {
+    QNLayoutStrDiv *div = [self linearLayout:^(QNLayout *layout) {
         layout.wrapContent();
     }];
     div.calAttributedStr = calAttrStr;

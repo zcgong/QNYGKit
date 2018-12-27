@@ -20,12 +20,12 @@
 /**
  线性布局Div
  */
-+ (instancetype)linearDivWithLayout:(void(^)( QNLayout *layout))layout;
++ (instancetype)linearLayout:(void(^)( QNLayout *layout))layout;
 
 /**
  垂直布局Div
  */
-+ (instancetype)verticalDivWithLayout:(void(^)( QNLayout *layout))layout;
++ (instancetype)verticalLayout:(void(^)( QNLayout *layout))layout;
 
 /**
 绝对布局
