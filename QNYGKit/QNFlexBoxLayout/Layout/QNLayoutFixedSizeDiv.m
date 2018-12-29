@@ -25,6 +25,10 @@
     [super qn_layoutWithSize:self.fixedSize];
 }
 
+- (void)qn_layoutWithWrapContent {
+    [self qn_layoutWithSize:self.fixedSize];
+}
+
 - (void)qn_asyncLayoutWithSize:(CGSize)size {
     [super qn_asyncLayoutWithSize:self.fixedSize];
 }

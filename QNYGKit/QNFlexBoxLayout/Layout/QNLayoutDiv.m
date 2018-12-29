@@ -38,9 +38,6 @@
 + (instancetype)verticalLayout:(void(^)(QNLayout *layout))layout {
     QNLayoutDiv *layoutDiv = [self new];
     [layoutDiv qn_makeLayout:layout];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection(QNFlexDirectionColumn);
-    }];
     return layoutDiv;
 }
 
@@ -171,6 +168,10 @@
     }
 }
 
+- (void)qn_layoutWithWrapContent {
+    [self qn_layoutWithSize:QNUndefinedSize];
+}
+
 - (void)qn_asyncLayoutWithSize:(CGSize)size {
     [QNAsyncLayoutTransaction addCalculateBlock:^{
         [self.qn_layout calculateLayoutWithSize:size];
@@ -197,16 +198,12 @@
     return self.qn_layout;
 }
 
-- (void)p_removeAllChildren {
-    [self p_updateChlidren:nil];
-}
-
 - (void)qn_markDirty {
     for (id<QNLayoutProtocol> layoutElement in self.qn_children) {
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
         [layoutElement qn_markDirty];
     }
-    [self p_removeAllChildren];
+    [self p_updateChlidren:nil];
 }
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {

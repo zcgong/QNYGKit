@@ -11,8 +11,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol QNLayoutCalProtocol <NSObject>
+
+/**
+ 根据给定的参考尺寸计算实际的尺寸
+
+ @param size    参考尺寸
+ @return 实际尺寸
+ */
 - (CGSize)calculateSizeWithSize:(CGSize)size;
-- (void)qn_layoutWithWrapContent;
+
 @end
 
 NS_ASSUME_NONNULL_END

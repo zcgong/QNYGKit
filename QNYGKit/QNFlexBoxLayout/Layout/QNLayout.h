@@ -97,9 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QNLayout : NSObject
 
 - (QNLayout * (^)(QNFlexDirection attr))flexDirection;
-
 - (QNLayout * (^)(QNJustify attr))justifyContent;
-
 - (QNLayout * (^)(QNAlign attr))alignContent;
 - (QNLayout * (^)(QNAlign attr))alignItems;
 - (QNLayout * (^)(QNAlign attr))alignSelf;
@@ -107,9 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (QNLayout * (^)(QNPositionType attr))positionType;
 
 - (QNLayout * (^)(QNWrap attr))flexWrap;
-
 - (QNLayout * (^)(CGFloat attr))flexGrow;
-
 - (QNLayout * (^)(CGFloat attr))flexShrink;
 - (QNLayout * (^)(CGFloat attr))flexBasiss;
 
@@ -129,7 +125,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (QNLayout * (^)(CGFloat attr))width;
 - (QNLayout * (^)(CGFloat attr))height;
-
 - (QNLayout * (^)(CGFloat attr))minWidth;
 - (QNLayout * (^)(CGFloat attr))minHeight;
 - (QNLayout * (^)(CGFloat attr))maxWidth;
@@ -186,10 +181,21 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (QNLayout * (^)(void))absoluteLayout;
 
+/**
+ 设置子元素
+ */
 - (QNLayout * (^)(NSArray*))children;
 
+/**
+ 使用布局缓存进行布局
+
+ @param layoutCache 布局缓存
+ */
 - (void)applyLayoutCache:(QNLayoutCache *)layoutCache;
 
+/**
+ 获取布局缓存
+ */
 - (QNLayoutCache *)layoutCache;
 
 @end

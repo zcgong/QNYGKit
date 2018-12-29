@@ -167,9 +167,8 @@
     
     // 绝对布局
     UIView *bottomView = QN_View_Rect(RECT_WH(150, 150)).bgColor([UIColor blueColor]);
-    [bottomView qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapSize().absoluteLayout();
-        layout.margin(QN_INSETS_TL(self.view.height - 180, SCREEN_WIDTH - 180));
+    [bottomView qn_makeAbsoluteLayout:^(QNLayout *layout) {
+        layout.wrapSize().margin(QN_INSETS_TL(self.view.height - 180, SCREEN_WIDTH - 180));
     }];
     [self.view qn_makeLayout:^(QNLayout *layout) {
         layout.children(@[bottomView]);

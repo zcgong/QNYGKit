@@ -28,10 +28,6 @@
     return div;
 }
 
-- (void)qn_layoutWithWrapContent {
-    [self qn_layoutWithSize:QNUndefinedSize];
-}
-
 #pragma mark - QNLayoutCalProtocol
 
 - (CGSize)calculateSizeWithSize:(CGSize)size {
