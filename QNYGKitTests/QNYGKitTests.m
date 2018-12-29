@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "QNFlexBoxLayout.h"
+#import "QNYGKit.h"
 
 #define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
 
@@ -71,7 +71,7 @@
         layout.margin(UIEdgeInsetsMake(12, 5, 8, 0));
     }];
     
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayout:^(QNLayout *layout) {
+    QNLayoutDiv *mainDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
         layout.padding(UIEdgeInsetsMake(3, 4, 5, 6));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);
     }];

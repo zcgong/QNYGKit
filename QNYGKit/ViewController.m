@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "QNFlexBoxLayout.h"
+#import "QNYGKit.h"
 #import "UIView+ZJ.h"
 #import "QNFeedView.h"
 #import "QNFeedModel.h"

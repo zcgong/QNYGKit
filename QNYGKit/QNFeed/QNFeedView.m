@@ -7,7 +7,7 @@
 //
 
 #import "QNFeedView.h"
-#import "QNFlexBoxLayout.h"
+#import "QNYGKit.h"
 #import "QNFeedViewLayoutModel.h"
 #import "QNFeedViewDataModel.h"
 

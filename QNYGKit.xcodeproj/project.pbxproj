@@ -87,6 +87,7 @@
 		3C35674121CD1D9B006342D8 /* UILabel+Chainable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Chainable.m"; sourceTree = "<group>"; };
 		3C35674221CD1D9B006342D8 /* UIButton+Chainable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Chainable.h"; sourceTree = "<group>"; };
 		3C35674321CD1D9B006342D8 /* UIButton+Chainable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Chainable.m"; sourceTree = "<group>"; };
+		3C3BC96E21D783EC0097CE4F /* QNYGKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNYGKit.h; sourceTree = "<group>"; };
 		3C6DE0212165ADFF00BDC6E6 /* QNBaseDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNBaseDataModel.h; sourceTree = "<group>"; };
 		3C6DE0222165ADFF00BDC6E6 /* QNBaseDataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNBaseDataModel.m; sourceTree = "<group>"; };
 		3C6DE0242165AF0700BDC6E6 /* QNBaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNBaseModel.h; sourceTree = "<group>"; };
@@ -121,7 +122,6 @@
 		61062F71215B5A3700C279D9 /* QNFeedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNFeedView.h; sourceTree = "<group>"; };
 		61062F72215B5A3700C279D9 /* QNFeedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNFeedView.m; sourceTree = "<group>"; };
 		61062F74215B5B1600C279D9 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
-		61062F79215B60F300C279D9 /* QNFlexBoxLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNFlexBoxLayout.h; sourceTree = "<group>"; };
 		617974C921549FDE00142DD9 /* QNYGKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QNYGKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		617974CC21549FDE00142DD9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		617974CD21549FDE00142DD9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -258,7 +258,7 @@
 		61062F76215B607800C279D9 /* QNFlexBoxLayout */ = {
 			isa = PBXGroup;
 			children = (
-				61062F79215B60F300C279D9 /* QNFlexBoxLayout.h */,
+				3C3BC96E21D783EC0097CE4F /* QNYGKit.h */,
 				3C35673A21CD1D78006342D8 /* Chainable */,
 				61062F77215B609500C279D9 /* Yoga */,
 				61062F78215B60C500C279D9 /* Layout */,
