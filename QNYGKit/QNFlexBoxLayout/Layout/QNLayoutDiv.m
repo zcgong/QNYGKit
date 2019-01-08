@@ -107,11 +107,40 @@
 }
 
 - (void)qn_layoutWithSize:(CGSize)size {
+    CGSize oriSize = size;
+    if (oriSize.width <= 0) {
+        oriSize.width = QNUndefinedValue;
+    }
+    
+    if (oriSize.height <= 0) {
+        oriSize.height = QNUndefinedValue;
+    }
     [self qn_layout].wrapContent();
     [[self qn_layout] resetUndefinedSize];
-    [self.qn_layout calculateLayoutWithSize:size];
+    [self.qn_layout calculateLayoutWithSize:oriSize];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
+}
+
+- (void)qn_layoutWithWrapContent {
+    [self qn_layoutWithSize:QNUndefinedSize];
+}
+
+- (void)qn_asyncLayoutWithSize:(CGSize)size {
+    CGSize oriSize = size;
+    if (oriSize.width <= 0) {
+        oriSize.width = QNUndefinedValue;
+    }
+    
+    if (oriSize.height <= 0) {
+        oriSize.height = QNUndefinedValue;
+    }
+    [QNAsyncLayoutTransaction addCalculateBlock:^{
+        [self.qn_layout calculateLayoutWithSize:oriSize];
+    } complete:^{
+        self.frame = self.qn_layout.frame;
+        [self qn_applyLayoutToViewHierachy];
+    }];
 }
 
 - (void)qn_applyLayoutToViewHierachy {
@@ -166,19 +195,6 @@
             layoutElement.frame = CGRectMake(x, CGRectGetMinY(layoutElement.frame), CGRectGetWidth(layoutElement.frame), CGRectGetHeight(layoutElement.frame));
         }
     }
-}
-
-- (void)qn_layoutWithWrapContent {
-    [self qn_layoutWithSize:QNUndefinedSize];
-}
-
-- (void)qn_asyncLayoutWithSize:(CGSize)size {
-    [QNAsyncLayoutTransaction addCalculateBlock:^{
-        [self.qn_layout calculateLayoutWithSize:size];
-    } complete:^{
-        self.frame = self.qn_layout.frame;
-        [self qn_applyLayoutToViewHierachy];
-    }];
 }
 
 - (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index {

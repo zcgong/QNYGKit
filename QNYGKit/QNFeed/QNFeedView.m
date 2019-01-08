@@ -79,42 +79,4 @@
     self.timeLabel.frame = fLayoutModel.timeStrFrame;
 }
 
-/*
-- (void)p_layoutViews {
-    [_titleLabel qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapContent();
-    }];
-    
-    [_contentLabel qn_makeLayout:^(QNLayout *layout) {
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(10, 0, 10, 0)).wrapContent();
-    }];
-    
-    [_contentImageView qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapSize();
-    }];
-    
-    QNLayoutDiv *div = [QNLayoutDiv layoutDivWithFlexDirection:QNFlexDirectionRow];
-    
-    [_usernameLabel qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapContent();
-    }];
-    
-    [_timeLabel qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapContent();
-    }];
-    
-    [div qn_makeLayout:^(QNLayout *layout) {
-        layout.justifyContent.equalTo(@(QNJustifySpaceBetween));
-        layout.children(@[self.usernameLabel, self.timeLabel]);
-        layout.margin.equalToEdgeInsets(UIEdgeInsetsMake(10, 0, 0, 0));
-    }];
-    
-    [self qn_makeLayout:^(QNLayout *layout) {
-        layout.flexDirection.equalTo(@(QNFlexDirectionColumn));
-        layout.children(@[self.titleLabel, self.contentLabel, self.contentImageView, div]);
-        layout.padding.equalToEdgeInsets(UIEdgeInsetsMake(10, 10, 10, 10));
-    }];
-}
- */
-
 @end

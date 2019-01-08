@@ -142,40 +142,62 @@
 }
 
 - (void)qn_layoutWithSize:(CGSize)size {
+    CGSize oriSize = size;
+    if (oriSize.width <= 0) {
+        oriSize.width = QNUndefinedValue;
+    }
+    
+    if (oriSize.height <= 0) {
+        oriSize.height = QNUndefinedValue;
+    }
     self.qn_layout.wrapContent();
-    [self.qn_layout resetUndefinedSize];
-    [self.qn_layout calculateLayoutWithSize:size];
+    [self.qn_layout calculateLayoutWithSize:oriSize];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
+    [self.qn_layout resetUndefinedSize];
 }
 
 - (void)qn_asyncLayoutWithSize:(CGSize)size {
+    CGSize oriSize = size;
+    if (oriSize.width <= 0) {
+        oriSize.width = QNUndefinedValue;
+    }
+    
+    if (oriSize.height <= 0) {
+        oriSize.height = QNUndefinedValue;
+    }
     self.qn_layout.wrapContent();
-    [self.qn_layout resetUndefinedSize];
     [QNAsyncLayoutTransaction addCalculateBlock:^{
-        [self.qn_layout calculateLayoutWithSize:size];
+        [self.qn_layout calculateLayoutWithSize:oriSize];
     } complete:^{
         self.frame = self.qn_layout.frame;
         [self qn_applyLayoutToViewHierachy];
+        [self.qn_layout resetUndefinedSize];
     }];
 }
 
 - (void)qn_layoutOriginWithSize:(CGSize)size {
-    self.qn_layout.wrapContent();
-    [self.qn_layout resetUndefinedSize];
-    [self.qn_layout calculateLayoutWithSize:size];
-    [self p_layoutSize:self.qn_layout.frame.size];
-    [self qn_applyLayoutToViewHierachy];
+    CGPoint origin = self.frame.origin;
+    [self qn_layoutWithSize:size];
+    self.frame = (CGRect){origin, self.frame.size};
 }
 
 - (void)qn_asyncLayoutOriginWithSize:(CGSize)size {
+    CGSize oriSize = size;
+    if (oriSize.width <= 0) {
+        oriSize.width = QNUndefinedValue;
+    }
+    
+    if (oriSize.height <= 0) {
+        oriSize.height = QNUndefinedValue;
+    }
     self.qn_layout.wrapContent();
-    [self.qn_layout resetUndefinedSize];
     [QNAsyncLayoutTransaction addCalculateBlock:^{
-        [self.qn_layout calculateLayoutWithSize:size];
+        [self.qn_layout calculateLayoutWithSize:oriSize];
     } complete:^{
         [self p_layoutSize:self.qn_layout.frame.size];
         [self qn_applyLayoutToViewHierachy];
+        [self.qn_layout resetUndefinedSize];
     }];
 }
 

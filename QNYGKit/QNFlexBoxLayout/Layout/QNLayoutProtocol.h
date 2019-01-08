@@ -29,8 +29,8 @@
 
 /**
  插入一个布局子元素
- 
- @param layout
+
+ @param layout 子元素
  @param index 位置
  */
 - (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index;
