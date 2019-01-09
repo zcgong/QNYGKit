@@ -16,17 +16,7 @@ static NSMutableArray *messageQueue = nil;
 
 static CFRunLoopSourceRef _runLoopSource = nil;
 
-static dispatch_queue_t calculate_creation_queue() {
-    static dispatch_queue_t calculate_creation_queue;
-    static dispatch_once_t creationOnceToken;
-    dispatch_once(&creationOnceToken, ^{
-        calculate_creation_queue = dispatch_queue_create("qnlayout.calculateLayout", DISPATCH_QUEUE_SERIAL);
-    });
-    
-    return calculate_creation_queue;
-}
-
-static void display_Locked(dispatch_block_t block) {
+static void calculate_Locked(dispatch_block_t block) {
     
     if ([UIDevice currentDevice].systemVersion.floatValue >= 10.0) {
         
@@ -59,7 +49,7 @@ static void display_Locked(dispatch_block_t block) {
 
 
 static void enqueue(dispatch_block_t block) {
-    display_Locked(^() {
+    calculate_Locked(^() {
         if (!messageQueue) {
             messageQueue = [NSMutableArray array];
         }
@@ -70,7 +60,7 @@ static void enqueue(dispatch_block_t block) {
 }
 
 static void processQueue() {
-    display_Locked(^{
+    calculate_Locked(^{
         for (dispatch_block_t block in messageQueue) {
             block();
         }
@@ -78,19 +68,11 @@ static void processQueue() {
     });
 }
 
-
-static void calculate_create_task_safely(dispatch_block_t block, dispatch_block_t complete) {
-    dispatch_async(calculate_creation_queue(), ^ {
-        block();
-        enqueue(complete);
-    });
-}
-
 static void sourceContextCallBackLog(void *info) {
     
-#if DEBUG
+#if QNYGKit_DEBUG
     
-    NSLog(@"applay FlexBox layout");
+    NSLog(@"QNYGKit applay flexbox layout.");
     
 #endif
     
@@ -104,17 +86,17 @@ static void _messageGroupRunLoopObserverCallback(CFRunLoopObserverRef observer, 
 
 static dispatch_semaphore_t FBConcurrentSemaphore;
 
-static dispatch_queue_t display_creation_queue() {
+static dispatch_queue_t calculate_creation_queue() {
     static dispatch_queue_t dispalyQueue = NULL;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        dispalyQueue = dispatch_queue_create("qnlayout.display", DISPATCH_QUEUE_CONCURRENT);
+        dispalyQueue = dispatch_queue_create("qnlayout.calculate", DISPATCH_QUEUE_CONCURRENT);
         dispatch_set_target_queue(dispalyQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0));
     });
     return dispalyQueue;
 }
 
-static void display_create_task_safely(dispatch_block_t displayBlock, dispatch_block_t complete) {
+static void calculate_create_task_safely(dispatch_block_t calculateBlock, dispatch_block_t complete) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSUInteger processorCount = [NSProcessInfo processInfo].activeProcessorCount;
@@ -122,9 +104,9 @@ static void display_create_task_safely(dispatch_block_t displayBlock, dispatch_b
         FBConcurrentSemaphore = dispatch_semaphore_create(maxConcurrentCount);
     });
     
-    dispatch_async(display_creation_queue(), ^{
+    dispatch_async(calculate_creation_queue(), ^{
         dispatch_semaphore_wait(FBConcurrentSemaphore, DISPATCH_TIME_FOREVER);
-        displayBlock();
+        calculateBlock();
         enqueue(complete);
         dispatch_semaphore_signal(FBConcurrentSemaphore);
     });
@@ -155,13 +137,8 @@ static void display_create_task_safely(dispatch_block_t displayBlock, dispatch_b
 }
 
 + (void)addCalculateBlock:(dispatch_block_t)calculateBlock
-                 complete:(nullable dispatch_block_t)complete {
+                 complete:(dispatch_block_t)complete {
     calculate_create_task_safely(calculateBlock, complete);
-}
-
-+ (void)addDisplayBlock:(dispatch_block_t)displayBlock
-               complete:(dispatch_block_t)complete {
-    display_create_task_safely(displayBlock, complete);
 }
 
 @end
