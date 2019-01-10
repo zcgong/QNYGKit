@@ -44,4 +44,8 @@
     return CGSizeMake(ceil(calSize.width), ceil(calSize.height));
 }
 
+- (BOOL)allowAsyncCalculated {
+    return YES;
+}
+
 @end

@@ -61,18 +61,27 @@ static YGSize YGMeasureView(
     id<QNLayoutCalProtocol> calLayout = (__bridge id<QNLayoutCalProtocol>) YGNodeGetContext(node);
     
     __block CGSize sizeThatFits;
-    if ([[NSThread currentThread] isMainThread]) {
+    
+    // 如果允许异步计算，则在当前线程直接计算
+    if ([calLayout allowAsyncCalculated]) {
         sizeThatFits = [calLayout calculateSizeWithSize:(CGSize) {
             .width = constrainedWidth,
             .height = constrainedHeight,
         }];
     } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        if ([[NSThread currentThread] isMainThread]) {
             sizeThatFits = [calLayout calculateSizeWithSize:(CGSize) {
                 .width = constrainedWidth,
                 .height = constrainedHeight,
             }];
-        });
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                sizeThatFits = [calLayout calculateSizeWithSize:(CGSize) {
+                    .width = constrainedWidth,
+                    .height = constrainedHeight,
+                }];
+            });
+        }
     }
     
     return (YGSize) {

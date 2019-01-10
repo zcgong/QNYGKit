@@ -116,17 +116,17 @@
         oriSize.height = QNUndefinedValue;
     }
     [self qn_layout].wrapContent();
-    [[self qn_layout] resetUndefinedSize];
     [self.qn_layout calculateLayoutWithSize:oriSize];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
+    [[self qn_layout] resetUndefinedSize];
 }
 
 - (void)qn_layoutWithWrapContent {
     [self qn_layoutWithSize:QNUndefinedSize];
 }
 
-- (void)qn_asyncLayoutWithSize:(CGSize)size {
+- (void)qn_asyncLayoutWithSize:(CGSize)size complete:(void(^)(CGRect frame))complete {
     CGSize oriSize = size;
     if (oriSize.width <= 0) {
         oriSize.width = QNUndefinedValue;
@@ -140,6 +140,10 @@
     } complete:^{
         self.frame = self.qn_layout.frame;
         [self qn_applyLayoutToViewHierachy];
+        [[self qn_layout] resetUndefinedSize];
+        if (complete) {
+            complete(self.frame);
+        }
     }];
 }
 
@@ -214,10 +218,10 @@
     return self.qn_layout;
 }
 
-- (void)qn_markDirty {
+- (void)qn_clearLayout {
     for (id<QNLayoutProtocol> layoutElement in self.qn_children) {
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
-        [layoutElement qn_markDirty];
+        [layoutElement qn_clearLayout];
     }
     [self p_updateChlidren:nil];
 }

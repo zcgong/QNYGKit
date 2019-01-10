@@ -49,11 +49,4 @@
  */
 - (void)qn_layoutOriginWithSize:(CGSize)size;
 
-/**
- 根据size进行布局（异步）
- 
- @param size 尺寸参数
- */
-- (void)qn_asyncLayoutOriginWithSize:(CGSize)size;
-
 @end

@@ -29,8 +29,8 @@
     [self qn_layoutWithSize:self.fixedSize];
 }
 
-- (void)qn_asyncLayoutWithSize:(CGSize)size {
-    [super qn_asyncLayoutWithSize:self.fixedSize];
+- (void)qn_asyncLayoutWithSize:(CGSize)size complete:(void(^)(CGRect frame))complete {
+    [super qn_asyncLayoutWithSize:self.fixedSize complete:complete];
 }
 
 @end

@@ -84,11 +84,11 @@
     self.qn_children = nil;
 }
 
-- (void)qn_markDirty {
+- (void)qn_clearLayout {
     NSArray *children = [self qn_children];
     for (id<QNLayoutProtocol> layoutElement in children) {
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
-        [layoutElement qn_markDirty];
+        [layoutElement qn_clearLayout];
     }
     [self p_removeAllChildren];
     objc_setAssociatedObject(self, @selector(qn_layout), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -157,7 +157,7 @@
     [self.qn_layout resetUndefinedSize];
 }
 
-- (void)qn_asyncLayoutWithSize:(CGSize)size {
+- (void)qn_asyncLayoutWithSize:(CGSize)size complete:(void(^)(CGRect frame))complete {
     CGSize oriSize = size;
     if (oriSize.width <= 0) {
         oriSize.width = QNUndefinedValue;
@@ -173,6 +173,9 @@
         self.frame = self.qn_layout.frame;
         [self qn_applyLayoutToViewHierachy];
         [self.qn_layout resetUndefinedSize];
+        if (complete) {
+            complete(self.frame);
+        }
     }];
 }
 
@@ -180,25 +183,6 @@
     CGPoint origin = self.frame.origin;
     [self qn_layoutWithSize:size];
     self.frame = (CGRect){origin, self.frame.size};
-}
-
-- (void)qn_asyncLayoutOriginWithSize:(CGSize)size {
-    CGSize oriSize = size;
-    if (oriSize.width <= 0) {
-        oriSize.width = QNUndefinedValue;
-    }
-    
-    if (oriSize.height <= 0) {
-        oriSize.height = QNUndefinedValue;
-    }
-    self.qn_layout.wrapContent();
-    [QNAsyncLayoutTransaction addCalculateBlock:^{
-        [self.qn_layout calculateLayoutWithSize:oriSize];
-    } complete:^{
-        [self p_layoutSize:self.qn_layout.frame.size];
-        [self qn_applyLayoutToViewHierachy];
-        [self.qn_layout resetUndefinedSize];
-    }];
 }
 
 - (void)qn_applyLayoutToViewHierachy {
@@ -246,6 +230,10 @@
 - (CGSize)calculateSizeWithSize:(CGSize)size {
     CGSize calSize = [self sizeThatFits:size];
     return CGSizeMake(ceil(calSize.width), ceil(calSize.height));
+}
+
+- (BOOL)allowAsyncCalculated {
+    return NO;
 }
 
 #pragma mark - private

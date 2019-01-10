@@ -106,12 +106,13 @@
         layout.children(@[titleDiv, linearDiv]);
     }];
 
-    [mainDiv qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
-    NSAssert(CGSizeEqualToSize(mainDiv.frame.size, mainView.frame.size), @"main frame not equal");
-    NSAssert(CGRectEqualToRect(labelTitle.frame, titleDiv.frame), @"title frame not equal");
-    NSAssert(CGRectEqualToRect(divA.frame, imageViewA.frame), @"A frame not equal");
-    NSAssert(CGRectEqualToRect(divB.frame, imageViewB.frame), @"B frame not equal");
-    NSAssert(CGRectEqualToRect(divC.frame, imageViewC.frame), @"C frame not equal");
+    [mainDiv qn_asyncLayoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue) complete:^(CGRect frame) {
+        NSAssert(CGSizeEqualToSize(mainDiv.frame.size, mainView.frame.size), @"main frame not equal");
+        NSAssert(CGRectEqualToRect(labelTitle.frame, titleDiv.frame), @"title frame not equal");
+        NSAssert(CGRectEqualToRect(divA.frame, imageViewA.frame), @"A frame not equal");
+        NSAssert(CGRectEqualToRect(divB.frame, imageViewB.frame), @"B frame not equal");
+        NSAssert(CGRectEqualToRect(divC.frame, imageViewC.frame), @"C frame not equal");
+    }];
     
     NSString *dataFilePath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:dataFilePath];

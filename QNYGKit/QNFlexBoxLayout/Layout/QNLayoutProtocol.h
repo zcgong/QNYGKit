@@ -30,7 +30,6 @@
 /**
  插入一个布局子元素
  
- @param layout 子元素
  @param index 位置
  */
 - (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index;
@@ -65,7 +64,8 @@
 /**
  根据给定的尺寸进行异步布局
  */
-- (void)qn_asyncLayoutWithSize:(CGSize)size;
+- (void)qn_asyncLayoutWithSize:(CGSize)size
+                      complete:(void(^)(CGRect frame))complete;;
 
 /**
  自适应大小
@@ -80,6 +80,6 @@
 /**
  标记布局缓存失效
  */
-- (void)qn_markDirty;
+- (void)qn_clearLayout;
 
 @end
