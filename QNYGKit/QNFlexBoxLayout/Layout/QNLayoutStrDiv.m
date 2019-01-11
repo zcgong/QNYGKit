@@ -45,7 +45,7 @@
 }
 
 - (BOOL)allowAsyncCalculated {
-    return YES;
+    return self.lineNum <= 0;
 }
 
 @end

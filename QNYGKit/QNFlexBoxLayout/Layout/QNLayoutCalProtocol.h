@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGSize)calculateSizeWithSize:(CGSize)size;
 
 /**
- 是否可以异步计算，默认不允许
+ 是否可以异步计算
  */
 - (BOOL)allowAsyncCalculated;
 

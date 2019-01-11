@@ -119,7 +119,6 @@
     [self.qn_layout calculateLayoutWithSize:oriSize];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
-    [[self qn_layout] resetUndefinedSize];
 }
 
 - (void)qn_layoutWithWrapContent {
@@ -140,7 +139,6 @@
     } complete:^{
         self.frame = self.qn_layout.frame;
         [self qn_applyLayoutToViewHierachy];
-        [[self qn_layout] resetUndefinedSize];
         if (complete) {
             complete(self.frame);
         }
