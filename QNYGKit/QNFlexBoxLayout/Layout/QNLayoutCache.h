@@ -11,7 +11,10 @@
 
 @interface QNLayoutCache : NSObject
 
+/// 自身frame
 @property(nonatomic, assign) CGRect frame;
+
+/// 子元素frame
 @property(nonatomic, copy) NSArray<QNLayoutCache *> *subLayoutCaches;
 
 @end
