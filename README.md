@@ -18,12 +18,12 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 
 ### 4、QNYGKit特点
 * 基于Yoga实现，遵循FlexBox协议，性能高，对项目侵入性较低
-* QNLayout布局方便，支持链式操作，虚拟视图Div，异步计算size，多种方式计算size，布局缓存与失效
-* 完全使用Div计算view的frame体系，无需创建真实view，把view的布局计算完全独立开来
+* QNLayout布局方便，支持链式书写UI和布局
+* 异步计算size，多种方式计算size，布局缓存与失效
+* 完全使用虚拟视图VirtualView计算frame体系，无需创建真实view，把view的布局计算完全独立开来
 * 基于协议实现兼容UITableView的使用，将数据、布局、view三者逻辑上独立
 * 性能和Native基本一致
 * 相对完善的单元测试
-* 支持链式书写UI，提高开发效率
 ***
 
 ### 5、实现原理
@@ -42,16 +42,8 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ### 7、使用举例（可将工程下载到本地测试）
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/qnygkit.png)
 ```objective-c
-//
-//  ViewController.m
-//  QNYGKit
-//
-//  Created by jayhuan on 2018/9/21.
-//  Copyright © 2018 jayhuan. All rights reserved.
-//
-
 #import "ViewController.h"
-#import "QNFlexBoxLayout.h"
+#import "QNYGKit.h"
 #import "UIView+ZJ.h"
 #import "QNFeedView.h"
 #import "QNFeedModel.h"
@@ -112,14 +104,14 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     [imageViewC qn_makeLayout:^(QNLayout *layout) {
         layout.size(CGSizeMake(114, 68));
     }];
-    QNLayoutDiv *imageDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *imageVV = [QNLayoutVirtualView linearLayout:^(QNLayout *layout) {
         layout.spaceBetween();    // 分散排列，平分间距
         layout.children(@[imageViewA, imageViewB, imageViewC]); // 设置子view
     }];
     
     [mainView qn_makeVerticalLayout:^(QNLayout *layout) {
         layout.padding(QN_INSETS(15, 10, 10, 10));
-        layout.children(@[labelTitle, imageDiv]);
+        layout.children(@[labelTitle, imageVV]);
     }];
     
     [mainView addSubview:labelTitle];
@@ -128,34 +120,36 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     [mainView addSubview:imageViewC];
     [self.view addSubview:mainView];
     [mainView qn_layoutWithFixedWidth];
+    
     mainView.top = labelD.bottom + 10;
     
     // 6、完全使用Div计算view的frame
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
     NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。" attributes:attrDict];
-    QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv divWithAttributedString:[mAttrString copy]];
-    [titleDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutTextVirtualView *titleVV = [QNLayoutTextVirtualView virtualViewWithAttributedString:[mAttrString copy]];
+    [titleVV qn_makeLayout:^(QNLayout *layout) {
         layout.marginB(10);
     }];
-    QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutDiv *linearDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+    QNLayoutFixedSizeVirtualView *divA = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeVirtualView *divB = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeVirtualView *divC = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutVirtualView *linearVV = [QNLayoutVirtualView linearLayout:^(QNLayout *layout) {
         layout.spaceBetween();    // 分散排列，平分间距
         layout.children(@[divA, divB, divC]); // 设置子view
     }];
     
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *mainVV = [QNLayoutVirtualView verticalLayout:^(QNLayout *layout) {
         layout.padding(QN_INSETS(15, 10, 10, 10));
-        layout.children(@[titleDiv, linearDiv]);
+        layout.children(@[titleVV, linearVV]);
     }];
 
-    [mainDiv qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
-    NSAssert(CGSizeEqualToSize(mainDiv.frame.size, mainView.frame.size), @"main frame not equal");
-    NSAssert(CGRectEqualToRect(labelTitle.frame, titleDiv.frame), @"title frame not equal");
-    NSAssert(CGRectEqualToRect(divA.frame, imageViewA.frame), @"A frame not equal");
-    NSAssert(CGRectEqualToRect(divB.frame, imageViewB.frame), @"B frame not equal");
-    NSAssert(CGRectEqualToRect(divC.frame, imageViewC.frame), @"C frame not equal");
+    [mainVV qn_asyncLayoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue) complete:^(CGRect frame) {
+        NSAssert(CGSizeEqualToSize(mainVV.frame.size, mainView.frame.size), @"main frame not equal");
+        NSAssert(CGRectEqualToRect(labelTitle.frame, titleVV.frame), @"title frame not equal");
+        NSAssert(CGRectEqualToRect(divA.frame, imageViewA.frame), @"A frame not equal");
+        NSAssert(CGRectEqualToRect(divB.frame, imageViewB.frame), @"B frame not equal");
+        NSAssert(CGRectEqualToRect(divC.frame, imageViewC.frame), @"C frame not equal");
+    }];
     
     NSString *dataFilePath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
@@ -172,16 +166,9 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     QNFeedView *feedView = [QNFeedView defaultFeedView];
     QNViewModelItem *viewModelItem = [QNFeedViewModel getViewModelItemWithModel:feedModel];
     [feedView applyViewModelItem:viewModelItem];
-    feedView.top = mainView.bottom + 10;
+    feedView.top = mainView.bottom + 50;
     feedView.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:feedView];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 可以模拟文字颜色变化的等情况，dataModel需要变化，layoutModel不需要变化
-        [viewModelItem markDataModelDirty];
-        [QNFeedViewModel updateVideoModelItem:viewModelItem];
-        [feedView applyViewModelItem:viewModelItem];
-        feedView.top = mainView.bottom + 10;
-    });
     
     UIView *viewA = QN_View_Rect(RECT_WH(60, 60)).bgColor([UIColor purpleColor]);
     UIView *viewB = QN_View_Rect(RECT_WH(60, 60)).bgColor([UIColor greenColor]);
@@ -195,7 +182,7 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     [viewC qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize();
     }];
-    QNLayoutDiv *tDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *tDiv = [QNLayoutVirtualView linearLayout:^(QNLayout *layout) {
         layout.justifyCenter().children(@[viewA, viewB, viewC]);
     }];
     [tDiv qn_layoutWithSize:CGSizeMake(80, 60)];
@@ -211,9 +198,8 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
     
     // 绝对布局
     UIView *bottomView = QN_View_Rect(RECT_WH(150, 150)).bgColor([UIColor blueColor]);
-    [bottomView qn_makeLayout:^(QNLayout *layout) {
-        layout.wrapSize().absoluteLayout();
-        layout.margin(QN_INSETS_TL(self.view.height - 180, SCREEN_WIDTH - 180));
+    [bottomView qn_makeAbsoluteLayout:^(QNLayout *layout) {
+        layout.wrapSize().margin(QN_INSETS_TL(self.view.height - 180, SCREEN_WIDTH - 180));
     }];
     [self.view qn_makeLayout:^(QNLayout *layout) {
         layout.children(@[bottomView]);
