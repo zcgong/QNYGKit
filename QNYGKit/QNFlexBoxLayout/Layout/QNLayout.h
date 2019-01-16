@@ -10,7 +10,6 @@
 #import <UIKit/UIKit.h>
 
 extern const CGSize QNUndefinedSize;
-
 extern const CGFloat QNUndefinedValue;
 
 typedef enum QNFlexDirection {
@@ -194,9 +193,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)applyLayoutCache:(QNLayoutCache *)layoutCache;
 
 /**
- 获取布局缓存
+ 递归获取布局缓存
  */
 - (QNLayoutCache *)layoutCache;
+
+/**
+ 重置
+ */
+- (void)reset;
 
 @end
 NS_ASSUME_NONNULL_END

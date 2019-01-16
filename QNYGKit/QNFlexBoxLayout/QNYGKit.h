@@ -10,9 +10,9 @@
 #define QNYGKit_h
 
 #import "QNLayout.h"
-#import "QNLayoutDiv.h"
-#import "QNLayoutStrDiv.h"
-#import "QNLayoutFixedSizeDiv.h"
+#import "QNLayoutVirtualView.h"
+#import "QNLayoutTextVirtualView.h"
+#import "QNLayoutFixedSizeVirtualView.h"
 #import "QNLayoutProtocol.h"
 #import "UIView+QNLayout.h"
 #import "QNLayoutDef.h"

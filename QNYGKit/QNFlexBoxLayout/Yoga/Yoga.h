@@ -57,6 +57,7 @@ WIN_EXPORT YGNodeRef YGNodeNew(void);
 WIN_EXPORT void YGNodeFree(const YGNodeRef node);
 WIN_EXPORT void YGNodeFreeRecursive(const YGNodeRef node);
 WIN_EXPORT void YGNodeReset(const YGNodeRef node);
+WIN_EXPORT void YGNodeTryLeaveParent(const YGNodeRef node);
 WIN_EXPORT int32_t YGNodeGetInstanceCount(void);
 
 WIN_EXPORT void YGNodeInsertChild(const YGNodeRef node,

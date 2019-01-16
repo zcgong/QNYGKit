@@ -52,6 +52,15 @@
     return objc_getAssociatedObject(self, _cmd) ?: @[];
 }
 
+- (void)setCalculated:(BOOL)calculated {
+    objc_setAssociatedObject(self, @selector(calculated), @(calculated), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)calculated {
+    NSNumber *calculatedNum = objc_getAssociatedObject(self, @selector(calculated));
+    return [calculatedNum boolValue];
+}
+
 - (void)qn_addChild:(id<QNLayoutProtocol>)layout {
     NSAssert([layout conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
     NSMutableArray *newChildren = [self.qn_children mutableCopy];
@@ -76,8 +85,12 @@
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
     NSMutableArray *newChildren = [self.qn_children mutableCopy];
-    [newChildren removeObject:layout];
-    self.qn_children = [newChildren copy];
+    if ([newChildren containsObject:layout]) {
+        [newChildren removeObject:layout];
+        self.qn_children = [newChildren copy];
+    } else {
+        NSAssert(NO, @"delete an invalid chlid");
+    }
 }
 
 - (void)p_removeAllChildren {
@@ -98,9 +111,30 @@
     if (layout) {
         QNLayout *mLayout = objc_getAssociatedObject(self, @selector(qn_layout));
         if (mLayout) {
-            [self p_removeAllChildren];
-            objc_setAssociatedObject(self, @selector(qn_layout), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            if (mLayout) {
+                [self p_removeAllChildren];
+                [mLayout reset];
+                self.calculated = NO;
+                mLayout.context = self;
+            }
         }
+        layout(self.qn_layout);
+    }
+    return self.qn_layout;
+}
+
+- (QNLayout *)qn_makeReLayout:(void(^)(QNLayout *layout))layout {
+    QNLayout *mLayout = objc_getAssociatedObject(self, @selector(qn_layout));
+    if (mLayout) {
+        for (id<QNLayoutProtocol> element in self.qn_children) {
+            if (element.calculated) {
+                element.qn_layout.wrapSize();   // 保持原计算尺寸
+            }
+        }
+    } else {
+        NSAssert(NO, @"You have never layouted");
+    }
+    if (layout) {
         layout(self.qn_layout);
     }
     return self.qn_layout;
@@ -188,6 +222,7 @@
 - (void)qn_applyLayoutToViewHierachy {
     for (id<QNLayoutProtocol> layoutElement in self.qn_children) {
         layoutElement.frame = layoutElement.qn_layout.frame;
+        layoutElement.calculated = YES;
         [self p_updateAbsoluteSubLayoutElementFrame:layoutElement];
         [layoutElement qn_applyLayoutToViewHierachy];
     }

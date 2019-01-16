@@ -1,22 +1,22 @@
 //
-//  QNLayoutDiv.m
-//  QNYGKit
+//  QNLayoutVirtualView.m
+//  QQNews
 //
-//  Created by jayhuan on 2018/9/26.
-//  Copyright © 2018 jayhuan. All rights reserved.
+//  Created by jayhuan on 2019/1/15.
+//  Copyright © 2019 Tencent. All rights reserved.
 //
 
-#import "QNLayoutDiv.h"
+#import "QNLayoutVirtualView.h"
 #import "QNLayout+Private.h"
 #import "UIView+QNLayout.h"
 #import "QNAsyncLayoutTransaction.h"
 
-@interface QNLayoutDiv()
+@interface QNLayoutVirtualView()
 @property(nonatomic, strong) QNLayout *qn_layout;
 @property(nonatomic, copy) NSArray<id<QNLayoutProtocol>> *qn_children;
 @end
 
-@implementation QNLayoutDiv
+@implementation QNLayoutVirtualView
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -27,56 +27,56 @@
 }
 
 + (instancetype)linearLayout:(void(^)(QNLayout *layout))layout {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:layout];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *layoutVirtualView = [self new];
+    [layoutVirtualView qn_makeLayout:layout];
+    [layoutVirtualView qn_makeLayout:^(QNLayout *layout) {
         layout.flexDirection(QNFlexDirectionRow);
     }];
-    return layoutDiv;
+    return layoutVirtualView;
 }
 
 + (instancetype)verticalLayout:(void(^)(QNLayout *layout))layout {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:layout];
-    return layoutDiv;
+    QNLayoutVirtualView *layoutVirtualView = [self new];
+    [layoutVirtualView qn_makeLayout:layout];
+    return layoutVirtualView;
 }
 
 + (instancetype)absoluteLayout:(void(^)(QNLayout *layout))layout {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:layout];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *layoutVirtualView = [self new];
+    [layoutVirtualView qn_makeLayout:layout];
+    [layoutVirtualView qn_makeLayout:^(QNLayout *layout) {
         layout.absoluteLayout();
     }];
-    return layoutDiv;
+    return layoutVirtualView;
 }
 
-+ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction
++ (instancetype)layoutWithFlexDirection:(QNFlexDirection)direction
                             justifyContent:(QNJustify)justifyContent
                                   children:(NSArray<id<QNLayoutProtocol>>*)children {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *layoutVirtualView = [self new];
+    [layoutVirtualView qn_makeLayout:^(QNLayout *layout) {
         [layout setFlexDirection:direction];
         [layout setJustifyContent:justifyContent];
     }];
-    [layoutDiv p_updateChlidren:children];
-    return layoutDiv;
+    [layoutVirtualView p_updateChildren:children];
+    return layoutVirtualView;
 }
 
-+ (instancetype)layoutDivWithFlexDirection:(QNFlexDirection)direction
++ (instancetype)layoutWithFlexDirection:(QNFlexDirection)direction
                             justifyContent:(QNJustify)justifyContent
                                 alignItems:(QNAlign)alignItems
                                   children:(NSArray <id<QNLayoutProtocol>>*)children {
-    QNLayoutDiv *layoutDiv = [self new];
-    [layoutDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *layoutVirtualView = [self new];
+    [layoutVirtualView qn_makeLayout:^(QNLayout *layout) {
         [layout setFlexDirection:direction];
         [layout setJustifyContent:justifyContent];
         [layout setAlignItems:alignItems];
     }];
-    [layoutDiv p_updateChlidren:children];
-    return layoutDiv;
+    [layoutVirtualView p_updateChildren:children];
+    return layoutVirtualView;
 }
 
-- (void)p_updateChlidren:(NSArray<id<QNLayoutProtocol>> *)children {
+- (void)p_updateChildren:(NSArray<id<QNLayoutProtocol>> *)children {
     if (self.qn_children == children) {
         return;
     }
@@ -97,13 +97,13 @@
     NSAssert([layout conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
     NSMutableArray *newChildren = [self p_newChildren];
     [newChildren addObject:layout];
-    [self p_updateChlidren:[newChildren copy]];
+    [self p_updateChildren:[newChildren copy]];
 }
 
 - (void)qn_addChildren:(NSArray<id<QNLayoutProtocol>> *)children {
     NSMutableArray *newChildren = [self p_newChildren];
     [newChildren addObjectsFromArray:children];
-    [self p_updateChlidren:[newChildren copy]];
+    [self p_updateChildren:[newChildren copy]];
 }
 
 - (void)qn_layoutWithSize:(CGSize)size {
@@ -119,13 +119,14 @@
     [self.qn_layout calculateLayoutWithSize:oriSize];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
+    [[self qn_layout] resetUndefinedSize];
 }
 
 - (void)qn_layoutWithWrapContent {
     [self qn_layoutWithSize:QNUndefinedSize];
 }
 
-- (void)qn_asyncLayoutWithSize:(CGSize)size complete:(void(^)(CGRect frame))complete {
+- (void)qn_asyncLayoutWithSize:(CGSize)size complete:(void (^)(CGRect frame))complete {
     CGSize oriSize = size;
     if (oriSize.width <= 0) {
         oriSize.width = QNUndefinedValue;
@@ -139,6 +140,7 @@
     } complete:^{
         self.frame = self.qn_layout.frame;
         [self qn_applyLayoutToViewHierachy];
+        [[self qn_layout] resetUndefinedSize];
         if (complete) {
             complete(self.frame);
         }
@@ -158,6 +160,7 @@
                 .height = layoutElement.qn_layout.frame.size.height,
             },
         };
+        layoutElement.calculated = YES;
         [self p_updateAbsoluteSubLayoutElementFrame:layoutElement];
         [layoutElement qn_applyLayoutToViewHierachy];
     }
@@ -206,7 +209,7 @@
 - (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index {
     NSMutableArray *newChildren = [self p_newChildren];
     [newChildren insertObject:layout atIndex:index];
-    [self p_updateChlidren:[newChildren copy]];
+    [self p_updateChildren:[newChildren copy]];
 }
 
 - (QNLayout *)qn_makeLayout:(void (^)(QNLayout *))layout {
@@ -221,17 +224,22 @@
         NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
         [layoutElement qn_clearLayout];
     }
-    [self p_updateChlidren:nil];
+    [self p_updateChildren:nil];
 }
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
     NSMutableArray *newChildren = [self p_newChildren];
-    [newChildren removeObject:layout];
-    [self p_updateChlidren:[newChildren copy]];
+    if ([newChildren containsObject:layout]) {
+        [newChildren removeObject:layout];
+        [self p_updateChildren:[newChildren copy]];
+    } else {
+        NSAssert(NO, @"delete an invalid chlid");
+    }
 }
 
 - (NSMutableArray *)p_newChildren {
     return self.qn_children ? [self.qn_children mutableCopy] : [NSMutableArray array];
 }
+
 
 @end

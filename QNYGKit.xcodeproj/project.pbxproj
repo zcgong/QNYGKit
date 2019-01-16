@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C05149821EDA28D005A2362 /* QNLayoutTextVirtualView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C05149421EDA28C005A2362 /* QNLayoutTextVirtualView.m */; };
+		3C05149921EDA28D005A2362 /* QNLayoutVirtualView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C05149621EDA28D005A2362 /* QNLayoutVirtualView.m */; };
+		3C05149A21EDA28D005A2362 /* QNLayoutFixedSizeVirtualView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C05149721EDA28D005A2362 /* QNLayoutFixedSizeVirtualView.m */; };
 		3C0AD586217D83510029F680 /* QNAsyncLayoutTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0AD585217D83510029F680 /* QNAsyncLayoutTransaction.m */; };
-		3C2FEC72217B63890046ED62 /* QNLayoutStrDiv.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2FEC71217B63890046ED62 /* QNLayoutStrDiv.m */; };
-		3C2FEC75217B63B90046ED62 /* QNLayoutFixedSizeDiv.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2FEC74217B63B90046ED62 /* QNLayoutFixedSizeDiv.m */; };
 		3C32B1AA217C4E8200DF30FB /* UIView+ZJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C32B1A8217C4E8200DF30FB /* UIView+ZJ.m */; };
 		3C32B1AF217C59AA00DF30FB /* moment_picC@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C32B1AC217C59AA00DF30FB /* moment_picC@2x.png */; };
 		3C32B1B0217C59AA00DF30FB /* moment_picB@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C32B1AD217C59AA00DF30FB /* moment_picB@2x.png */; };
@@ -24,7 +25,6 @@
 		3CD84086218414FE0037E673 /* QNFeedViewLayoutModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD84085218414FE0037E673 /* QNFeedViewLayoutModel.m */; };
 		3CF7BB352198046F00BE74CD /* news_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3CF7BB342198046F00BE74CD /* news_logo.jpg */; };
 		61062F55215B505300C279D9 /* UIView+QNLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F54215B505300C279D9 /* UIView+QNLayout.m */; };
-		61062F58215B514300C279D9 /* QNLayoutDiv.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F57215B514200C279D9 /* QNLayoutDiv.m */; };
 		61062F64215B57B100C279D9 /* QNViewModelItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F5A215B57B100C279D9 /* QNViewModelItem.m */; };
 		61062F65215B57B100C279D9 /* QNBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F5E215B57B100C279D9 /* QNBaseView.m */; };
 		61062F66215B57B100C279D9 /* QNBaseViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61062F61215B57B100C279D9 /* QNBaseViewModel.m */; };
@@ -66,13 +66,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C05149221EDA28C005A2362 /* QNLayoutVirtualView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNLayoutVirtualView.h; sourceTree = "<group>"; };
+		3C05149321EDA28C005A2362 /* QNLayoutTextVirtualView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNLayoutTextVirtualView.h; sourceTree = "<group>"; };
+		3C05149421EDA28C005A2362 /* QNLayoutTextVirtualView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNLayoutTextVirtualView.m; sourceTree = "<group>"; };
+		3C05149521EDA28C005A2362 /* QNLayoutFixedSizeVirtualView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNLayoutFixedSizeVirtualView.h; sourceTree = "<group>"; };
+		3C05149621EDA28D005A2362 /* QNLayoutVirtualView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNLayoutVirtualView.m; sourceTree = "<group>"; };
+		3C05149721EDA28D005A2362 /* QNLayoutFixedSizeVirtualView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNLayoutFixedSizeVirtualView.m; sourceTree = "<group>"; };
 		3C0AD584217D83510029F680 /* QNAsyncLayoutTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNAsyncLayoutTransaction.h; sourceTree = "<group>"; };
 		3C0AD585217D83510029F680 /* QNAsyncLayoutTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNAsyncLayoutTransaction.m; sourceTree = "<group>"; };
 		3C2FEC6F217B625C0046ED62 /* QNLayoutCalProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNLayoutCalProtocol.h; sourceTree = "<group>"; };
-		3C2FEC70217B63890046ED62 /* QNLayoutStrDiv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNLayoutStrDiv.h; sourceTree = "<group>"; };
-		3C2FEC71217B63890046ED62 /* QNLayoutStrDiv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNLayoutStrDiv.m; sourceTree = "<group>"; };
-		3C2FEC73217B63B90046ED62 /* QNLayoutFixedSizeDiv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNLayoutFixedSizeDiv.h; sourceTree = "<group>"; };
-		3C2FEC74217B63B90046ED62 /* QNLayoutFixedSizeDiv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNLayoutFixedSizeDiv.m; sourceTree = "<group>"; };
 		3C32B1A8217C4E8200DF30FB /* UIView+ZJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZJ.m"; sourceTree = "<group>"; };
 		3C32B1A9217C4E8200DF30FB /* UIView+ZJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZJ.h"; sourceTree = "<group>"; };
 		3C32B1AC217C59AA00DF30FB /* moment_picC@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moment_picC@2x.png"; sourceTree = "<group>"; };
@@ -102,8 +104,6 @@
 		61062F52215B500D00C279D9 /* QNLayout+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QNLayout+Private.h"; sourceTree = "<group>"; };
 		61062F53215B505300C279D9 /* UIView+QNLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+QNLayout.h"; sourceTree = "<group>"; };
 		61062F54215B505300C279D9 /* UIView+QNLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+QNLayout.m"; sourceTree = "<group>"; };
-		61062F56215B514200C279D9 /* QNLayoutDiv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNLayoutDiv.h; sourceTree = "<group>"; };
-		61062F57215B514200C279D9 /* QNLayoutDiv.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNLayoutDiv.m; sourceTree = "<group>"; };
 		61062F5A215B57B100C279D9 /* QNViewModelItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNViewModelItem.m; sourceTree = "<group>"; };
 		61062F5B215B57B100C279D9 /* QNViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNViewProtocol.h; sourceTree = "<group>"; };
 		61062F5C215B57B100C279D9 /* QNViewModelItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNViewModelItem.h; sourceTree = "<group>"; };
@@ -284,21 +284,21 @@
 			children = (
 				3C0AD584217D83510029F680 /* QNAsyncLayoutTransaction.h */,
 				3C0AD585217D83510029F680 /* QNAsyncLayoutTransaction.m */,
-				61062F56215B514200C279D9 /* QNLayoutDiv.h */,
-				61062F57215B514200C279D9 /* QNLayoutDiv.m */,
-				3C2FEC70217B63890046ED62 /* QNLayoutStrDiv.h */,
-				3C2FEC71217B63890046ED62 /* QNLayoutStrDiv.m */,
-				3C2FEC73217B63B90046ED62 /* QNLayoutFixedSizeDiv.h */,
-				3C2FEC74217B63B90046ED62 /* QNLayoutFixedSizeDiv.m */,
-				61062F53215B505300C279D9 /* UIView+QNLayout.h */,
-				61062F54215B505300C279D9 /* UIView+QNLayout.m */,
 				61062F52215B500D00C279D9 /* QNLayout+Private.h */,
-				6179750A2154A18E00142DD9 /* QNLayout.h */,
-				6179750B2154A18E00142DD9 /* QNLayout.m */,
 				6179750D2154A43700142DD9 /* QNLayoutProtocol.h */,
+				3C2FEC6F217B625C0046ED62 /* QNLayoutCalProtocol.h */,
 				6179750E2154A45100142DD9 /* QNLayoutCache.h */,
 				6179750F2154A45100142DD9 /* QNLayoutCache.m */,
-				3C2FEC6F217B625C0046ED62 /* QNLayoutCalProtocol.h */,
+				6179750A2154A18E00142DD9 /* QNLayout.h */,
+				6179750B2154A18E00142DD9 /* QNLayout.m */,
+				61062F53215B505300C279D9 /* UIView+QNLayout.h */,
+				61062F54215B505300C279D9 /* UIView+QNLayout.m */,
+				3C05149221EDA28C005A2362 /* QNLayoutVirtualView.h */,
+				3C05149621EDA28D005A2362 /* QNLayoutVirtualView.m */,
+				3C05149321EDA28C005A2362 /* QNLayoutTextVirtualView.h */,
+				3C05149421EDA28C005A2362 /* QNLayoutTextVirtualView.m */,
+				3C05149521EDA28C005A2362 /* QNLayoutFixedSizeVirtualView.h */,
+				3C05149721EDA28D005A2362 /* QNLayoutFixedSizeVirtualView.m */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -501,30 +501,30 @@
 				3C32B1AA217C4E8200DF30FB /* UIView+ZJ.m in Sources */,
 				617974D121549FDE00142DD9 /* ViewController.m in Sources */,
 				617974CE21549FDE00142DD9 /* AppDelegate.m in Sources */,
+				3C05149A21EDA28D005A2362 /* QNLayoutFixedSizeVirtualView.m in Sources */,
 				61062F55215B505300C279D9 /* UIView+QNLayout.m in Sources */,
 				61062F73215B5A3700C279D9 /* QNFeedView.m in Sources */,
 				617974DF21549FE000142DD9 /* main.m in Sources */,
 				3C35674621CD1D9B006342D8 /* UILabel+Chainable.m in Sources */,
-				61062F58215B514300C279D9 /* QNLayoutDiv.m in Sources */,
 				3C0AD586217D83510029F680 /* QNAsyncLayoutTransaction.m in Sources */,
 				617975102154A45100142DD9 /* QNLayoutCache.m in Sources */,
 				3CD84086218414FE0037E673 /* QNFeedViewLayoutModel.m in Sources */,
 				3C35674421CD1D9B006342D8 /* UIView+Chainable.m in Sources */,
 				61062F6A215B592E00C279D9 /* QNFeedModel.m in Sources */,
 				617975092154A10E00142DD9 /* Yoga.c in Sources */,
+				3C05149821EDA28D005A2362 /* QNLayoutTextVirtualView.m in Sources */,
 				3C6DE0232165ADFF00BDC6E6 /* QNBaseDataModel.m in Sources */,
 				3C35674721CD1D9B006342D8 /* UIButton+Chainable.m in Sources */,
 				61062F6D215B599600C279D9 /* QNFeedViewDataModel.m in Sources */,
 				6179750C2154A18E00142DD9 /* QNLayout.m in Sources */,
-				3C2FEC72217B63890046ED62 /* QNLayoutStrDiv.m in Sources */,
 				3C35674521CD1D9B006342D8 /* UIImageView+Chainable.m in Sources */,
 				3CD840832184125C0037E673 /* QNBaseLayoutModel.m in Sources */,
 				61062F66215B57B100C279D9 /* QNBaseViewModel.m in Sources */,
 				61062F70215B59F700C279D9 /* QNFeedViewModel.m in Sources */,
 				61062F65215B57B100C279D9 /* QNBaseView.m in Sources */,
 				617975082154A10E00142DD9 /* YGNodeList.c in Sources */,
+				3C05149921EDA28D005A2362 /* QNLayoutVirtualView.m in Sources */,
 				617974D721549FDE00142DD9 /* QNYGKit.xcdatamodeld in Sources */,
-				3C2FEC75217B63B90046ED62 /* QNLayoutFixedSizeDiv.m in Sources */,
 				3C6DE0262165AF0700BDC6E6 /* QNBaseModel.m in Sources */,
 				61062F64215B57B100C279D9 /* QNViewModelItem.m in Sources */,
 			);

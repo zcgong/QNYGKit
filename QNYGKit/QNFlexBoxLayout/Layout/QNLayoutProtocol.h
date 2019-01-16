@@ -16,6 +16,7 @@
 
 @property(nonatomic, strong, readonly) QNLayout *qn_layout;
 @property(nonatomic, assign) CGRect frame;
+@property(nonatomic, assign) BOOL calculated;
 
 /**
  添加一个布局子元素

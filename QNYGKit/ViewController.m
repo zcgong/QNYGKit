@@ -68,14 +68,14 @@
     [imageViewC qn_makeLayout:^(QNLayout *layout) {
         layout.size(CGSizeMake(114, 68));
     }];
-    QNLayoutDiv *imageDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *imageVV = [QNLayoutVirtualView linearLayout:^(QNLayout *layout) {
         layout.spaceBetween();    // 分散排列，平分间距
         layout.children(@[imageViewA, imageViewB, imageViewC]); // 设置子view
     }];
     
     [mainView qn_makeVerticalLayout:^(QNLayout *layout) {
         layout.padding(QN_INSETS(15, 10, 10, 10));
-        layout.children(@[labelTitle, imageDiv]);
+        layout.children(@[labelTitle, imageVV]);
     }];
     
     [mainView addSubview:labelTitle];
@@ -84,31 +84,44 @@
     [mainView addSubview:imageViewC];
     [self.view addSubview:mainView];
     [mainView qn_layoutWithFixedWidth];
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        UILabel *labelTest = QN_Label.lines(0).fnt(15).bgColor([UIColor redColor]);
+//        labelTest.txt(@"Hello world");
+//        [labelTest qn_makeLayout:^(QNLayout *layout) {
+//            layout.marginT(10).marginB(20).wrapContent();
+//        }];
+//        [mainView addSubview:labelTest];
+//        [mainView qn_removeChild:labelTitle];
+//        [mainView qn_addChild:labelTest];
+//        [mainView qn_layoutOriginWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
+//    });
+    
     mainView.top = labelD.bottom + 10;
     
     // 6、完全使用Div计算view的frame
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
     NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。" attributes:attrDict];
-    QNLayoutStrDiv *titleDiv = [QNLayoutStrDiv divWithAttributedString:[mAttrString copy]];
-    [titleDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutTextVirtualView *titleVV = [QNLayoutTextVirtualView virtualViewWithAttributedString:[mAttrString copy]];
+    [titleVV qn_makeLayout:^(QNLayout *layout) {
         layout.marginB(10);
     }];
-    QNLayoutFixedSizeDiv *divA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutFixedSizeDiv *divB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutFixedSizeDiv *divC = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(114, 68)];
-    QNLayoutDiv *linearDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+    QNLayoutFixedSizeVirtualView *divA = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeVirtualView *divB = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutFixedSizeVirtualView *divC = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(114, 68)];
+    QNLayoutVirtualView *linearVV = [QNLayoutVirtualView linearLayout:^(QNLayout *layout) {
         layout.spaceBetween();    // 分散排列，平分间距
         layout.children(@[divA, divB, divC]); // 设置子view
     }];
     
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *mainVV = [QNLayoutVirtualView verticalLayout:^(QNLayout *layout) {
         layout.padding(QN_INSETS(15, 10, 10, 10));
-        layout.children(@[titleDiv, linearDiv]);
+        layout.children(@[titleVV, linearVV]);
     }];
 
-    [mainDiv qn_asyncLayoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue) complete:^(CGRect frame) {
-        NSAssert(CGSizeEqualToSize(mainDiv.frame.size, mainView.frame.size), @"main frame not equal");
-        NSAssert(CGRectEqualToRect(labelTitle.frame, titleDiv.frame), @"title frame not equal");
+    [mainVV qn_asyncLayoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue) complete:^(CGRect frame) {
+        NSAssert(CGSizeEqualToSize(mainVV.frame.size, mainView.frame.size), @"main frame not equal");
+        NSAssert(CGRectEqualToRect(labelTitle.frame, titleVV.frame), @"title frame not equal");
         NSAssert(CGRectEqualToRect(divA.frame, imageViewA.frame), @"A frame not equal");
         NSAssert(CGRectEqualToRect(divB.frame, imageViewB.frame), @"B frame not equal");
         NSAssert(CGRectEqualToRect(divC.frame, imageViewC.frame), @"C frame not equal");
@@ -129,16 +142,16 @@
     QNFeedView *feedView = [QNFeedView defaultFeedView];
     QNViewModelItem *viewModelItem = [QNFeedViewModel getViewModelItemWithModel:feedModel];
     [feedView applyViewModelItem:viewModelItem];
-    feedView.top = mainView.bottom + 10;
+    feedView.top = mainView.bottom + 50;
     feedView.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:feedView];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 可以模拟文字颜色变化的等情况，dataModel需要变化，layoutModel不需要变化
-        [viewModelItem markDataModelDirty];
-        [QNFeedViewModel updateVideoModelItem:viewModelItem];
-        [feedView applyViewModelItem:viewModelItem];
-        feedView.top = mainView.bottom + 10;
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        // 可以模拟文字颜色变化的等情况，dataModel需要变化，layoutModel不需要变化
+//        [viewModelItem markDataModelDirty];
+//        [QNFeedViewModel updateVideoModelItem:viewModelItem];
+//        [feedView applyViewModelItem:viewModelItem];
+//        feedView.top = mainView.bottom + 10;
+//    });
     
     UIView *viewA = QN_View_Rect(RECT_WH(60, 60)).bgColor([UIColor purpleColor]);
     UIView *viewB = QN_View_Rect(RECT_WH(60, 60)).bgColor([UIColor greenColor]);
@@ -152,7 +165,7 @@
     [viewC qn_makeLayout:^(QNLayout *layout) {
         layout.wrapSize();
     }];
-    QNLayoutDiv *tDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *tDiv = [QNLayoutVirtualView linearLayout:^(QNLayout *layout) {
         layout.justifyCenter().children(@[viewA, viewB, viewC]);
     }];
     [tDiv qn_layoutWithSize:CGSizeMake(80, 60)];

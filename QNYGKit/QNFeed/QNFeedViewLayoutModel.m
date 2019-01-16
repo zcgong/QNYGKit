@@ -22,33 +22,33 @@
 
 - (void)applyDataModel:(id<QNDataModelProtocol>)dataModel {
     QNFeedViewDataModel *fViewModel = (QNFeedViewDataModel *)dataModel;
-    QNLayoutStrDiv *titleStrDiv = [QNLayoutStrDiv divWithAttributedString:fViewModel.titleAttr];
-    QNLayoutStrDiv *contentStrDiv = [QNLayoutStrDiv divWithAttributedString:fViewModel.contentAttr];
-    [contentStrDiv qn_makeLayout:^(QNLayout *layout) {
+    QNLayoutTextVirtualView *titleVirtualView = [QNLayoutTextVirtualView virtualViewWithAttributedString:fViewModel.titleAttr];
+    QNLayoutTextVirtualView *contentVirtualView = [QNLayoutTextVirtualView virtualViewWithAttributedString:fViewModel.contentAttr];
+    [contentVirtualView qn_makeLayout:^(QNLayout *layout) {
         layout.margin(UIEdgeInsetsMake(5, 0, 5, 0));
     }];
     
-    QNLayoutFixedSizeDiv *contentImageDiv = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 100)];
+    QNLayoutFixedSizeVirtualView *contentImageVirtualView = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(100, 100)];
     
-    QNLayoutStrDiv *userStrDiv = [QNLayoutStrDiv divWithAttributedString:fViewModel.nameAttr];
-    QNLayoutStrDiv *timeStrDiv = [QNLayoutStrDiv divWithAttributedString:fViewModel.timeAttr];
+    QNLayoutTextVirtualView *userTextVirtualView = [QNLayoutTextVirtualView virtualViewWithAttributedString:fViewModel.nameAttr];
+    QNLayoutTextVirtualView *timeTextVirtualView = [QNLayoutTextVirtualView virtualViewWithAttributedString:fViewModel.timeAttr];
     
-    QNLayoutDiv *div = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *virtualView = [QNLayoutVirtualView linearLayout:^(QNLayout *layout) {
         layout.spaceBetween();
-        layout.children(@[userStrDiv, timeStrDiv]);
+        layout.children(@[userTextVirtualView, timeTextVirtualView]);
         layout.marginT(5);
     }];
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayout:^(QNLayout *layout) {
-        layout.children(@[titleStrDiv, contentStrDiv, contentImageDiv, div]);
+    QNLayoutVirtualView *mainvirtualView = [QNLayoutVirtualView verticalLayout:^(QNLayout *layout) {
+        layout.children(@[titleVirtualView, contentVirtualView, contentImageVirtualView, virtualView]);
         layout.padding(UIEdgeInsetsMake(5, 5, 5, 5));
     }];
-    [mainDiv qn_layoutWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, QNUndefinedValue)];
-    self.titleFrame = titleStrDiv.frame;
-    self.contentStrFrame = contentStrDiv.frame;
-    self.contentImageFrame = contentImageDiv.frame;
-    self.userStrFrame = userStrDiv.frame;
-    self.timeStrFrame = timeStrDiv.frame;
-    self.frame = mainDiv.frame;
+    [mainvirtualView qn_layoutWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, QNUndefinedValue)];
+    self.titleFrame = titleVirtualView.frame;
+    self.contentStrFrame = contentVirtualView.frame;
+    self.contentImageFrame = contentImageVirtualView.frame;
+    self.userStrFrame = userTextVirtualView.frame;
+    self.timeStrFrame = timeTextVirtualView.frame;
+    self.frame = mainvirtualView.frame;
 }
 
 @end

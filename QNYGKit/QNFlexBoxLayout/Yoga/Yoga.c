@@ -277,6 +277,13 @@ void YGNodeFreeRecursive(const YGNodeRef root) {
   YGNodeFree(root);
 }
 
+void YGNodeTryLeaveParent(const YGNodeRef node) {
+    if (node->parent) {
+        YGNodeListDelete(node->parent->children, node);
+        node->parent = NULL;
+    }
+}
+
 void YGNodeReset(const YGNodeRef node) {
   YG_ASSERT(YGNodeGetChildCount(node) == 0, "Cannot reset a node which still has children attached");
   YG_ASSERT(node->parent == NULL, "Cannot reset a node still attached to a parent");

@@ -62,7 +62,6 @@ static YGSize YGMeasureView(
     
     __block CGSize sizeThatFits;
     
-    // 如果允许异步计算，则在当前线程直接计算
     if ([calLayout allowAsyncCalculated]) {
         sizeThatFits = [calLayout calculateSizeWithSize:(CGSize) {
             .width = constrainedWidth,
@@ -83,7 +82,7 @@ static YGSize YGMeasureView(
             });
         }
     }
-    
+
     return (YGSize) {
         .width = YGSanitizeMeasurement(constrainedWidth, sizeThatFits.width, widthMode),
         .height = YGSanitizeMeasurement(constrainedHeight, sizeThatFits.height, heightMode),
@@ -614,8 +613,8 @@ static void YGSetMesure(QNLayout *layout) {
 
 - (QNLayout * (^)(void))wrapSize {
     return ^QNLayout* () {
-        if ([self.context isKindOfClass:[UIView class]]) {
-            CGSize oriSize = ((UIView *)(self.context)).frame.size;
+        if ([self.context conformsToProtocol:@protocol(QNLayoutProtocol)]) {
+            CGSize oriSize = ((id<QNLayoutProtocol>)(self.context)).frame.size;
             if (oriSize.width <= 0) {
                 oriSize.width = QNUndefinedValue;
             }
@@ -678,6 +677,11 @@ static void YGSetMesure(QNLayout *layout) {
         [((id<QNLayoutProtocol>)self.context) qn_addChildren:children];
         return self;
     };
+}
+
+- (void)reset {
+    YGNodeTryLeaveParent(self.qnNode);
+    YGNodeReset(self.qnNode);
 }
 
 @end
