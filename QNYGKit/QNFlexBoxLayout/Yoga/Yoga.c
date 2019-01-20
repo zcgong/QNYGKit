@@ -2420,9 +2420,9 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
 
   gDepth++;
 
-  const bool needToVisitNode =
-      (node->isDirty && layout->generationCount != gCurrentGenerationCount) ||
-      layout->lastParentDirection != parentDirection;
+    const bool needToVisitNode = true;
+//      (node->isDirty && layout->generationCount != gCurrentGenerationCount) ||
+//      layout->lastParentDirection != parentDirection;
 
   if (needToVisitNode) {
     // Invalidate the cached results.
@@ -2447,6 +2447,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
   // most
   // expensive to measure, so it's worth avoiding redundant measurements if at
   // all possible.
+    /*
   if (node->measure) {
     const float marginAxisRow = YGNodeMarginForAxis(node, YGFlexDirectionRow);
     const float marginAxisColumn = YGNodeMarginForAxis(node, YGFlexDirectionColumn);
@@ -2503,6 +2504,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
       }
     }
   }
+     */
 
   if (!needToVisitNode && cachedResults != NULL) {
     layout->measuredDimensions[YGDimensionWidth] = cachedResults->computedWidth;
@@ -2559,6 +2561,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
 
     layout->lastParentDirection = parentDirection;
 
+      /*
     if (cachedResults == NULL) {
       if (layout->nextCachedMeasurementsIndex == YG_MAX_CACHED_RESULT_COUNT) {
         if (gPrintChanges) {
@@ -2584,6 +2587,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
       newCacheEntry->computedWidth = layout->measuredDimensions[YGDimensionWidth];
       newCacheEntry->computedHeight = layout->measuredDimensions[YGDimensionHeight];
     }
+       */
   }
 
   if (performLayout) {

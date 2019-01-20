@@ -11,11 +11,11 @@
 @implementation QNViewModelItem
 
 - (void)markDataModelDirty {
-    self.dataModel.isInvalid =  YES;
+    self.dataModel.isInvalid = YES;
 }
 
 - (void)markLayoutModelDirty {
-    self.layoutModel.isInvalid =  YES;
+    self.layoutModel.isInvalid = YES;
 }
 
 @end

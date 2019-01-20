@@ -180,7 +180,6 @@ static void YGSetMesure(QNLayout *layout) {
     layout.parent = self;
     
     YGNodeInsertChild(self.qnNode, layout.qnNode, YGNodeGetChildCount(self.qnNode));
-    
 }
 
 - (void)addChildren:(NSArray *)children {
@@ -340,10 +339,6 @@ static void YGSetMesure(QNLayout *layout) {
 - (void)setAspectRatio:(CGFloat)aspectRatio
 {
     YGNodeStyleSetAspectRatio(self.qnNode, aspectRatio);
-}
-
-- (void)resetUndefinedSize {
-    [self setSize:QNUndefinedSize];
 }
 
 - (QNLayout * (^)(QNFlexDirection attr))flexDirection {
@@ -682,6 +677,18 @@ static void YGSetMesure(QNLayout *layout) {
 - (void)reset {
     YGNodeTryLeaveParent(self.qnNode);
     YGNodeReset(self.qnNode);
+}
+
+- (void)markDirty {
+    if (YGNodeGetMeasureFunc(self.qnNode) != NULL) {
+        YGNodeMarkDirty(self.qnNode);
+    }
+    if ([self.context conformsToProtocol:@protocol(QNLayoutProtocol)]) {
+        ((id<QNLayoutProtocol>)(self.context)).calculated = NO;
+    }
+    if (self.parent) {
+        [self.parent markDirty];
+    }
 }
 
 @end

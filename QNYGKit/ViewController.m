@@ -23,12 +23,22 @@
     labelA.txt(@"1、自适应，长度和高度都不限制。（我是补充文字，我是补充文字，我是补充文字。）");
     [self.view addSubview:labelA];
     [labelA qn_layoutWithWrapContent];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        labelA.txt(@"hello world");
+        [labelA qn_layoutWithWrapContent];
+    });
     labelA.top = 35;
     
     // 2、自适应，长度固定，高度不限制。
     UILabel *labelB = QN_Label_Rect(RECT_WH(SCREEN_WIDTH, 0)).lines(0).bgColor([UIColor orangeColor]);
     labelB.txt(@"2、自适应，长度固定，高度不限制。（我是补充文字，我是补充文字，我是补充文字。）");
     [self.view addSubview:labelB];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        labelB.txt(@"hello world");
+        [labelB qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH - 100, QNUndefinedValue)];
+        labelB.top = labelA.bottom + 10;
+    });
     [labelB qn_layoutWithFixedWidth];
     labelB.top = labelA.bottom + 10;
     
@@ -45,6 +55,17 @@
     [self.view addSubview:labelD];
     [labelD qn_layoutWithFixedSize];
     labelD.top = labelC.bottom + 10;
+    
+    UILabel *labelE = QN_Label_Rect(RECT_WH(300, 42)).lines(0).bgColor([UIColor orangeColor]);
+    labelE.txt(@"4321、直接固定size。（我是补充文字，我是补充文字，我是补充文字。）");
+    [self.view addSubview:labelE];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        labelE.txt(@"hello world,直接固定size");
+        [labelE qn_layoutWithWrapContent];
+        labelE.top = labelD.bottom + 10;
+    });
+    [labelE qn_layoutWithWrapContent];
+    labelE.top = labelD.bottom + 10;
     
     // 5、组合view，水平、垂直布局等
     UIView *mainView = QN_View_Rect(RECT_WH(SCREEN_WIDTH, 0)).bgColor([UIColor yellowColor]);
@@ -81,9 +102,54 @@
     [mainView addSubview:labelTitle];
     [mainView addSubview:imageViewA];
     [mainView addSubview:imageViewB];
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [imageViewB qn_makeReLayout:^(QNLayout *layout) {
+//            layout.size(CGSizeMake(100, 100));
+//        }];
+//        [mainView qn_reLayoutOriginWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
+//    });
+    
     [mainView addSubview:imageViewC];
     [self.view addSubview:mainView];
     [mainView qn_layoutWithFixedWidth];
+    mainView.top = labelE.bottom + 20;
+    
+    /// 重新布局
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        labelTitle.txt(@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+        [mainView qn_layoutOriginWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
+    });
+    
+    /// 使用缓存
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        labelTitle.txt(@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+//        [mainView qn_makeReLayout:nil];
+//        [mainView qn_layoutWithFixedWidth];
+//        mainView.top = 100;
+//    });
+    
+    /// dirty
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        labelTitle.txt(@"5、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+//        [labelTitle qn_markDirty];
+//        [mainView qn_reLayoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
+//        mainView.top = 100;
+//    });
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        UILabel *lb = QN_Label.bgColor([UIColor purpleColor]).txt(@"555、组合布局：我是标题，我是标题，我是标题。不限行数，不限行数，不限行数。哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+//        lb.lines(0);
+//        labelTitle.txt(@"hello world");
+//        [lb qn_makeLayout:^(QNLayout *layout) {
+//            layout.wrapContent().marginB(10);
+//        }];
+//        [mainView qn_insertChild:lb atIndex:0];
+//        [mainView addSubview:lb];
+//        [mainView qn_layoutWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
+//        mainView.top = 100;
+//    });
+    
     
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        UILabel *labelTest = QN_Label.lines(0).fnt(15).bgColor([UIColor redColor]);
@@ -97,7 +163,7 @@
 //        [mainView qn_layoutOriginWithSize:CGSizeMake(SCREEN_WIDTH, QNUndefinedValue)];
 //    });
     
-    mainView.top = labelD.bottom + 10;
+//    mainView.top = labelD.bottom + 10;
     
     // 6、完全使用Div计算view的frame
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};

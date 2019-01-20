@@ -49,4 +49,10 @@
  */
 - (void)qn_layoutOriginWithSize:(CGSize)size;
 
+- (void)qn_reLayoutWithSize:(CGSize)size;
+
+- (void)qn_reLayoutOriginWithSize:(CGSize)size;
+
+- (QNLayout *)qn_makeReLayout:(void(^)(QNLayout *layout))layout;
+
 @end

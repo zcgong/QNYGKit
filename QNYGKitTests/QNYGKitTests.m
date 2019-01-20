@@ -32,7 +32,7 @@
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
     NSMutableAttributedString *mAttrString = [[NSMutableAttributedString alloc] initWithString:@"我是字符串，我是字符串，我是字符串，我是字符串，我是字符串" attributes:attrDict];
     NSAttributedString *attrString = [mAttrString copy];
-    QNLayoutStrDiv *strDiv = [QNLayoutStrDiv divWithAttributedString:attrString];
+    QNLayoutTextVirtualView *strDiv = [QNLayoutTextVirtualView virtualViewWithAttributedString:attrString];
     [strDiv qn_layoutWithWrapContent];
     CGRect strFrame = [attrString boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
     strFrame = CGRectMake(0, 0, ceil(strFrame.size.width), ceil(strFrame.size.height));
@@ -40,17 +40,17 @@
 }
 
 - (void)testVerticalLayout {
-    QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
+    QNLayoutFixedSizeVirtualView *fixedSizeDivA = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(100, 50)];
     [fixedSizeDivA qn_makeLayout:^(QNLayout *layout) {
         layout.margin(UIEdgeInsetsMake(5, 10, 12, 0));
     }];
     
-    QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
+    QNLayoutFixedSizeVirtualView *fixedSizeDivB = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(100, 50)];
     [fixedSizeDivB qn_makeLayout:^(QNLayout *layout) {
         layout.margin(UIEdgeInsetsMake(12, 5, 8, 0));
     }];
     
-    QNLayoutDiv *mainDiv = [QNLayoutDiv verticalLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *mainDiv = [QNLayoutVirtualView verticalLayout:^(QNLayout *layout) {
         layout.padding(UIEdgeInsetsMake(3, 4, 5, 6));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);
     }];
@@ -61,17 +61,17 @@
 }
 
 - (void)testLinearLayout {
-    QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
+    QNLayoutFixedSizeVirtualView *fixedSizeDivA = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(100, 50)];
     [fixedSizeDivA qn_makeLayout:^(QNLayout *layout) {
         layout.margin(UIEdgeInsetsMake(5, 10, 12, 10));
     }];
     
-    QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 60)];
+    QNLayoutFixedSizeVirtualView *fixedSizeDivB = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(100, 60)];
     [fixedSizeDivB qn_makeLayout:^(QNLayout *layout) {
         layout.margin(UIEdgeInsetsMake(12, 5, 8, 0));
     }];
     
-    QNLayoutDiv *mainDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+    QNLayoutVirtualView *mainDiv = [QNLayoutVirtualView linearLayout:^(QNLayout *layout) {
         layout.padding(UIEdgeInsetsMake(3, 4, 5, 6));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);
     }];
@@ -82,10 +82,10 @@
 }
 
 - (void)testJustify {
-    QNLayoutFixedSizeDiv *fixedSizeDivA = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 50)];
+    QNLayoutFixedSizeVirtualView *fixedSizeDivA = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(100, 50)];
     
-    QNLayoutFixedSizeDiv *fixedSizeDivB = [QNLayoutFixedSizeDiv divWithFixedSize:CGSizeMake(100, 60)];
-    QNLayoutDiv *mainDiv = [QNLayoutDiv linearLayout:^(QNLayout *layout) {
+    QNLayoutFixedSizeVirtualView *fixedSizeDivB = [QNLayoutFixedSizeVirtualView virtualViewWithFixedSize:CGSizeMake(100, 60)];
+    QNLayoutVirtualView *mainDiv = [QNLayoutVirtualView linearLayout:^(QNLayout *layout) {
         layout.justifyContent(QNJustifySpaceBetween);
         layout.padding(UIEdgeInsetsMake(10, 12, 15, 18));
         layout.children(@[fixedSizeDivA, fixedSizeDivB]);

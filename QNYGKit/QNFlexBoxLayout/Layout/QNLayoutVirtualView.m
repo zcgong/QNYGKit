@@ -119,7 +119,6 @@
     [self.qn_layout calculateLayoutWithSize:oriSize];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
-    [[self qn_layout] resetUndefinedSize];
 }
 
 - (void)qn_layoutWithWrapContent {
@@ -140,7 +139,6 @@
     } complete:^{
         self.frame = self.qn_layout.frame;
         [self qn_applyLayoutToViewHierachy];
-        [[self qn_layout] resetUndefinedSize];
         if (complete) {
             complete(self.frame);
         }
@@ -149,7 +147,6 @@
 
 - (void)qn_applyLayoutToViewHierachy {
     for (id<QNLayoutProtocol> layoutElement in self.qn_children) {
-        
         layoutElement.frame = (CGRect) {
             .origin = {
                 .x = _frame.origin.x + layoutElement.qn_layout.frame.origin.x,
@@ -219,12 +216,8 @@
     return self.qn_layout;
 }
 
-- (void)qn_clearLayout {
-    for (id<QNLayoutProtocol> layoutElement in self.qn_children) {
-        NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
-        [layoutElement qn_clearLayout];
-    }
-    [self p_updateChildren:nil];
+- (void)qn_markDirty {
+    [self.qn_layout markDirty];
 }
 
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {

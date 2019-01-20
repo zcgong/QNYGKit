@@ -66,6 +66,7 @@
     NSMutableArray *newChildren = [self.qn_children mutableCopy];
     [newChildren addObject:layout];
     self.qn_children = [newChildren copy];
+    [self qn_markDirty];
 }
 
 - (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index {
@@ -73,6 +74,7 @@
     NSMutableArray *newChildren = [self.qn_children mutableCopy];
     [newChildren insertObject:layout atIndex:index];
     self.qn_children = [newChildren copy];
+    [self qn_markDirty];
 }
 
 - (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index {
@@ -86,6 +88,7 @@
 - (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
     NSMutableArray *newChildren = [self.qn_children mutableCopy];
     if ([newChildren containsObject:layout]) {
+        [layout.qn_layout markDirty];
         [newChildren removeObject:layout];
         self.qn_children = [newChildren copy];
     } else {
@@ -95,16 +98,6 @@
 
 - (void)p_removeAllChildren {
     self.qn_children = nil;
-}
-
-- (void)qn_clearLayout {
-    NSArray *children = [self qn_children];
-    for (id<QNLayoutProtocol> layoutElement in children) {
-        NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
-        [layoutElement qn_clearLayout];
-    }
-    [self p_removeAllChildren];
-    objc_setAssociatedObject(self, @selector(qn_layout), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (QNLayout *)qn_makeLayout:(void(^)(QNLayout *layout))layout {
@@ -123,17 +116,21 @@
     return self.qn_layout;
 }
 
-- (QNLayout *)qn_makeReLayout:(void(^)(QNLayout *layout))layout {
-    QNLayout *mLayout = objc_getAssociatedObject(self, @selector(qn_layout));
-    if (mLayout) {
-        for (id<QNLayoutProtocol> element in self.qn_children) {
-            if (element.calculated) {
-                element.qn_layout.wrapSize();   // 保持原计算尺寸
-            }
+- (void)qn_markDirty {
+    [self.qn_layout markDirty];
+}
+
+- (void)p_reLayout {
+    [self qn_markDirty];
+    for (id<QNLayoutProtocol> element in self.qn_children) {
+        if (element.calculated) {
+            element.qn_layout.wrapSize();   // 保持原计算尺寸
         }
-    } else {
-        NSAssert(NO, @"You have never layouted");
     }
+}
+
+- (QNLayout *)qn_makeReLayout:(void(^)(QNLayout *layout))layout {
+    [self qn_markDirty];
     if (layout) {
         layout(self.qn_layout);
     }
@@ -188,7 +185,6 @@
     [self.qn_layout calculateLayoutWithSize:oriSize];
     self.frame = self.qn_layout.frame;
     [self qn_applyLayoutToViewHierachy];
-    [self.qn_layout resetUndefinedSize];
 }
 
 - (void)qn_asyncLayoutWithSize:(CGSize)size complete:(void(^)(CGRect frame))complete {
@@ -206,7 +202,6 @@
     } complete:^{
         self.frame = self.qn_layout.frame;
         [self qn_applyLayoutToViewHierachy];
-        [self.qn_layout resetUndefinedSize];
         if (complete) {
             complete(self.frame);
         }
@@ -217,6 +212,16 @@
     CGPoint origin = self.frame.origin;
     [self qn_layoutWithSize:size];
     self.frame = (CGRect){origin, self.frame.size};
+}
+
+- (void)qn_reLayoutWithSize:(CGSize)size {
+    [self p_reLayout];
+    [self qn_layoutWithSize:size];
+}
+
+- (void)qn_reLayoutOriginWithSize:(CGSize)size {
+    [self p_reLayout];
+    [self qn_layoutOriginWithSize:size];
 }
 
 - (void)qn_applyLayoutToViewHierachy {

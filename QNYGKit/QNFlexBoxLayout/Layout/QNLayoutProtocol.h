@@ -79,6 +79,6 @@
 /**
  标记布局缓存失效
  */
-- (void)qn_clearLayout;
+- (void)qn_markDirty;
 
 @end

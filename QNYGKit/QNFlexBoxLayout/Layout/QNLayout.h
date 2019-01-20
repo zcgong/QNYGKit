@@ -197,10 +197,5 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (QNLayoutCache *)layoutCache;
 
-/**
- 重置
- */
-- (void)reset;
-
 @end
 NS_ASSUME_NONNULL_END
