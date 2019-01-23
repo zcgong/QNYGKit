@@ -34,4 +34,16 @@
     [super qn_layoutWithSize:self.fixedSize];
 }
 
+- (void)qn_addChild:(id<QNLayoutProtocol>)layout {
+    NSAssert(NO, @"QNLayoutFixedSizeVirtualView can be only used to be leaf node.");
+}
+
+- (void)qn_addChildren:(NSArray<id<QNLayoutProtocol>> *)children {
+    NSAssert(NO, @"QNLayoutFixedSizeVirtualView can be only used to be leaf node.");
+}
+
+- (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index {
+    NSAssert(NO, @"QNLayoutFixedSizeVirtualView can be only used to be leaf node.");
+}
+
 @end

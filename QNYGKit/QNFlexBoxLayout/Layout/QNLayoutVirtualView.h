@@ -10,7 +10,7 @@
 #import "QNLayoutProtocol.h"
 
 /**
- 虚拟视图布局，方便布局，同时减少View的层级
+ 虚拟视图布局，方便布局，同时减少View的层级。支持完全使用VirtualView布局，与UIView完全等价。
  */
 @interface QNLayoutVirtualView : NSObject<QNLayoutProtocol>
 

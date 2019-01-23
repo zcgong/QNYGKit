@@ -76,18 +76,7 @@
     return layoutVirtualView;
 }
 
-- (void)p_updateChildren:(NSArray<id<QNLayoutProtocol>> *)children {
-    if (self.qn_children == children) {
-        return;
-    }
-    self.qn_children = [children copy];
-    [self.qn_layout removeAllChildren];
-    
-    for (id<QNLayoutProtocol> layoutElement in children) {
-        NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
-        [self.qn_layout addChild:layoutElement.qn_layout];
-    }
-}
+#pragma mark - QNLayoutProtocol
 
 - (NSUInteger)qn_childrenCount {
     return self.qn_children.count;
@@ -163,6 +152,56 @@
     }
 }
 
+- (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index {
+    return [self.qn_children objectAtIndex:index];
+}
+
+- (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index {
+    NSMutableArray *newChildren = [self p_newChildren];
+    [newChildren insertObject:layout atIndex:index];
+    [self p_updateChildren:[newChildren copy]];
+}
+
+- (QNLayout *)qn_makeLayout:(void (^)(QNLayout *))layout {
+    if (layout) {
+        layout(self.qn_layout);
+    }
+    return self.qn_layout;
+}
+
+- (void)qn_markDirty {
+    [self.qn_layout markDirty];
+}
+
+- (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
+    NSMutableArray *newChildren = [self p_newChildren];
+    if ([newChildren containsObject:layout]) {
+        [newChildren removeObject:layout];
+        [self p_updateChildren:[newChildren copy]];
+    } else {
+        NSAssert(NO, @"delete an invalid chlid");
+    }
+}
+
+#pragma mark - private
+
+- (NSMutableArray *)p_newChildren {
+    return self.qn_children ? [self.qn_children mutableCopy] : [NSMutableArray array];
+}
+
+- (void)p_updateChildren:(NSArray<id<QNLayoutProtocol>> *)children {
+    if (self.qn_children == children) {
+        return;
+    }
+    self.qn_children = [children copy];
+    [self.qn_layout removeAllChildren];
+    
+    for (id<QNLayoutProtocol> layoutElement in children) {
+        NSAssert([layoutElement conformsToProtocol:@protocol(QNLayoutProtocol)], @"invalid");
+        [self.qn_layout addChild:layoutElement.qn_layout];
+    }
+}
+
 - (void)p_updateAbsoluteSubLayoutElementFrame:(id<QNLayoutProtocol>)layoutElement {
     YGNodeRef node = layoutElement.qn_layout.qnNode;
     if (YGNodeStyleGetPositionType(node) != YGPositionTypeAbsolute) {
@@ -198,41 +237,5 @@
         }
     }
 }
-
-- (id<QNLayoutProtocol>)qn_childLayoutAtIndex:(NSUInteger)index {
-    return [self.qn_children objectAtIndex:index];
-}
-
-- (void)qn_insertChild:(id<QNLayoutProtocol>)layout atIndex:(NSInteger)index {
-    NSMutableArray *newChildren = [self p_newChildren];
-    [newChildren insertObject:layout atIndex:index];
-    [self p_updateChildren:[newChildren copy]];
-}
-
-- (QNLayout *)qn_makeLayout:(void (^)(QNLayout *))layout {
-    if (layout) {
-        layout(self.qn_layout);
-    }
-    return self.qn_layout;
-}
-
-- (void)qn_markDirty {
-    [self.qn_layout markDirty];
-}
-
-- (void)qn_removeChild:(id<QNLayoutProtocol>)layout {
-    NSMutableArray *newChildren = [self p_newChildren];
-    if ([newChildren containsObject:layout]) {
-        [newChildren removeObject:layout];
-        [self p_updateChildren:[newChildren copy]];
-    } else {
-        NSAssert(NO, @"delete an invalid chlid");
-    }
-}
-
-- (NSMutableArray *)p_newChildren {
-    return self.qn_children ? [self.qn_children mutableCopy] : [NSMutableArray array];
-}
-
 
 @end

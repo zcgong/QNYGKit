@@ -11,6 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ 需要动态计算文本尺寸的虚拟视图叶子节点，可代替UILabel等场景
+ */
 @interface QNLayoutTextVirtualView : QNLayoutVirtualView<QNLayoutCalProtocol>
 
 @property(nonatomic, copy, readonly) NSAttributedString *calAttributedStr;

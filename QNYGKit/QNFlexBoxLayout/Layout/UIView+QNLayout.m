@@ -35,6 +35,8 @@
     return absoluteLayout;
 }
 
+#pragma mark - QNLayoutProtocol
+
 - (void)qn_setChildren:(NSArray<id<QNLayoutProtocol>> *)children {
     if (self.qn_children == children) {
         return;
@@ -96,10 +98,6 @@
     }
 }
 
-- (void)p_removeAllChildren {
-    self.qn_children = nil;
-}
-
 - (QNLayout *)qn_makeLayout:(void(^)(QNLayout *layout))layout {
     if (layout) {
         QNLayout *mLayout = objc_getAssociatedObject(self, @selector(qn_layout));
@@ -120,23 +118,6 @@
     [self.qn_layout markDirty];
 }
 
-- (void)p_reLayout {
-    [self qn_markDirty];
-    for (id<QNLayoutProtocol> element in self.qn_children) {
-        if (element.calculated) {
-            element.qn_layout.wrapSize();   // 保持原计算尺寸
-        }
-    }
-}
-
-- (QNLayout *)qn_makeReLayout:(void(^)(QNLayout *layout))layout {
-    [self qn_markDirty];
-    if (layout) {
-        layout(self.qn_layout);
-    }
-    return self.qn_layout;
-}
-
 - (void)qn_addChildren:(NSArray<id<QNLayoutProtocol>> *)children {
     NSMutableArray *newChildren = [[self qn_children] mutableCopy];
     [newChildren addObjectsFromArray:children];
@@ -154,22 +135,8 @@
     return layout;
 }
 
-#pragma mark - layout
-
 - (void)qn_layoutWithWrapContent {
     [self qn_layoutWithSize:QNUndefinedSize];
-}
-
-- (void)qn_layoutWithFixedWidth {
-    [self qn_layoutWithSize:CGSizeMake(self.frame.size.width, QNUndefinedValue)];
-}
-
-- (void)qn_layoutWithFixedHeight {
-    [self qn_layoutWithSize:CGSizeMake(QNUndefinedValue, self.frame.size.height)];
-}
-
-- (void)qn_layoutWithFixedSize {
-    [self qn_layoutWithSize:self.frame.size];
 }
 
 - (void)qn_layoutWithSize:(CGSize)size {
@@ -208,11 +175,16 @@
     }];
 }
 
-- (void)qn_layoutOriginWithSize:(CGSize)size {
-    CGPoint origin = self.frame.origin;
-    [self qn_layoutWithSize:size];
-    self.frame = (CGRect){origin, self.frame.size};
+- (void)qn_applyLayoutToViewHierachy {
+    for (id<QNLayoutProtocol> layoutElement in self.qn_children) {
+        layoutElement.frame = layoutElement.qn_layout.frame;
+        layoutElement.calculated = YES;
+        [self p_updateAbsoluteSubLayoutElementFrame:layoutElement];
+        [layoutElement qn_applyLayoutToViewHierachy];
+    }
 }
+
+#pragma mark - relayout
 
 - (void)qn_reLayoutWithSize:(CGSize)size {
     [self p_reLayout];
@@ -224,13 +196,33 @@
     [self qn_layoutOriginWithSize:size];
 }
 
-- (void)qn_applyLayoutToViewHierachy {
-    for (id<QNLayoutProtocol> layoutElement in self.qn_children) {
-        layoutElement.frame = layoutElement.qn_layout.frame;
-        layoutElement.calculated = YES;
-        [self p_updateAbsoluteSubLayoutElementFrame:layoutElement];
-        [layoutElement qn_applyLayoutToViewHierachy];
+- (QNLayout *)qn_makeReLayout:(void(^)(QNLayout *layout))layout {
+    [self qn_markDirty];
+    if (layout) {
+        layout(self.qn_layout);
     }
+    return self.qn_layout;
+}
+
+#pragma mark - private
+
+- (void)p_removeAllChildren {
+    self.qn_children = nil;
+}
+
+- (void)p_reLayout {
+    [self qn_markDirty];
+    for (id<QNLayoutProtocol> element in self.qn_children) {
+        if (element.calculated) {
+            element.qn_layout.wrapSize();   // 保持原计算尺寸
+        }
+    }
+}
+
+- (void)p_layoutSize:(CGSize)size {
+    CGRect newframe = self.frame;
+    newframe.size = size;
+    self.frame = newframe;
 }
 
 - (void)p_updateAbsoluteSubLayoutElementFrame:(id<QNLayoutProtocol>)layoutElement {
@@ -265,6 +257,26 @@
     }
 }
 
+#pragma mark - layout
+
+- (void)qn_layoutWithFixedWidth {
+    [self qn_layoutWithSize:CGSizeMake(self.frame.size.width, QNUndefinedValue)];
+}
+
+- (void)qn_layoutWithFixedHeight {
+    [self qn_layoutWithSize:CGSizeMake(QNUndefinedValue, self.frame.size.height)];
+}
+
+- (void)qn_layoutWithFixedSize {
+    [self qn_layoutWithSize:self.frame.size];
+}
+
+- (void)qn_layoutOriginWithSize:(CGSize)size {
+    CGPoint origin = self.frame.origin;
+    [self qn_layoutWithSize:size];
+    self.frame = (CGRect){origin, self.frame.size};
+}
+
 #pragma mark - QNLayoutCalProtocol
 
 - (CGSize)calculateSizeWithSize:(CGSize)size {
@@ -274,14 +286,6 @@
 
 - (BOOL)allowAsyncCalculated {
     return NO;
-}
-
-#pragma mark - private
-
-- (void)p_layoutSize:(CGSize)size {
-    CGRect newframe = self.frame;
-    newframe.size = size;
-    self.frame = newframe;
 }
 
 @end

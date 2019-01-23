@@ -161,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (QNLayout * (^)(void))alignSelfEnd;
 
 /**
- 内部子元素居中排列（交叉轴）
+ 内部子元素居中排列（交叉轴），尽量在保证子元素都是叶子节点的情况下使用！！！
  */
 - (QNLayout * (^)(void))alignItemsCenter;
 

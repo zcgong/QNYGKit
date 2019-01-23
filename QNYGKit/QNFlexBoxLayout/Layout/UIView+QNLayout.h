@@ -43,16 +43,29 @@
 - (void)qn_layoutWithFixedSize;
 
 /**
- 根据size进行布局（同步）
+ 根据size进行布局，保持frame放入origin不变
  
  @param size 尺寸参数
  */
 - (void)qn_layoutOriginWithSize:(CGSize)size;
 
+/**
+ 使用上次缓存的计算结果重新计算。（在增删改部分节点的场景使用）
+ 
+ @param size 尺寸参数
+ */
 - (void)qn_reLayoutWithSize:(CGSize)size;
 
+/**
+ 使用上次缓存的计算结果重新计算，保持frame的origin不变。（在增删改部分节点的场景使用）
+ 
+ @param size 尺寸参数
+ */
 - (void)qn_reLayoutOriginWithSize:(CGSize)size;
 
+/**
+ 标记已计算过的layout节点为待计算状态。（修改部分节点）
+ */
 - (QNLayout *)qn_makeReLayout:(void(^)(QNLayout *layout))layout;
 
 @end

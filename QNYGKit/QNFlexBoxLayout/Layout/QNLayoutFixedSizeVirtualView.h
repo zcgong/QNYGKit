@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- 固定大小的虚拟视图，用来代替固定大小的view的布局计算
+ 固定大小的虚拟视图叶子节点，用来代替固定大小的view的布局计算
  */
 @interface QNLayoutFixedSizeVirtualView : QNLayoutVirtualView
 

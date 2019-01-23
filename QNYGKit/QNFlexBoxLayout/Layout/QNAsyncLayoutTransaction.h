@@ -12,6 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface QNAsyncLayoutTransaction : NSObject
 
+/**
+ 添加异步任务
+ 
+ @param calculateBlock 子线程计算布局
+ @param complete 主线程渲染
+ */
 + (void)addCalculateBlock:(dispatch_block_t)calculateBlock
                  complete:(dispatch_block_t)complete;
 

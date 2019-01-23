@@ -84,10 +84,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAspectRatio:(CGFloat)aspectRatio;
 
 /**
- 重置置空
+ 重置置空，恢复默认值
  */
 - (void)reset;
 
+/**
+ 设置缓存失效
+ */
 - (void)markDirty;
 
 @end
