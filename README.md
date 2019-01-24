@@ -7,23 +7,20 @@ Yoga是一个实现了Flexbox规范的跨平台布局引擎，c语言实现，�
 ***
 
 ### 3、FlexBox是什么？
-弹性布局（flexible box）模块（目前是w3c候选的推荐）旨在提供一个更加有效的方式来布置，对齐和分布在容器之间的各项内容，即使它们的大小是未知或者动态变化的。
-弹性布局的主要思想是让容器有能力来改变子项目的宽度和高度，以填满可用空间（主要是为了容纳所有类型的显示设备和屏幕尺寸）的能力。
-
-目前在RN、ASDK（Texture）、ComponentKit、Weex等框架都支持FlexBox布局。
+Flexbox布局，是一种灵活的CSS布局方式，可简单、方便、快捷的实现复杂页面布局，目前Texture、ComponentKit、RN、Weex等开源框架都支持Flexbox布局。
 
 [FlexBox入门教程](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)  
 
 ***
 
 ### 4、QNYGKit特点
-* 基于Yoga实现，遵循FlexBox协议，性能高，对项目侵入性较低
-* QNLayout布局方便，支持链式书写UI和布局
-* 异步计算size，多种方式计算size，布局缓存与失效
-* 完全使用虚拟视图VirtualView计算frame体系，无需创建真实view，把view的布局计算完全独立开来
-* 基于协议实现兼容UITableView的使用，将数据、布局、view三者逻辑上独立
-* 性能和Native基本一致
-* 相对完善的单元测试
+* 基于Yoga实现，遵循FlexBox协议，性能高，侵入性低
+* 支持链式书写UI和布局
+* 提供多种方式计算size，支持异步计算
+* 布局缓存与失效，支持动态调整布局
+* 完全使用虚拟视图VirtualView计算布局体系，无需创建真实view，把view的布局计算完全独立开来
+* 基于协议实现兼容UITableView的使用，将数据、布局、view逻辑解耦
+* 性能与Native基本一致
 ***
 
 ### 5、实现原理
