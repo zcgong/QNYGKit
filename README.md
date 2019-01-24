@@ -24,16 +24,20 @@ Flexbox布局，是一种灵活的CSS布局方式，可简单、方便、快捷�
 ***
 
 ### 5、实现原理
+##### 核心架构
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/core_arthitecture.png)
+
+##### 整体架构
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/all_architecture.png)
+
+##### UIView与VirtualView完全等价
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/view.png)
-![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/benchmark.png)
 ***
 
 ### 6、性能测试
-在相同测试环境下与Native以及基于AutoLayout实现的Masonry框架进行比较。
+在相同测试环境下与Native以及YogaKit进行比较。
 
-![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/performance.png)
+![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/benchmark.png)
 ***
 
 ### 7、使用举例（可将工程下载到本地测试）
