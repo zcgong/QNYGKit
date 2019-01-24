@@ -35,8 +35,7 @@ Flexbox布局，是一种灵活的CSS布局方式，可简单、方便、快捷�
 ***
 
 ### 6、性能测试
-#####在相同测试环境下与Native以及YogaKit进行比较。
-
+##### 在相同测试环境下与Native以及YogaKit进行比较。
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/benchmark.png)
 ***
 
