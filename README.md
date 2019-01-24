@@ -25,7 +25,7 @@ Flexbox布局，是一种灵活的CSS布局方式，可简单、方便、快捷�
 
 ### 5、实现原理
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/core_arthitecture.png)
-![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/all_arthitecture.png)
+![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/all_architecture.png)
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/view.png)
 ![Image text](https://github.com/nannanIT/QNYGKit/blob/master/QNYGKit/Images/benchmark.png)
 ***
