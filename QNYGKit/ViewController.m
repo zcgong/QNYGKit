@@ -74,10 +74,10 @@
         layout.padding(QN_INSETS(15, 10, 10, 10)).children(@[labelTitle, imageVV]);
     }];
     [mainView qn_addSubviews:@[labelTitle, imageViewA, imageViewB, imageViewC]];
-    
-    [self.view addSubview:mainView];
     [mainView qn_layoutWithFixedWidth];
     mainView.top = labelD.bottom + 10;
+    
+    [self.view addSubview:mainView];
     
     // 6、完全使用VirtualView计算frame
     NSDictionary *attrDict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
