@@ -204,7 +204,6 @@ static void YGSetMesure(QNLayout *layout) {
     if (self.qnNode == NULL) {
         return;
     }
-    
     while (YGNodeGetChildCount(self.qnNode) > 0) {
         YGNodeRemoveChild(self.qnNode, YGNodeGetChild(self.qnNode, YGNodeGetChildCount(self.qnNode) - 1));
     }

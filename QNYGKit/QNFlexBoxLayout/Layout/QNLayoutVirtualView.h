@@ -18,12 +18,12 @@
 @property(nonatomic, assign) BOOL calculated;
 
 /**
- 线性布局Div
+ 线性布局VirtualView
  */
 + (instancetype)linearLayout:(void(^)( QNLayout *layout))layout;
 
 /**
- 垂直布局Div
+ 垂直布局VirtualView
  */
 + (instancetype)verticalLayout:(void(^)( QNLayout *layout))layout;
 
@@ -33,7 +33,7 @@
 + (instancetype)absoluteLayout:(void(^)(QNLayout *layout))layout;
 
 /**
- 根据布局方向、对齐方式、子元素自定义Div
+ 根据布局方向、对齐方式、子元素自定义VirtualView
  
  @param direction 方向
  @param justifyContent 对齐方式（主轴）
@@ -44,7 +44,7 @@
                                   children:(NSArray<id<QNLayoutProtocol>>*)children;
 
 /**
- 根据布局方向、对齐方式、子元素自定义Div
+ 根据布局方向、对齐方式、子元素自定义VirtualView
  
  @param direction 方向
  @param justifyContent 对齐方式（主轴）
