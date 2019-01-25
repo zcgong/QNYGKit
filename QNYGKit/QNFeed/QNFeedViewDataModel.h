@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "QNFeedModel.h"
 #import "QNBaseDataModel.h"
 #import <UIKit/UIKit.h>
 

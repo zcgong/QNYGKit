@@ -7,7 +7,6 @@
 //
 
 #import "QNBaseView.h"
-//#import "QNFeedViewDataModel.h"
 #import "QNFeedViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN

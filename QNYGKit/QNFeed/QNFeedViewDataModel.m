@@ -7,6 +7,7 @@
 //
 
 #import "QNFeedViewDataModel.h"
+#import "QNFeedModel.h"
 
 @implementation QNFeedViewDataModel
 
