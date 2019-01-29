@@ -89,8 +89,13 @@ static YGSize YGMeasureView(
     };
 }
 
+/// 动态叶子节点
+static BOOL isDynamicLeafNode(QNLayout *layout) {
+    return ([layout.context conformsToProtocol:@protocol(QNLayoutCalProtocol)] && layout.allChildren.count == 0);
+}
+
 static void YGSetMesure(QNLayout *layout) {
-    if ([layout.context conformsToProtocol:@protocol(QNLayoutCalProtocol)] && layout.allChildren.count == 0) {
+    if (isDynamicLeafNode(layout)) {
         YGNodeSetMeasureFunc(layout.qnNode, YGMeasureView);
     } else {
         YGNodeSetMeasureFunc(layout.qnNode, NULL);
@@ -100,7 +105,7 @@ static void YGSetMesure(QNLayout *layout) {
 @interface QNLayout()
 
 @property(nonatomic, strong) NSMutableArray *mChildren;
-@property(nonatomic, weak) id context;
+@property(nonatomic, weak) id<QNLayoutProtocol> context;
 @property(nonatomic, weak) QNLayout *parent;
 @property(nonatomic, assign) YGNodeRef qnNode;
 @property(nonatomic, assign) CGRect frame;
@@ -124,6 +129,7 @@ static void YGSetMesure(QNLayout *layout) {
 }
 
 - (void)setContext:(id)context {
+    NSAssert([context conformsToProtocol:@protocol(QNLayoutProtocol)], @"context is not valid");
     _context = context;
     YGNodeSetContext(self.qnNode, (__bridge void *)(context));
 }
@@ -141,7 +147,7 @@ static void YGSetMesure(QNLayout *layout) {
 
 - (QNLayoutCache *)layoutCache {
     QNLayoutCache *layoutCache = [QNLayoutCache new];
-    layoutCache.frame = ((id<QNLayoutProtocol>)self.context).frame;
+    layoutCache.frame = self.context.frame;
     NSMutableArray *childrenLayoutCache = [NSMutableArray arrayWithCapacity:self.allChildren.count];
     for (QNLayout *childLayout in self.allChildren) {
         [childrenLayoutCache addObject:[childLayout layoutCache]];
@@ -575,7 +581,7 @@ static void YGSetMesure(QNLayout *layout) {
 
 - (QNLayout * (^)(void))wrapExactContent {
     return ^QNLayout* () {
-        if ([self.context conformsToProtocol:@protocol(QNLayoutCalProtocol)] && self.allChildren.count == 0) {
+        if (isDynamicLeafNode(self)) {
             CGSize currentSize = CGSizeMake(YGNodeStyleGetWidth(self.qnNode), YGNodeStyleGetHeight(self.qnNode));
             CGSize originSize = [((id<QNLayoutCalProtocol>)(self.context)) calculateSizeWithSize:QNUndefinedSize];
             CGFloat paddingT = YGNodeStyleGetPadding(self.qnNode, YGEdgeTop);
@@ -596,10 +602,8 @@ static void YGSetMesure(QNLayout *layout) {
             }
             CGSize exactSize = CGSizeMake(YGValueIsUndefined(currentSize.width) ? originSize.width + (paddingL + paddingR) : currentSize.width, YGValueIsUndefined(currentSize.height) ? originSize.height + (paddingT + paddingB) : currentSize.height);
             [self setSize:exactSize];
-            [self setMinSize:exactSize];
-            [self setMaxSize:exactSize];
         } else {
-            NSAssert(NO, @"context is not view");
+            NSAssert(NO, @"context is not dynamic.");
         }
         return self;
     };
@@ -607,19 +611,15 @@ static void YGSetMesure(QNLayout *layout) {
 
 - (QNLayout * (^)(void))wrapSize {
     return ^QNLayout* () {
-        if ([self.context conformsToProtocol:@protocol(QNLayoutProtocol)]) {
-            CGSize oriSize = ((id<QNLayoutProtocol>)(self.context)).frame.size;
-            if (oriSize.width <= 0) {
-                oriSize.width = QNUndefinedValue;
-            }
-            
-            if (oriSize.height <= 0) {
-                oriSize.height = QNUndefinedValue;
-            }
-            [self setSize:oriSize];
-        } else {
-            NSAssert(NO, @"context is not view");
+        CGSize oriSize = self.context.frame.size;
+        if (oriSize.width <= 0) {
+            oriSize.width = QNUndefinedValue;
         }
+        
+        if (oriSize.height <= 0) {
+            oriSize.height = QNUndefinedValue;
+        }
+        [self setSize:oriSize];
         return self;
     };
 }
@@ -668,7 +668,7 @@ static void YGSetMesure(QNLayout *layout) {
 
 - (QNLayout * (^)(NSArray* children))children {
     return ^QNLayout* (NSArray* children) {
-        [((id<QNLayoutProtocol>)self.context) qn_addChildren:children];
+        [self.context qn_addChildren:children];
         return self;
     };
 }
@@ -682,9 +682,7 @@ static void YGSetMesure(QNLayout *layout) {
     if (YGNodeGetMeasureFunc(self.qnNode) != NULL) {
         YGNodeMarkDirty(self.qnNode);
     }
-    if ([self.context conformsToProtocol:@protocol(QNLayoutProtocol)]) {
-        ((id<QNLayoutProtocol>)(self.context)).calculated = NO;
-    }
+    self.context.calculated = NO;
     if (self.parent) {
         [self.parent markDirty];
     }
